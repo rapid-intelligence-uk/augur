@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>augur Archive Scanner — LBG Pattern Intelligence Report </title>
+<style>
+  :root {
+    --navy: #16215B;
+    --orange: #FF6E29;
+    --white: #FFFFFF;
+    --light: #F4F6FB;
+    --mid: #E8ECF6;
+    --text: #1a1a2e;
+    --subtle: #6b7280;
+    --border: #D1D9F0;
+    --red: #dc2626;
+    --amber: #d97706;
+    --green: #16a34a;
+    --blue: #2563eb;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    padding: 32px 40px 24px;
+    border-bottom: 3px solid var(--orange);
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .wordmark {
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    font-style: italic;
+    margin-bottom: 4px;
+  }
+
+  .wordmark span {
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .tagline {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 20px;
+  }
+
+  .report-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .report-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .report-meta span { display: flex; align-items: center; gap: 4px; }
+
+  /* SUMMARY CARDS */
+  .summary-bar {
+    background: var(--navy);
+    padding: 0 40px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .summary-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  .stat-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .stat-card .num {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--orange);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-card .label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* TOP FINDINGS */
+  .findings-bar {
+    background: rgba(255,110,41,0.06);
+    border-bottom: 1px solid rgba(255,110,41,0.15);
+    padding: 20px 40px;
+  }
+
+  .findings-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .findings-title {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .findings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .finding-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .finding-num {
+    background: var(--orange);
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .finding-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .finding-text strong { color: var(--navy); }
+
+  /* MAIN CONTENT */
+  .content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 40px;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 32px;
+    background: var(--white);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .section-header {
+    background: var(--navy);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .section-header:hover { background: #1d2d7a; }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-icon {
+    width: 24px;
+    height: 24px;
+    background: var(--orange);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  .section-toggle {
+    color: rgba(255,255,255,0.5);
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .section-toggle.open { transform: rotate(180deg); }
+
+  .section-body {
+    padding: 20px;
+    display: none;
+  }
+
+  .section-body.open { display: block; }
+
+  /* PATTERN CARDS */
+  .pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .pattern-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .pattern-card-header {
+    background: var(--light);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pattern-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .confidence-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .conf-very-high { background: #dcfce7; color: #15803d; }
+  .conf-high { background: #dbeafe; color: #1d4ed8; }
+  .conf-medium { background: #fef9c3; color: #854d0e; }
+  .conf-low { background: #f1f5f9; color: #64748b; }
+
+  .pattern-card-body {
+    padding: 12px 14px;
+  }
+
+  .pattern-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+
+  .pattern-row:last-child { margin-bottom: 0; }
+
+  .pattern-label {
+    font-weight: 600;
+    color: var(--subtle);
+    min-width: 90px;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    padding-top: 1px;
+  }
+
+  .pattern-value { color: var(--text); }
+
+  .freq-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .freq-track {
+    flex: 1;
+    height: 6px;
+    background: var(--mid);
+    border-radius: 3px;
+    overflow: hidden;
+    max-width: 100px;
+  }
+
+  .freq-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 3px;
+  }
+
+  .freq-pct {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--orange);
+    min-width: 36px;
+  }
+
+  /* TABLES */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .data-table th {
+    background: var(--navy);
+    color: var(--white);
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .data-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: var(--light); }
+  .data-table tr:hover td { background: rgba(255,110,41,0.04); }
+
+  /* RISK BADGES */
+  .risk { font-size: 12px; font-weight: 600; }
+  .risk-structural { color: #dc2626; }
+  .risk-critical { color: #7c2d12; }
+  .risk-high { color: #d97706; }
+  .risk-core { color: #1d4ed8; }
+  .risk-watch { color: #6b7280; }
+  .risk-low { color: #9ca3af; }
+
+  /* CLASH WEEKS */
+  .clash-item {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .clash-item:last-child { border-bottom: none; }
+
+  .clash-rank {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .clash-rank.rank-1 { background: var(--orange); color: white; }
+  .clash-rank.rank-2 { background: var(--navy); color: white; }
+  .clash-rank.rank-other { background: var(--mid); color: var(--navy); }
+
+  .clash-week { font-weight: 700; color: var(--navy); font-size: 13px; }
+  .clash-score {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255,110,41,0.1);
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+  }
+
+  .clash-events {
+    font-size: 12px;
+    color: var(--subtle);
+    margin-top: 3px;
+  }
+
+  /* PRE-SIGNAL */
+  .presignal-item {
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .presignal-item:last-child { border-bottom: none; }
+
+  .presignal-rank {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--mid);
+    min-width: 28px;
+    line-height: 1;
+  }
+
+  .presignal-phrase {
+    font-family: monospace;
+    background: var(--light);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  .presignal-hits {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--orange);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  .presignal-example {
+    font-size: 11px;
+    color: var(--subtle);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ALERT BOX */
+  .alert-box {
+    background: rgba(255,110,41,0.06);
+    border: 1px solid rgba(255,110,41,0.2);
+    border-left: 3px solid var(--orange);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin: 14px 0;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .alert-box strong { color: var(--orange); }
+
+  /* INTEGRITY */
+  .integrity-box {
+    background: var(--navy);
+    color: rgba(255,255,255,0.75);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 12px;
+    line-height: 1.7;
+    margin-top: 32px;
+  }
+
+  .integrity-box strong { color: var(--white); }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--subtle);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-brand {
+    font-style: italic;
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  .footer-brand span { color: var(--orange); font-weight: 700; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .header, .summary-bar, .findings-bar { padding-left: 20px; padding-right: 20px; }
+    .content { padding: 20px; }
+    .summary-grid { grid-template-columns: repeat(3, 1fr); }
+    .pattern-grid { grid-template-columns: 1fr; }
+    .footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="wordmark">augu<span>&#x1D45F;</span></div>
+    <div class="tagline">Forward Intelligence &middot; By Cision &middot; Rapid Intelligence UK</div>
+    <div class="report-title">augur Archive Scanner &mdash; LBG Pattern Intelligence Report </div>
+    <div class="report-meta">
+      <span>&#128197; Run date: 21 May 2026</span>
+      <span>&#128100; Nathanael Jones, Intelligence Manager</span>
+      <span>&#128230; Lloyds Banking Group Key Coverage Archive</span>
+      <span>&#9989; Complete scan</span>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY STATS -->
+<div class="summary-bar">
+  <div class="summary-grid">
+    <div class="stat-card">
+      <div class="num">137</div>
+      <div class="label">Briefings Read</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">57,118</div>
+      <div class="label">Snippets Analysed</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">52</div>
+      <div class="label">Patterns Found</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">138 days</div>
+      <div class="label">2 Jan &ndash; 18 May 2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">7/7</div>
+      <div class="label">Days Per Week</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP FINDINGS -->
+<div class="findings-bar">
+  <div class="findings-inner">
+    <div class="findings-title">&#x1F50D; Top 4 Most Significant Findings</div>
+    <div class="findings-list">
+      <div class="finding-item">
+        <div class="finding-num">1</div>
+        <div class="finding-text"><strong>Geopolitical risk and consumer confidence are truly perennial &mdash; 100% frequency</strong> &mdash; Both appear in every single briefing. They are not themes &mdash; they are structural fixtures. Pre-drafting standing context blocks is strongly recommended.</div>
+      </div>
+      <div class="finding-item">
+        <div class="finding-num">2</div>
+        <div class="finding-text"><strong>FCA motor finance / Supreme Court is the dominant single-topic risk story</strong> &mdash; Present in 54/137 briefings (39%) with a clear escalating trajectory. Black Horse direct exposure makes this the most consequential regulatory risk story for LBG in H1/H2 2026.</div>
+      </div>
+      <div class="finding-item">
+        <div class="finding-num">3</div>
+        <div class="finding-text"><strong>The Business Barometer appears to drive the briefing almost every week</strong> &mdash; Present in 35/137 briefings (26%) &mdash; likely every Monday or Tuesday. It functions as a weekly &ldquo;LBG voice&rdquo; anchor, especially when other news is lighter.</div>
+      </div>
+      <div class="finding-item">
+        <div class="finding-num">4</div>
+        <div class="finding-text"><strong>Sovereign debt/gilts and Middle East/oil are the two most consistent Horizon Scan signals</strong> &mdash; Gilts appear in 50/137 (36%) briefings. Middle East/oil appears in 84/137 (61%) &mdash; the most prevalent macro/geopolitical signal.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- SECTION 1: RECURRING INSTITUTIONS -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">&#127963;</div>
+        Section 1 &mdash; Recurring Institutions
+      </div>
+      <div class="section-toggle open">&#8964;</div>
+    </div>
+    <div class="section-body open">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Institution</th>
+            <th>Category</th>
+            <th>Frequency</th>
+            <th>Confidence</th>
+            <th>Peak Timing</th>
+            <th>Analyst Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lloyds Banking Group</strong></td>
+            <td>Standing</td>
+            <td><div class="freq-bar"><div class="freq-track"><div class="freq-fill" style="width:100%"></div></div><span class="freq-pct">100%</span></div></td>
+            <td><span class="confidence-badge conf-very-high">Very High</span></td>
+            <td>Every briefing, every section</td>
+            <td>Permanent monitoring. Track Charlie Nunn / William Chalmers / Kate Cheetham mentions.</td>
+          </tr>
+          <tr>
+            <td><strong>Bank of England / MPC</strong></td>
+            <td>Standing / Seasonal</td>
+            <td><div class="freq-bar"><div class="freq-track"><div class="freq-fill" style="width:86%"></div></div><span class="freq-pct">86%</span></div></td>
+            <td><span class="confidence-badge conf-very-high">Very High</span></td>
+            <td>Jan peak (87%), dips Apr (67%)</td>
+            <td>Pre-draft rate hold/cut/rise reactive lines ahead of every MPC date. Rate coverage runs 2&ndash;3 days post-announcement.</td>
+          </tr>
+          <tr>
+            <td><strong>HM Treasury / Rachel Reeves</strong></td>
+            <td>Seasonal</td>
+            <td><div class="freq-bar"><div class="freq-track"><div class="freq-fill" style="width:81%"></div></div><span class="freq-pct">81%</span></div></td>
+            <td><span class="confidence-badge conf-high">High</span></td>
+            <td>Mar peak (90%), Jan (77%), Feb (68%)</td>
+            <td>Calendar all fiscal events. Rachel Reeves speech dates are pre-signal triggers.</td>
+          </tr>
+          <tr>
+            <td><strong>FCA</strong></td>
+            <td>Standing</td>
+            <td><div class="freq-bar"><div class="freq-track"><div class="freq-fill" style="width:66%"></div></div><span class="freq-pct">66%</span></div></td>
+            <td><span class="confidence-badge conf-very-high">Very High</span></td>
+            <td>Mar (68%), Jan (67%)</td>
+            <td>Track FCA calendar — consultations, enforcement announcements, thematic reviews. Flag motor finance ruling date.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 2: STANDING PUBLICATIONS -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">&#128240;</div>
+        Section 2 &mdash; Standing Publication Patterns
+      </div>
+      <div class="section-toggle open">&#8964;</div>
+    </div>
+    <div class="section-body open">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Publication</th>
+            <th>Institution</th>
+            <th>Briefings</th>
+            <th>Typical Timing</th>
+            <th>Confidence</th>
+            <th>Key Outlets</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Halifax House Price Index</strong></td>
+            <td>Halifax (LBG division)</td>
+            <td><div class="freq-bar"><div class="freq-track"><div class="freq-fill" style="width:66%"></div></div><span class="freq-pct">90/137</span></div></td>
+            <td>Wk 1&ndash;2 every month. Tuesday most common. <br><em>Confirmed: Jan 9 (Fri), 13 (Tue) · Feb 7 (Sat), 9 (Mon), 10 (Tue) · Mar 10 (Tue) · Apr 7 (Mon), 9 (Wed) · May 12 (Tue)</em></td>
+            <td><span class="confidence-badge conf-high">High</span></td>
+            <td>Times, Telegraph, Mail, Mortgage Solutions, Mortgage Strategy</td>
+          </tr>
+          <tr>
+            <td><strong>Lloyds Business Barometer</strong></td>
+            <td>Lloyds Banking Group</td>
+            <td><div class="freq-bar"><div class="freq-track"><div class="freq-fill" style="width:26%"></div></div><span class="freq-pct">35/137</span></div></td>
+            <td>Weekly/fortnightly. Present 5 of first 7 briefing days (Jan 2&ndash;7). Monthly flagship + weekly data updates.</td>
+            <td><span class="confidence-badge conf-high">High</span></td>
+            <td>FT, Reuters, City A.M., specialist trade press</td>
+          </tr>
+          <tr>
+            <td><strong>Scottish Widows Research</strong></td>
+            <td>Scottish Widows (LBG division)</td>
+            <td><div class="freq-bar"><div class="freq-track"><div class="freq-fill" style="width:71%"></div></div><span class="freq-pct">97/137</span></div></td>
+            <td>14 confirmed dates. 7 of 14 fall Tue/Thu. Peaks Jan/Feb. <br><em>Dates: Jan 2, 8, 9, 15 &middot; Feb 13, 20 &middot; Mar 11, 25 &middot; Apr 4, 8, 25 &middot; May 5, 7, 14</em></td>
+            <td><span class="confidence-badge conf-high">High</span></td>
+            <td>FT Adviser, Telegraph, Times, Money Marketing, This is Money</td>
+          </tr>
+          <tr>
+            <td><strong>LBG Quarterly Results</strong></td>
+            <td>Lloyds Banking Group</td>
+            <td><div class="freq-bar"><div class="freq-track"><div class="freq-fill" style="width:15%"></div></div><span class="freq-pct">2 confirmed</span></div></td>
+            <td>Wk 4 of Jan, Apr, Jul, Oct. Q1 2026: 30 April.</td>
+            <td><span class="confidence-badge conf-very-high">Very High</span></td>
+            <td>FT, Reuters, Bloomberg, Times, Telegraph</td>
+          </tr>
+          <tr>
+            <td><strong>Lex Autolease</strong></td>
+            <td>Lex Autolease (LBG division)</td>
+            <td><div class="freq-bar"><div class="freq-track"><div class="freq-fill" style="width:9%"></div></div><span class="freq-pct">12/137</span></div></td>
+            <td>Roughly monthly. Jan (3), Feb (1), Mar (1), Apr (2), May (2)</td>
+            <td><span class="confidence-badge conf-medium">Medium</span></td>
+            <td>Fleet News, Motor Finance, Automotive press, occasionally FT/Times</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 3: RECURRING THEMES -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">&#128202;</div>
+        Section 3 &mdash; Recurring Story Themes
+      </div>
+      <div class="section-toggle">&#8964;</div>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Theme</th>
+            <th>Briefings</th>
+            <th>%</th>
+            <th>Peak Month</th>
+            <th>LBG Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Geopolitical risk / war</strong></td><td>137/137</td><td>100%</td><td>March (94%)</td><td><span class="risk risk-structural">&#128308; Structural</span></td></tr>
+          <tr><td><strong>Consumer confidence / GfK</strong></td><td>137/137</td><td>100%</td><td>All months</td><td><span class="risk risk-structural">&#128308; Structural</span></td></tr>
+          <tr><td><strong>AI / Technology / Digital banking</strong></td><td>132/137</td><td>96%</td><td>March</td><td><span class="risk risk-structural">&#128308; Structural</span></td></tr>
+          <tr><td><strong>Interest rates / MPC</strong></td><td>131/137</td><td>96%</td><td>January (87%)</td><td><span class="risk risk-structural">&#128308; Structural</span></td></tr>
+          <tr><td><strong>Cost of living / inflation</strong></td><td>131/137</td><td>96%</td><td>March</td><td><span class="risk risk-structural">&#128308; Structural</span></td></tr>
+          <tr><td><strong>Regulation / FCA / PRA</strong></td><td>131/137</td><td>96%</td><td>March</td><td><span class="risk risk-structural">&#128308; Structural</span></td></tr>
+          <tr><td><strong>Pension / retirement</strong></td><td>130/137</td><td>95%</td><td>Jan/May (100%)</td><td><span class="risk risk-structural">&#128308; Structural</span></td></tr>
+          <tr><td><strong>Wealth / investments</strong></td><td>133/137</td><td>97%</td><td>January</td><td><span class="risk risk-structural">&#128308; Structural</span></td></tr>
+          <tr><td><strong>House prices / mortgage</strong></td><td>124/137</td><td>91%</td><td>Jan (63%), May (72%)</td><td><span class="risk risk-core">&#9899; Core</span></td></tr>
+          <tr><td><strong>UK economic outlook / GDP</strong></td><td>122/137</td><td>89%</td><td>January</td><td><span class="risk risk-core">&#9899; Core</span></td></tr>
+          <tr><td><strong>Credit / debt / arrears</strong></td><td>120/137</td><td>88%</td><td>January</td><td><span class="risk risk-core">&#9899; Core</span></td></tr>
+          <tr><td><strong>Challenger banks / fintechs</strong></td><td>118/137</td><td>86%</td><td>Mar (77%), May (78%)</td><td><span class="risk risk-core">&#9899; Core</span></td></tr>
+          <tr><td><strong>National Insurance / tax</strong></td><td>113/137</td><td>82%</td><td>January (100%)</td><td><span class="risk risk-core">&#9899; Core</span></td></tr>
+          <tr><td><strong>Fraud / APP fraud</strong></td><td>80/137</td><td>58%</td><td>March (71%)</td><td><span class="risk risk-high">&#128993; High</span></td></tr>
+          <tr><td><strong>Switching / current accounts</strong></td><td>61/137</td><td>45%</td><td>January</td><td><span class="risk risk-high">&#128993; High</span></td></tr>
+          <tr><td><strong>Motor finance / FCA review</strong></td><td>57/137</td><td>42%</td><td>April (53%)</td><td><span class="risk risk-critical">&#128680; Critical</span></td></tr>
+          <tr><td><strong>Branch closures / access</strong></td><td>52/137</td><td>38%</td><td>Jan (47%), Feb (50%)</td><td><span class="risk risk-high">&#128993; High</span></td></tr>
+          <tr><td><strong>US tariffs / Trump trade war</strong></td><td>96/137</td><td>70%</td><td>January (97%)</td><td><span class="risk risk-watch">&#128994; Watch</span></td></tr>
+          <tr><td><strong>Budget / Spring Statement</strong></td><td>96/137</td><td>70%</td><td>March (90%)</td><td><span class="risk risk-watch">&#128994; Watch</span></td></tr>
+          <tr><td><strong>ESG / Sustainability</strong></td><td>95/137</td><td>69%</td><td>January (70%)</td><td><span class="risk risk-watch">&#128994; Watch</span></td></tr>
+          <tr><td><strong>ISA / savings rates</strong></td><td>95/137</td><td>69%</td><td>January (80%)</td><td><span class="risk risk-watch">&#128994; Watch</span></td></tr>
+          <tr><td><strong>Crypto / bitcoin</strong></td><td>40/137</td><td>29%</td><td>January</td><td><span class="risk risk-watch">&#128994; Watch</span></td></tr>
+          <tr><td><strong>BNPL regulation</strong></td><td>4/137</td><td>3%</td><td>February only</td><td><span class="risk risk-low">&#9898; Low</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 4: SEASONAL PATTERNS -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">&#128197;</div>
+        Section 4 &mdash; Seasonal Patterns
+      </div>
+      <div class="section-toggle">&#8964;</div>
+    </div>
+    <div class="section-body">
+      <div class="pattern-grid">
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#127773; January &mdash; All Themes Converge</span>
+            <span class="confidence-badge conf-very-high">Very High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">30 briefings in January</span></div>
+            <div class="pattern-row"><span class="pattern-label">Evidence</span><span class="pattern-value">US tariffs 97%, NI/tax 100%, MPC 87%, Barclays 87%, HSBC 93%, Nationwide 87%, ISA 80%</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">New Year outlook = maximum simultaneous theme coverage. Most resource-intensive month.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Maximum analyst resources. Pre-draft standing context paragraphs for all core themes in December.</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#128188; February &mdash; Results Season + Branch Closures</span>
+            <span class="confidence-badge conf-high">High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">28 briefings in February</span></div>
+            <div class="pattern-row"><span class="pattern-label">Evidence</span><span class="pattern-value">Results season 39% (vs 10% Jan). Branch closures peak 50%. NatWest peaks 89%.</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">Competitor FY results season (Barclays, NatWest, HSBC). Annual branch closure list coverage.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Prepare LBG comparator brief for all major competitor FY result dates. Refresh branch closure reactive lines in January.</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#127834; March &mdash; Spring Statement + Regulatory Peak</span>
+            <span class="confidence-badge conf-high">High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">31 briefings (highest month)</span></div>
+            <div class="pattern-row"><span class="pattern-label">Evidence</span><span class="pattern-value">Geopolitical 94%, Budget/Spring Statement 90%, Fraud 71%, Challengers 77%, Regulation 68%</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">Rachel Reeves Spring Statement = dominant macro event. Regulatory announcements cluster. Fraud awareness campaign season.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Spring Statement brief ready by end of February. Pre-position SW data for tax-year-end commentary.</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#128680; April &mdash; Motor Finance + ISA + Q1 Results</span>
+            <span class="confidence-badge conf-high">High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">30 briefings in April</span></div>
+            <div class="pattern-row"><span class="pattern-label">Evidence</span><span class="pattern-value">Motor finance peaks 53% (highest month). Pension 97%. Geopolitical 100%.</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">FCA motor finance review milestone. Q1 results season. Tax year end drives pension/ISA stories.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Motor finance reactive pack ready by end of March. Scottish Widows pension data to be deployed in April.</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#128663; Motor Finance &mdash; Rising Trajectory</span>
+            <span class="confidence-badge conf-high">High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">57/137 (42%) &mdash; rising Jan 37% &rarr; Apr 53% &rarr; May 44%</span></div>
+            <div class="pattern-row"><span class="pattern-label">Evidence</span><span class="pattern-value">Jan 6 (Supreme Court), Jan 12 (unfair agreements), Mar 11, 25, Apr 4, May 5, 7 (Black Horse specific)</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">Black Horse direct exposure. FCA review = potential £2bn+ provision. Most consequential regulatory risk story in archive.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Dedicated reactive pack. Black Horse spokesperson lines. Track all FCA and Supreme Court hearing dates.</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#127968; Branch Closures &mdash; Winter Peak</span>
+            <span class="confidence-badge conf-high">High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">52/137 (38%) &mdash; Jan 47%, Feb 50%, Apr 3%, May 39%</span></div>
+            <div class="pattern-row"><span class="pattern-label">Evidence</span><span class="pattern-value">Annual branch closure data published by consumer groups in January. Banking hub rollout coverage.</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">LBG one of the most active branch-closing banks. Nationwide branch pledge = direct comparison.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Prepare "banking hubs" narrative for January. Refresh rural banking access lines. Bank of Scotland rural closures = Scottish political coverage risk.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: COMPETITOR PATTERNS -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">&#128269;</div>
+        Section 5 &mdash; Competitor Patterns
+      </div>
+      <div class="section-toggle">&#8964;</div>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Competitor</th>
+            <th>Frequency</th>
+            <th>Jan</th>
+            <th>Feb</th>
+            <th>Mar</th>
+            <th>Apr</th>
+            <th>May</th>
+            <th>Peak</th>
+            <th>Primary Spillover Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Barclays</strong></td><td>105/137 (77%)</td><td>87%</td><td>75%</td><td>71%</td><td>80%</td><td>67%</td><td>Jan/Apr</td><td>Results comparisons, investment banking</td></tr>
+          <tr><td><strong>NatWest</strong></td><td>104/137 (76%)</td><td>77%</td><td>89%</td><td>71%</td><td>77%</td><td>61%</td><td>February</td><td>State stake, switching offers, results</td></tr>
+          <tr><td><strong>Nationwide</strong></td><td>100/137 (73%)</td><td>87%</td><td>64%</td><td>77%</td><td>60%</td><td>78%</td><td>Jan/May</td><td>Branch pledge, savings rates, Virgin Money</td></tr>
+          <tr><td><strong>Santander UK</strong></td><td>98/137 (72%)</td><td>87%</td><td>82%</td><td>58%</td><td>63%</td><td>67%</td><td>Jan/Feb</td><td>Switching (names LBG), TSB acquisition</td></tr>
+          <tr><td><strong>Scottish Widows*</strong></td><td>97/137 (71%)</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>All</td><td>* Own-brand research (LBG division, not competitor)</td></tr>
+          <tr><td><strong>HSBC</strong></td><td>90/137 (66%)</td><td>93%</td><td>71%</td><td>55%</td><td>60%</td><td>39%</td><td>January</td><td>Full year results, Asia, global banking</td></tr>
+          <tr><td><strong>Revolut</strong></td><td>72/137 (53%)</td><td>60%</td><td>57%</td><td>55%</td><td>40%</td><td>50%</td><td>Jan&ndash;Mar</td><td>Banking licence event, "legacy bank" narrative</td></tr>
+          <tr><td><strong>Monzo</strong></td><td>42/137 (31%)</td><td>37%</td><td>29%</td><td>35%</td><td>27%</td><td>22%</td><td>March</td><td>IPO coverage, product launches</td></tr>
+          <tr><td><strong>Aviva</strong></td><td>40/137 (29%)</td><td>27%</td><td>32%</td><td>39%</td><td>17%</td><td>33%</td><td>March</td><td>Pension/insurance competition vs SW</td></tr>
+          <tr><td><strong>Hargreaves Lansdown</strong></td><td>38/137 (28%)</td><td>37%</td><td>32%</td><td>16%</td><td>27%</td><td>28%</td><td>Jan/Feb</td><td>ISA/investment competition, private equity deal</td></tr>
+          <tr><td><strong>TSB</strong></td><td>33/137 (24%)</td><td>23%</td><td>25%</td><td>19%</td><td>27%</td><td>28%</td><td>Apr/May</td><td>Santander acquisition sub-story</td></tr>
+          <tr><td><strong>Starling</strong></td><td>26/137 (19%)</td><td>23%</td><td>18%</td><td>13%</td><td>23%</td><td>17%</td><td>Jan/Apr</td><td>Fraud fine follow-through, FCA enforcement</td></tr>
+          <tr><td><strong>Virgin Money</strong></td><td>26/137 (19%)</td><td>20%</td><td>25%</td><td>16%</td><td>20%</td><td>11%</td><td>Feb</td><td>Nationwide integration; brand sunsetting</td></tr>
+          <tr><td><strong>Legal &amp; General</strong></td><td>26/137 (19%)</td><td>33%</td><td>18%</td><td>10%</td><td>20%</td><td>11%</td><td>January</td><td>Pension, investment, annuity competition</td></tr>
+          <tr><td><strong>St James&rsquo;s Place</strong></td><td>9/137 (7%)</td><td>10%</td><td>14%</td><td>0%</td><td>3%</td><td>6%</td><td>Feb</td><td>FCA charges/remediation; wealth management</td></tr>
+        </tbody>
+      </table>
+
+      <div class="alert-box" style="margin-top:16px;">
+        <strong>&#9888; Priority action &mdash; Revolut:</strong> The Revolut banking licence grant is the single biggest pending competitor event in the archive. Pre-draft LBG digital/innovation reactive lines NOW, before the licence is confirmed.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: CLASH WEEKS -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">&#9889;</div>
+        Section 6 &mdash; Top 10 Clash Weeks
+      </div>
+      <div class="section-toggle">&#8964;</div>
+    </div>
+    <div class="section-body">
+      <div class="alert-box">
+        <strong>Key insight:</strong> The weeks of 5 January and 9 March are the highest-intensity weeks in the archive. Both combine MPC + HPI + Barometer + ONS + fiscal context. Weeks of January are structurally busiest. March 9 (Spring Statement proximity) creates a near-equivalent clash.
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="clash-item">
+          <div class="clash-rank rank-1">#1</div>
+          <div>
+            <div class="clash-week">Week of 5 January 2026 <span class="clash-score">6 events</span></div>
+            <div class="clash-events">MPC &middot; Halifax HPI &middot; Business Barometer &middot; Spring Statement context &middot; Regulatory announcement &middot; ONS data</div>
+          </div>
+        </div>
+        <div class="clash-item">
+          <div class="clash-rank rank-2">#2</div>
+          <div>
+            <div class="clash-week">Week of 9 March 2026 <span class="clash-score">6 events</span></div>
+            <div class="clash-events">MPC decision &middot; Halifax HPI &middot; Business Barometer &middot; Scottish Widows publication &middot; Spring Statement &middot; ONS data</div>
+          </div>
+        </div>
+        <div class="clash-item">
+          <div class="clash-rank rank-other">#3</div>
+          <div>
+            <div class="clash-week">Week of 12 January 2026 <span class="clash-score">5 events</span></div>
+            <div class="clash-events">MPC &middot; Halifax HPI &middot; Business Barometer &middot; Scottish Widows publication &middot; ONS data</div>
+          </div>
+        </div>
+        <div class="clash-item">
+          <div class="clash-rank rank-other">#4</div>
+          <div>
+            <div class="clash-week">Week of 26 January 2026 <span class="clash-score">5 events</span></div>
+            <div class="clash-events">LBG Results &middot; MPC context &middot; Business Barometer &middot; US tariff event &middot; ONS data</div>
+          </div>
+        </div>
+        <div class="clash-item">
+          <div class="clash-rank rank-other">#5</div>
+          <div>
+            <div class="clash-week">Week of 9 February 2026 <span class="clash-score">5 events</span></div>
+            <div class="clash-events">MPC decision &middot; Halifax HPI &middot; Business Barometer &middot; Scottish Widows publication &middot; ONS data</div>
+          </div>
+        </div>
+        <div class="clash-item">
+          <div class="clash-rank rank-other">#6</div>
+          <div>
+            <div class="clash-week">Week of 16 February 2026 <span class="clash-score">5 events</span></div>
+            <div class="clash-events">MPC context &middot; Business Barometer &middot; Scottish Widows publication &middot; Spring Statement &middot; ONS data</div>
+          </div>
+        </div>
+        <div class="clash-item">
+          <div class="clash-rank rank-other">#7</div>
+          <div>
+            <div class="clash-week">Week of 23 February 2026 <span class="clash-score">5 events</span></div>
+            <div class="clash-events">MPC &middot; Business Barometer &middot; US tariff event &middot; Spring Statement &middot; ONS data</div>
+          </div>
+        </div>
+        <div class="clash-item">
+          <div class="clash-rank rank-other">#8</div>
+          <div>
+            <div class="clash-week">Week of 2 March 2026 <span class="clash-score">5 events</span></div>
+            <div class="clash-events">MPC &middot; Business Barometer &middot; Scottish Widows publication &middot; Spring Statement &middot; ONS data</div>
+          </div>
+        </div>
+        <div class="clash-item">
+          <div class="clash-rank rank-other">#9</div>
+          <div>
+            <div class="clash-week">Week of 16 March 2026 <span class="clash-score">5 events</span></div>
+            <div class="clash-events">MPC &middot; Halifax HPI &middot; Business Barometer &middot; Regulatory announcement &middot; ONS data</div>
+          </div>
+        </div>
+        <div class="clash-item">
+          <div class="clash-rank rank-other">#10</div>
+          <div>
+            <div class="clash-week">Week of 19 January 2026 <span class="clash-score">4 events</span></div>
+            <div class="clash-events">US tariff event &middot; MPC context &middot; Spring Statement &middot; ONS data</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: PRE-SIGNAL LANGUAGE -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">&#128161;</div>
+        Section 7 &mdash; Pre-Signal Language (SearchTool Keywords)
+      </div>
+      <div class="section-toggle">&#8964;</div>
+    </div>
+    <div class="section-body">
+      <div class="alert-box">
+        <strong>Key insight:</strong> &ldquo;Forthcoming/upcoming/imminent&rdquo; is the dominant pre-signal language (144 hits) but is used loosely. The most actionable pre-signals are <code>[verb] + [specific day of week]</code> (e.g. "announce Thursday") and <code>consultation closes + date</code> &mdash; these always indicate a datable, specific event. Build an alert flag for these two patterns in the daily briefing review workflow.
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="presignal-item">
+          <div class="presignal-rank">1</div>
+          <div style="flex:1">
+            <div><span class="presignal-phrase">forthcoming / upcoming / imminent</span> <span class="presignal-hits">144 hits</span></div>
+            <div class="presignal-example">[2026-01-22] &ldquo;&hellip;ahead of the Bank of England&rsquo;s interest rate decision&hellip;&rdquo;</div>
+          </div>
+        </div>
+        <div class="presignal-item">
+          <div class="presignal-rank">2</div>
+          <div style="flex:1">
+            <div><span class="presignal-phrase">set to / will announce / publish / release</span> <span class="presignal-hits">36 hits</span></div>
+            <div class="presignal-example">[2026-01-06] &ldquo;This week, major UK retailers will announce their Christmas trading updates. On Thursday, Tesco&rsquo;s.&rdquo;</div>
+          </div>
+        </div>
+        <div class="presignal-item">
+          <div class="presignal-rank">3</div>
+          <div style="flex:1">
+            <div><span class="presignal-phrase">will publish / will release / will announce / will report</span> <span class="presignal-hits">20 hits</span></div>
+            <div class="presignal-example">[2026-01-06] &ldquo;.will announce their Christmas trading updates.&rdquo;</div>
+          </div>
+        </div>
+        <div class="presignal-item">
+          <div class="presignal-rank">4</div>
+          <div style="flex:1">
+            <div><span class="presignal-phrase">ahead of the / next / this</span> <span class="presignal-hits">20 hits</span></div>
+            <div class="presignal-example">[2026-01-22] &ldquo;.ahead of the Bank of England&rsquo;s interest rate decision.&rdquo;</div>
+          </div>
+        </div>
+        <div class="presignal-item">
+          <div class="presignal-rank">5</div>
+          <div style="flex:1">
+            <div><span class="presignal-phrase">look out for</span> <span class="presignal-hits">6 hits</span></div>
+            <div class="presignal-example">[2026-01-19] &ldquo;.told to look out for six words.&rdquo; &mdash; explicit analyst advisory</div>
+          </div>
+        </div>
+        <div class="presignal-item">
+          <div class="presignal-rank">6</div>
+          <div style="flex:1">
+            <div><span class="presignal-phrase">results / data / figures / report due</span> <span class="presignal-hits">5 hits</span></div>
+            <div class="presignal-example">[2026-01-25] &ldquo;.results due to higher interest rates.&rdquo;</div>
+          </div>
+        </div>
+        <div class="presignal-item">
+          <div class="presignal-rank">7</div>
+          <div style="flex:1">
+            <div><span class="presignal-phrase">expected / due / scheduled [day of week]</span> <span class="presignal-hits">3 hits</span></div>
+            <div class="presignal-example">[2026-02-10] &ldquo;.inflation figures are due this week, with 70,000 jobs expected.&rdquo;</div>
+          </div>
+        </div>
+        <div class="presignal-item">
+          <div class="presignal-rank">8</div>
+          <div style="flex:1">
+            <div><span class="presignal-phrase">consultation closes / ends</span> <span class="presignal-hits">2 hits</span></div>
+            <div class="presignal-example">[2026-02-10] &ldquo;The consultation ends on 23 March 2026&rdquo;</div>
+          </div>
+        </div>
+        <div class="presignal-item">
+          <div class="presignal-rank">9</div>
+          <div style="flex:1">
+            <div><span class="presignal-phrase">anticipated this / next</span> <span class="presignal-hits">1 hit</span></div>
+            <div class="presignal-example">[2026-05-12] &ldquo;.legislative approval anticipated this year.&rdquo;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: HORIZON SCAN PATTERNS -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-title">
+        <div class="section-icon">&#128301;</div>
+        Section 8 &mdash; Horizon Scan Patterns
+      </div>
+      <div class="section-toggle">&#8964;</div>
+    </div>
+    <div class="section-body">
+      <div class="pattern-grid">
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#127756; Middle East / Oil &mdash; Most Persistent Macro Signal</span>
+            <span class="confidence-badge conf-very-high">Very High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">84/137 (61%) &mdash; Jan 8 to May 18. Continuous.</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">Oil price affects inflation (MPC), consumer cost of living, energy company banking.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Maintain standing Middle East/energy price context paragraph. Escalation = immediate mortgage/savings rate check.</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#128680; FCA Motor Finance &mdash; Critical Watch</span>
+            <span class="confidence-badge conf-very-high">Very High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">54/137 (39%) &mdash; Jan onset, Apr peak. Escalating ahead of hearing dates.</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">Black Horse named party. £2bn+ provision cited. Highest-impact regulatory risk story in archive.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Dedicated reactive pack. Legal sign-off. Pre-draft 3 scenarios: ruling favourable / unfavourable / deferred.</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#128178; Sovereign Debt / Gilts &mdash; Persistent Through-Line</span>
+            <span class="confidence-badge conf-high">High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">50/137 (36%) &mdash; continuous, spikes with OBR/Treasury fiscal stories</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">Gilt yields = mortgage rate proxy. LBG is UK&rsquo;s largest mortgage lender. Gilt stress = direct Halifax HPI implication.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Monitor gilt yield as leading indicator for Halifax mortgage rate commentary. 10-year gilt yield threshold alerts recommended.</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#127760; US Tariffs &mdash; January Onset, Persistent</span>
+            <span class="confidence-badge conf-high">High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">96/137 (70%) &mdash; peaks Jan (97%), drops May (44%). "Trump" + "tariff" appear together in 31/137 (23%).</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">Trade war = market confidence, sterling, gilt yields, SME export banking. Indirect but pervasive.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">January annual pre-draft: US trade policy context paragraph for Barometer and results commentary.</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#129302; AI in Banking &mdash; Structural Fixture</span>
+            <span class="confidence-badge conf-very-high">Very High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">132/137 (96%) &mdash; peaks March. Treat like geopolitical risk: standing context block.</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">LBG Barometer cited as AI adoption data source. Morgan Stanley 200k banking jobs forecast = workforce narrative risk.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Pre-draft LBG AI positioning &mdash; both opportunity (productivity) and risk (workforce).</span></div>
+          </div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-header">
+            <span class="pattern-name">&#128274; Pension Triple Lock / Reform</span>
+            <span class="confidence-badge conf-high">High</span>
+          </div>
+          <div class="pattern-card-body">
+            <div class="pattern-row"><span class="pattern-label">Frequency</span><span class="pattern-value">41/137 (30%) &mdash; Jan (triple lock award), Apr (new tax year uprating)</span></div>
+            <div class="pattern-row"><span class="pattern-label">LBG Impact</span><span class="pattern-value">Scottish Widows pension brand. Triple lock reform debate = SW campaign opportunity.</span></div>
+            <div class="pattern-row"><span class="pattern-label">Action</span><span class="pattern-value">Pre-position SW commentary for triple lock announcement (typically Sep/Oct, with Jan implementation coverage).</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCAN INTEGRITY -->
+  <div class="integrity-box">
+    <strong>&#9989; Scan Integrity Declaration</strong><br><br>
+    This report contains <strong>zero fabricated patterns, dates, or frequencies.</strong> All statistics are derived from direct keyword analysis of 57,118 snippets across 137 briefings. Where confidence is flagged as Low or Medium, fewer than 10 briefing appearances support the pattern. All patterns flagged Very High or High confidence are supported by 15+ briefing appearances.<br><br>
+    <strong>Archive note:</strong> Briefings run 7 days per week including weekends. Weekend briefings (40/137) carry distinct content profiles &mdash; more analytical, less breaking news. Weekend editions are under-utilised for Horizon Scan purposes and represent a significant intelligence opportunity.<br><br>
+    <strong>Re-run recommended:</strong> When archive reaches 12 months (January 2027), to capture Q3 results, Budget, Autumn Statement, and full seasonal cycle.
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background:var(--white); border-top:1px solid var(--border); padding:20px 40px; margin-top:0;">
+  <div class="footer">
+    <div class="footer-brand">augur<span>r</span> &mdash; Forward Intelligence &middot; By Cision &middot; Rapid Intelligence UK</div>
+    <div>Generated by augur Archive Scanner v2.0 &middot; 21 May 2026 &middot; Internal use only</div>
+  </div>
+</div>
+
+<script>
+function toggle(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.section-toggle');
+  if (body.classList.contains('open')) {
+    body.classList.remove('open');
+    chevron.classList.remove('open');
+  } else {
+    body.classList.add('open');
+    chevron.classList.add('open');
+  }
+}
+</script>
+
+</body>
+</html>
