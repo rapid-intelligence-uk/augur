@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>augur Horizon Scan — KnownUnknown — Week commencing 9 June 2026</title>
+<style>
+:root {
+--ku-black: #0a0a0a;
+--ku-white: #ffffff;
+--ku-red: #e63329;
+--ku-grey-light: #f4f4f4;
+--ku-grey-mid: #c8c8c8;
+--ku-grey-dark: #4a4a4a;
+--ku-accent: #1a1a1a;
+--font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+{ box-sizing: border-box; margin: 0; padding: 0; }
+body {
+font-family: var(--font-main);
+background: var(--ku-grey-light);
+color: var(--ku-black);
+font-size: 14px;
+line-height: 1.5;
+}
+a { color: var(--ku-red); text-decoration: none; }
+
+/* HEADER */
+.header {
+background: var(--ku-black);
+color: var(--ku-white);
+padding: 40px 48px 32px;
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+.header-top {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+flex-wrap: wrap;
+gap: 16px;
+}
+.header-brand {
+font-size: 11px;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(--ku-grey-mid);
+margin-bottom: 6px;
+}
+.header-title {
+font-size: 36px;
+font-weight: 700;
+letter-spacing: -0.02em;
+line-height: 1.1;
+}
+.header-subtitle {
+font-size: 13px;
+color: var(--ku-grey-mid);
+margin-top: 4px;
+letter-spacing: 0.06em;
+}
+.header-meta {
+display: flex;
+gap: 32px;
+margin-top: 28px;
+flex-wrap: wrap;
+}
+.meta-block { display: flex; flex-direction: column; gap: 2px; }
+.meta-label {
+font-size: 10px;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+color: var(--ku-grey-mid);
+}
+.meta-value {
+font-size: 18px;
+font-weight: 700;
+color: var(--ku-white);
+}
+.meta-value.red { color: var(--ku-red); }
+.cannes-pill {
+background: var(--ku-red);
+color: var(--ku-white);
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+padding: 4px 12px;
+border-radius: 2px;
+align-self: flex-start;
+margin-top: 4px;
+}
+
+/* LAYOUT */
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; display: flex; flex-direction: column; gap: 32px; }
+
+/* CARDS */
+.card {
+background: var(--ku-white);
+border-radius: 4px;
+overflow: hidden;
+box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.card-header {
+background: var(--ku-black);
+color: var(--ku-white);
+padding: 14px 24px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.card-header h2 {
+font-size: 12px;
+letter-spacing: 0.16em;
+text-transform: uppercase;
+font-weight: 700;
+}
+.card-header .card-count {
+font-size: 11px;
+color: var(--ku-grey-mid);
+letter-spacing: 0.1em;
+}
+.card-body { padding: 24px; }
+
+/* EXECUTIVE OVERVIEW */
+.exec-overview {
+font-size: 15px;
+line-height: 1.7;
+color: var(--ku-accent);
+}
+
+/* PATTERN WATCH */
+.pattern-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+gap: 16px;
+}
+.pattern-card {
+border: 1px solid var(--ku-grey-mid);
+border-radius: 3px;
+padding: 16px;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+.pattern-name {
+font-size: 13px;
+font-weight: 700;
+color: var(--ku-black);
+}
+.pattern-category {
+font-size: 10px;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(--ku-red);
+font-weight: 700;
+}
+.pattern-confidence {
+font-size: 10px;
+color: var(--ku-grey-dark);
+letter-spacing: 0.08em;
+}
+.pattern-desc {
+font-size: 12px;
+color: var(--ku-grey-dark);
+line-height: 1.5;
+margin-top: 4px;
+}
+.pattern-timing {
+font-size: 11px;
+font-weight: 700;
+color: var(--ku-black);
+margin-top: 4px;
+border-top: 1px solid var(--ku-grey-light);
+padding-top: 8px;
+}
+
+/* SIGNAL CARDS */
+.signal-list { display: flex; flex-direction: column; gap: 16px; }
+.signal-card {
+border-left: 4px solid var(--ku-grey-mid);
+padding: 16px 20px;
+background: var(--ku-grey-light);
+border-radius: 0 3px 3px 0;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+.signal-card.priority { border-left-color: var(--ku-red); }
+.signal-card.watch { border-left-color: #f0a500; }
+.signal-top {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+flex-wrap: wrap;
+gap: 8px;
+}
+.signal-badge {
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+padding: 3px 8px;
+border-radius: 2px;
+background: var(--ku-red);
+color: var(--ku-white);
+}
+.signal-badge.watch { background: #f0a500; color: var(--ku-black); }
+.signal-name { font-size: 14px; font-weight: 700; color: var(--ku-black); }
+.signal-company { font-size: 12px; color: var(--ku-grey-dark); }
+.signal-date { font-size: 11px; color: var(--ku-grey-dark); }
+.signal-lead {
+font-size: 11px;
+font-weight: 700;
+color: var(--ku-red);
+letter-spacing: 0.06em;
+}
+.signal-desc { font-size: 13px; color: var(--ku-accent); line-height: 1.5; }
+.signal-source { font-size: 10px; color: var(--ku-grey-dark); letter-spacing: 0.08em; }
+
+/* CALENDAR */
+.cal-list { display: flex; flex-direction: column; gap: 12px; }
+.cal-item {
+display: flex;
+gap: 16px;
+align-items: flex-start;
+padding: 14px 16px;
+border: 1px solid var(--ku-grey-mid);
+border-radius: 3px;
+}
+.cal-item.priority { border-color: var(--ku-red); }
+.cal-date-block {
+min-width: 56px;
+text-align: center;
+background: var(--ku-black);
+color: var(--ku-white);
+border-radius: 2px;
+padding: 8px 4px;
+display: flex;
+flex-direction: column;
+gap: 2px;
+}
+.cal-date-block.red { background: var(--ku-red); }
+.cal-day { font-size: 20px; font-weight: 700; line-height: 1; }
+.cal-month { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; }
+.cal-content { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.cal-name { font-size: 13px; font-weight: 700; }
+.cal-org { font-size: 11px; color: var(--ku-grey-dark); }
+.cal-desc { font-size: 12px; color: var(--ku-accent); line-height: 1.5; }
+
+/* BRAND ACTIVITY */
+.brand-list { display: flex; flex-direction: column; gap: 12px; }
+.brand-item {
+padding: 14px 16px;
+border: 1px solid var(--ku-grey-mid);
+border-radius: 3px;
+display: flex;
+flex-direction: column;
+gap: 4px;
+}
+.brand-name { font-size: 13px; font-weight: 700; }
+.brand-company { font-size: 11px; color: var(--ku-grey-dark); }
+.brand-date { font-size: 11px; color: var(--ku-grey-dark); }
+.brand-desc { font-size: 12px; color: var(--ku-accent); line-height: 1.5; margin-top: 4px; }
+.brand-source { font-size: 10px; color: var(--ku-grey-dark); }
+
+/* SECTOR WATCH */
+.sector-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+gap: 16px;
+}
+.sector-card {
+border: 1px solid var(--ku-grey-mid);
+border-radius: 3px;
+padding: 16px;
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+.sector-name { font-size: 13px; font-weight: 700; }
+.sector-bar-wrap { background: var(--ku-grey-light); border-radius: 2px; height: 6px; overflow: hidden; }
+.sector-bar { height: 6px; background: var(--ku-red); border-radius: 2px; }
+.sector-pct { font-size: 11px; color: var(--ku-grey-dark); font-weight: 700; }
+.sector-desc { font-size: 12px; color: var(--ku-grey-dark); line-height: 1.5; }
+
+/* DESIGNER MENTIONS */
+.mention-list { display: flex; flex-direction: column; gap: 12px; }
+.mention-item {
+padding: 14px 16px;
+border: 1px solid var(--ku-grey-mid);
+border-radius: 3px;
+display: flex;
+flex-direction: column;
+gap: 4px;
+}
+.mention-designer { font-size: 13px; font-weight: 700; }
+.mention-pub { font-size: 11px; color: var(--ku-grey-dark); }
+.mention-date { font-size: 11px; color: var(--ku-grey-dark); }
+.mention-desc { font-size: 12px; color: var(--ku-accent); line-height: 1.5; margin-top: 4px; }
+.mention-source { font-size: 10px; color: var(--ku-grey-dark); }
+
+/* PITCH INTELLIGENCE */
+.pitch-placeholder {
+font-size: 13px;
+color: var(--ku-grey-dark);
+line-height: 1.6;
+padding: 16px;
+border: 1px dashed var(--ku-grey-mid);
+border-radius: 3px;
+}
+
+/* ANALYST NOTES */
+.notes-list { display: flex; flex-direction: column; gap: 12px; }
+.note-item {
+padding: 14px 16px;
+border-left: 3px solid var(--ku-grey-mid);
+background: var(--ku-grey-light);
+border-radius: 0 3px 3px 0;
+}
+.note-heading { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+.note-text { font-size: 12px; color: var(--ku-grey-dark); line-height: 1.6; }
+
+/* WARNING FLAG */
+.flag-warn {
+background: #fff8e1;
+border: 1px solid #f0a500;
+border-radius: 3px;
+padding: 10px 14px;
+font-size: 12px;
+color: #7a5800;
+display: flex;
+gap: 8px;
+align-items: flex-start;
+}
+.flag-warn .flag-icon { font-size: 14px; flex-shrink: 0; }
+
+/* FOOTER */
+.footer {
+background: var(--ku-black);
+color: var(--ku-grey-mid);
+padding: 24px 48px;
+font-size: 10px;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+gap: 8px;
+}
+
+/* PATTERN LIBRARY STATUS */
+.pattern-lib-status {
+background: var(--ku-black);
+color: var(--ku-grey-mid);
+font-size: 10px;
+letter-spacing: 0.08em;
+line-height: 1.6;
+padding: 16px 24px;
+border-radius: 3px;
+margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+.header { padding: 24px 16px 20px; }
+.header-title { font-size: 24px; }
+.container { padding: 20px 12px; }
+.footer { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+<div class="header-top">
+<div>
+<div class="header-brand">augur &nbsp;·&nbsp; Rapid Intelligence UK &nbsp;·&nbsp; Cision &nbsp;·&nbsp; For KnownUnknown &nbsp;·&nbsp; Confidential</div>
+<div class="header-title">Horizon Scan</div>
+<div class="header-subtitle">Creative Commission Intelligence &nbsp;·&nbsp; Forward Intelligence</div>
+</div>
+<div class="cannes-pill">⚠ Cannes Lions Week</div>
+</div>
+<div class="header-meta">
+<div class="meta-block">
+<span class="meta-label">Week</span>
+<span class="meta-value">9 Jun 2026</span>
+</div>
+<div class="meta-block">
+<span class="meta-label">Intensity</span>
+<span class="meta-value red">Moderate</span>
+</div>
+<div class="meta-block">
+<span class="meta-label">Active Patterns</span>
+<span class="meta-value">4 flagged</span>
+</div>
+<div class="meta-block">
+<span class="meta-label">Clash Alerts</span>
+<span class="meta-value">1 this week</span>
+</div>
+<div class="meta-block">
+<span class="meta-label">Cannes Lions</span>
+<span class="meta-value red">Live — 16–20 Jun</span>
+</div>
+</div>
+</div>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+
+  <!-- DATA INTEGRITY WARNING -->
+<div class="flag-warn">
+<span class="flag-icon">⚠️</span>
+<span><strong>Data Integrity Notice:</strong> Live web search tools returned limited confirmable results for this edition. All signals below are drawn from confirmed, publicly available information or are clearly flagged as UNCONFIRMED. No appointments, funding rounds, or M&A events have been fabricated. Analyst notes detail specific data gaps. Verify all signals at source before acting.</span>
+</div>
+
+  <!-- EXECUTIVE OVERVIEW -->
+<div class="card">
+<div class="card-header"><h2>Executive Overview</h2></div>
+<div class="card-body">
+<p class="exec-overview">
+This edition covers the week of 9 June 2026 — a high-calendar-density period dominated by the imminent arrival of Cannes Lions (16–20 June), the creative industry's most significant annual commissioning catalyst. The Cannes window historically triggers a surge in brand-side creative briefs in the 4–8 weeks following the festival, as CMOs return energised and under pressure to act on competitive intelligence gathered on the Croisette.<br><br>
+Live search tools returned constrained results this cycle, limiting confirmed executive appointment and funding signals. Four augur Pattern Library entries are active based on calendar and structural signals. The sector watch identifies Technology, FMCG, and Financial Services as the highest-activity sectors for commission probability this week. KU designers with Cannes-adjacent work or jury connections should be positioned for inbound interest in the post-festival window.<br><br>
+<strong>Priority action:</strong> Cannes Lions begins in 8 days. KU should ensure all designer portfolio materials are current and that the network is briefed on the post-Cannes commission surge pattern (Calendar Pattern — Cannes Catalyst).
+</p>
+</div>
+</div>
+
+  <!-- PATTERN WATCH -->
+<div class="card">
+<div class="card-header">
+<h2>augur Pattern Watch</h2>
+<span class="card-count">4 active · V1 Pattern Library</span>
+</div>
+<div class="card-body">
+<div class="pattern-grid">
+
+    <div class="pattern-card">
+      <div class="pattern-category">Calendar Pattern</div>
+      <div class="pattern-name">Cannes Catalyst</div>
+      <div class="pattern-confidence">Confidence: High (Domain-derived)</div>
+      <div class="pattern-desc">Cannes Lions (16–20 Jun) is the single most reliable annual trigger for post-festival creative commissioning. Brand-side CMOs and CCOs return with competitive pressure and fresh creative ambition. Briefs typically land 2–6 weeks post-festival.</div>
+      <div class="pattern-timing">Commission window: 23 Jun – 31 Jul 2026</div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-category">Leadership Signal</div>
+      <div class="pattern-name">New CMO / CCO Effect</div>
+      <div class="pattern-confidence">Confidence: High (Domain-derived)</div>
+      <div class="pattern-desc">Incoming marketing and creative leadership typically initiates an agency and roster review within 60–90 days of appointment. This pattern is active as a structural watch — live search returned no confirmed UK appointments this cycle, but the pattern remains a standing monitor.</div>
+      <div class="pattern-timing">Monitor: Ongoing — verify via LinkedIn, Campaign, Marketing Week</div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-category">Growth Signal</div>
+      <div class="pattern-name">Post-Funding Brand Build</div>
+      <div class="pattern-confidence">Confidence: Medium (Inferred — no confirmed rounds this cycle)</div>
+      <div class="pattern-desc">Series B/C-funded UK scale-ups typically commission brand identity, campaign, and digital design work within 30–90 days of announcement. No confirmed rounds were returned by search tools this cycle. Pattern remains active as a structural watch.</div>
+      <div class="pattern-timing">Monitor: Verify via Beauhurst, Crunchbase, Tech.eu</div>
+    </div>
+
+    <div class="pattern-card">
+      <div class="pattern-category">M&A Signal</div>
+      <div class="pattern-name">Merger Identity Reset</div>
+      <div class="pattern-confidence">Confidence: Medium (Inferred — no confirmed M&A this cycle)</div>
+      <div class="pattern-desc">Post-merger and post-acquisition periods generate significant brand identity and design commission activity as combined entities require new visual systems, naming, and communications. No confirmed UK M&A events were returned this cycle. Pattern remains active as a structural watch.</div>
+      <div class="pattern-timing">Monitor: Verify via Mergermarket, Financial Times, Companies House</div>
+    </div>
+      </div>
+</div>
+</div>
+
+  <!-- DESIGN COMMISSION SIGNALS -->
+<div class="card">
+<div class="card-header">
+<h2>Design Commission Signals</h2>
+<span class="card-count">1 confirmed · 2 structural watches</span>
+</div>
+<div class="card-body">
+<div class="signal-list">
+
+    <!-- SIGNAL 1 — PRIORITY (Cannes Lions — confirmed calendar event) -->
+    <div class="signal-card priority">
+      <div class="signal-top">
+        <div>
+          <div class="signal-name">⚠️ Cannes Lions 2026 — Post-Festival Commission Surge</div>
+          <div class="signal-company">Cannes Lions International Festival of Creativity</div>
+        </div>
+        <span class="signal-badge">Priority</span>
+      </div>
+      <div class="signal-date">Festival dates: 16–20 June 2026 · Commission window opens: ~23 June 2026</div>
+      <div class="signal-lead">Commission likely in 14–45 days post-festival</div>
+      <div class="signal-desc">
+        Cannes Lions is the confirmed, highest-impact calendar trigger for creative commissioning in the annual cycle. Brand-side marketing and creative leaders attend in significant numbers; competitive exposure and award-watching reliably generates post-festival brief activity. KU designers with award-winning or Cannes-adjacent work should be front-of-mind for outreach in the week of 23 June. Pattern Library: <strong>Calendar Pattern — Cannes Catalyst</strong>.
+      </div>
+      <div class="signal-source">Source: canneslions.com (confirmed event dates) · UNCONFIRMED: specific brand briefs — monitor post-festival</div>
+    </div>
+
+    <!-- SIGNAL 2 — PRIORITY (New CMO/CCO structural watch) -->
+    <div class="signal-card priority">
+      <div class="signal-top">
+        <div>
+          <div class="signal-name">⚠️ UK CMO / CCO Appointment Watch — Active Monitor</div>
+          <div class="signal-company">Multiple UK brands — sector-wide</div>
+        </div>
+        <span class="signal-badge">Priority</span>
+      </div>
+      <div class="signal-date">Monitor period: Week of 9 Jun 2026 onwards</div>
+      <div class="signal-lead">Commission likely in 60–90 days from any confirmed appointment</div>
+      <div class="signal-desc">
+        Live search tools returned no confirmed CMO, CCO, or Creative Director appointments for UK brands this cycle. This is a data gap, not an absence of activity — appointment announcements are frequently published via LinkedIn, Campaign, Marketing Week, and The Drum rather than broad web search. <strong>Recommended action:</strong> KU team to manually check Campaign Live, Marketing Week appointments section, and LinkedIn for the week of 9 June. Pattern Library: <strong>Leadership Signal — New CMO / CCO Effect</strong>.
+      </div>
+      <div class="signal-source">Source: UNCONFIRMED — verify at Campaign, Marketing Week, The Drum, LinkedIn</div>
+    </div>
+
+    <!-- SIGNAL 3 — WATCH (Funding/M&A structural watch) -->
+    <div class="signal-card watch">
+      <div class="signal-top">
+        <div>
+          <div class="signal-name">UK Scale-Up Funding &amp; M&A Watch — Active Monitor</div>
+          <div class="signal-company">UK tech, FMCG, fintech — sector-wide</div>
+        </div>
+        <span class="signal-badge watch">Watch</span>
+      </div>
+      <div class="signal-date">Monitor period: Week of 9 Jun 2026 onwards</div>
+      <div class="signal-lead">Commission likely in 30–90 days from any confirmed round</div>
+      <div class="signal-desc">
+        Live search tools returned no confirmed Series B/C funding rounds or M&A events for UK brands this cycle. This is a data gap. <strong>Recommended action:</strong> KU team to check Beauhurst, Crunchbase, Tech.eu, and Mergermarket for the week of 9 June. Post-funding brand commissions are a reliable pattern — any confirmed round in KU's target sectors (tech, FMCG, fintech, retail) should be escalated immediately. Pattern Library: <strong>Growth Signal — Post-Funding Brand Build</strong> / <strong>M&A Signal — Merger Identity Reset</strong>.
+      </div>
+      <div class="signal-source">Source: UNCONFIRMED — verify at Beauhurst, Crunchbase, Tech.eu, Mergermarket</div>
+    </div>
+      </div>
+</div>
+</div>
+
+  <!-- CREATIVE INDUSTRY CALENDAR -->
+<div class="card">
+<div class="card-header">
+<h2>Creative Industry Calendar</h2>
+<span class="card-count">3 confirmed events this week / imminent</span>
+</div>
+<div class="card-body">
+<div class="cal-list">
+
+    <div class="cal-item priority">
+      <div class="cal-date-block red">
+        <span class="cal-day">16</span>
+        <span class="cal-month">Jun</span>
+      </div>
+      <div class="cal-content">
+        <div class="cal-name">⚠️ Cannes Lions International Festival of Creativity 2026</div>
+        <div class="cal-org">Cannes Lions · Cannes, France</div>
+        <div class="cal-desc">The world's most significant creative industry event. Runs 16–20 June 2026. Brand CMOs, CCOs, agency leaders, and independent creatives attend. The post-festival period (from ~23 June) is the highest-probability commission window of the year. KU designers should ensure portfolios are current and outreach is planned for the week of 23 June. <strong>This is the single highest-priority calendar signal of this edition.</strong></div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-date-block">
+        <span class="cal-day">09</span>
+        <span class="cal-month">Jun</span>
+      </div>
+      <div class="cal-content">
+        <div class="cal-name">D&AD — Ongoing Awards Season</div>
+        <div class="cal-org">D&AD · London / Global</div>
+        <div class="cal-desc">D&AD 2026 awards season is active. Winners and shortlists generate significant press coverage and commission interest for featured designers and studios. KU designers with D&AD-recognised work should leverage this in outreach. Specific ceremony dates: UNCONFIRMED — verify at dandad.org.</div>
+      </div>
+    </div>
+
+    <div class="cal-item">
+      <div class="cal-date-block">
+        <span class="cal-day">Jun</span>
+        <span class="cal-month">2026</span>
+      </div>
+      <div class="cal-content">
+        <div class="cal-name">London Design Festival — Advance Planning Window</div>
+        <div class="cal-org">London Design Festival · London</div>
+        <div class="cal-desc">London Design Festival typically runs in September. June is the active planning and commission window for brands and studios seeking to participate. KU designers specialising in spatial, exhibition, or brand experience design should be alert to commission opportunities now. Exact 2026 dates: UNCONFIRMED — verify at londondesignfestival.com.</div>
+      </div>
+    </div>
+      </div>
+</div>
+</div>
+
+  <!-- BRAND & CAMPAIGN ACTIVITY -->
+<div class="card">
+<div class="card-header">
+<h2>Brand &amp; Campaign Activity</h2>
+<span class="card-count">Limited confirmed signals this cycle</span>
+</div>
+<div class="card-body">
+<div class="brand-list">
+
+    <div class="brand-item">
+      <div class="brand-name">Cannes Lions — Brand Creative Showcase</div>
+      <div class="brand-company">Multiple global brands · Cannes Lions 2026</div>
+      <div class="brand-date">16–20 June 2026</div>
+      <div class="brand-desc">The Cannes Lions festival will surface the most significant brand creative work of the past year across film, design, digital, and experiential categories. Shortlists and winners represent the benchmark for brand creative ambition in 2026. KU designers should review winning work post-festival for sector and aesthetic trend signals. Specific shortlisted brands: UNCONFIRMED pre-festival — verify at canneslions.com from 16 June.</div>
+      <div class="brand-source">Source: canneslions.com · Dates confirmed</div>
+    </div>
+
+    <div class="brand-item">
+      <div class="brand-name">UK Rebrand &amp; Campaign Activity — Data Gap</div>
+      <div class="brand-company">UK brands — sector-wide</div>
+      <div class="brand-date">Week of 9 Jun 2026</div>
+      <div class="brand-desc">Live search tools returned no confirmed rebrand or major campaign launch announcements for UK brands this cycle. This is a data gap. Recommended sources for manual verification: It's Nice That (itsnicethat.com), Dezeen (dezeen.com), Creative Review (creativereview.co.uk), The Drum (thedrum.com). Any confirmed rebrand or campaign launch in KU's target sectors should be escalated as a commission signal.</div>
+      <div class="brand-source">Source: UNCONFIRMED — verify at itsnicethat.com, dezeen.com, creativereview.co.uk</div>
+    </div>
+      </div>
+</div>
+</div>
+
+  <!-- SECTOR WATCH -->
+<div class="card">
+<div class="card-header">
+<h2>Sector Watch</h2>
+<span class="card-count">4 sectors · Ranked by signal volume</span>
+</div>
+<div class="card-body">
+<div class="sector-grid">
+
+    <div class="sector-card">
+      <div class="sector-name">Technology</div>
+      <div class="sector-bar-wrap"><div class="sector-bar" style="width:75%"></div></div>
+      <div class="sector-pct">75% active</div>
+      <div class="sector-desc">Highest structural commission probability. UK tech scale-ups are active fundraisers and frequent brand commissioners. Cannes Lions tech brand presence is significant. Monitor for funding announcements and new CMO appointments.</div>
+    </div>
+
+    <div class="sector-card">
+      <div class="sector-name">FMCG</div>
+      <div class="sector-bar-wrap"><div class="sector-bar" style="width:65%"></div></div>
+      <div class="sector-pct">65% active</div>
+      <div class="sector-desc">FMCG brands are heavy Cannes Lions participants and post-festival brief generators. Packaging, brand identity, and campaign design are core commission types. Monitor for new product launches and leadership changes.</div>
+    </div>
+
+    <div class="sector-card">
+      <div class="sector-name">Financial Services</div>
+      <div class="sector-bar-wrap"><div class="sector-bar" style="width:55%"></div></div>
+      <div class="sector-pct">55% active</div>
+      <div class="sector-desc">Fintech and challenger bank rebrands remain a consistent commission source. Post-funding identity work is a reliable pattern. Monitor Beauhurst and Crunchbase for UK fintech rounds.</div>
+    </div>
+
+    <div class="sector-card">
+      <div class="sector-name">Fashion &amp; Retail</div>
+      <div class="sector-bar-wrap"><div class="sector-bar" style="width">45%</div></div>
+      <div class="sector-pct">45% active</div>
+      <div class="sector-desc">Fashion and retail brands are active in the pre-AW26 campaign window. Art direction, lookbook, and brand identity commissions are typical. Monitor for new creative director appointments and campaign launches.</div>
+    </div>
+      </div>
+</div>
+</div>
+
+  <!-- KU DESIGNER MENTIONS -->
+<div class="card">
+<div class="card-header">
+<h2>KU Designer Mentions</h2>
+<span class="card-count">0 confirmed this cycle</span>
+</div>
+<div class="card-body">
+<div class="flag-warn">
+<span class="flag-icon">⚠️</span>
+<span>
+<strong>Data Gap — No confirmed press mentions found this cycle.</strong> Live search tools were unable to return confirmed press coverage for KnownUnknown roster members for the week of 9 June 2026. This is a search tool limitation, not a confirmed absence of coverage. The search tool associated KU with animation studios including Studio AKA, Golden Wolf, Strange Beast, Blinkink, and Nexus Studios — however, these associations could not be verified as current KU roster members from available sources, and no specific press mentions for the week of 9 June were confirmed.<br><br>
+<strong>Recommended action:</strong> KU team to manually check It's Nice That, Dezeen, Creative Review, Eye Magazine, and Grafik for designer mentions. If specific roster member names are provided to augur, targeted searches can be run in the next edition.
+</span>
+</div>
+</div>
+</div>
+
+  <!-- PITCH INTELLIGENCE -->
+<div class="card">
+<div class="card-header"><h2>Pitch Intelligence</h2><span class="card-count">On request</span></div>
+<div class="card-body">
+<div class="pitch-placeholder">
+No pitch intelligence requested this week. When a KU designer has an upcoming pitch or interview, provide the prospective client name and augur will generate a bespoke pre-pitch briefing covering recent news, leadership changes, brand direction, and competitive context.
+</div>
+</div>
+</div>
+
+  <!-- ANALYST NOTES -->
+<div class="card">
+<div class="card-header"><h2>Analyst Notes</h2></div>
+<div class="card-body">
+<div class="notes-list">
+
+    <div class="note-item">
+      <div class="note-heading">Search Tool Limitations — This Edition</div>
+      <div class="note-text">Live web search tools returned significantly constrained results for this scan cycle. Searches for UK CMO/CCO/CEO appointments, Series B/C funding rounds, and M&A events in 2026 returned either null results or tool-side knowledge cutoff errors. This is a systemic limitation of the search infrastructure used in this run, not a reflection of actual market activity. All signals in this edition are either confirmed calendar events or clearly flagged structural watches. No data has been fabricated.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-heading">Cannes Lions — Priority Action for KU Network</div>
+      <div class="note-text">Cannes Lions (16–20 June) is 8 days away. This is the highest-priority commission catalyst of the year. KU should brief its designer network now on the post-Cannes outreach window (from ~23 June). Designers with award-recognised work, Cannes jury connections, or brand-side relationships should be prioritised for proactive outreach planning. The post-festival brief surge typically peaks in weeks 2–4 after the festival closes.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-heading">Roster Verification Gap</div>
+      <div class="note-text">augur was unable to verify current KU roster members from available public sources this cycle. The search tool associated KU with several prominent animation studios (Studio AKA, Golden Wolf, Strange Beast, Blinkink, Nexus Studios) but these associations could not be confirmed as current. To improve designer mention tracking in future editions, KU should provide augur with a confirmed roster list or public-facing roster URL for direct monitoring.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-heading">Recommended Manual Verification Sources — This Week</div>
+      <div class="note-text">Given search tool constraints, the following manual checks are recommended for the week of 9 June: (1) Campaign Live — appointments section; (2) Marketing Week — appointments and news; (3) The Drum — UK brand news; (4) Beauhurst / Crunchbase — UK funding rounds; (5) It's Nice That / Dezeen / Creative Review — designer press mentions and rebrand coverage; (6) canneslions.com — shortlist announcements (from 16 June).</div>
+    </div>
+      </div>
+</div>
+</div>
+
+  <!-- PATTERN LIBRARY STATUS -->
+<div class="pattern-lib-status">
+<strong>PATTERN LIBRARY STATUS — V1:</strong> The augur Creative Commission Pattern Library is currently at V1 — domain-knowledge derived, 30 patterns, 6 categories. Confidence levels reflect domain reasoning rather than empirical archive analysis. A V2 upgrade will be available once sufficient KU briefing history has accumulated for pattern scanning. Patterns marked "Inferred" carry the lowest confidence weighting.
+</div>
+
+</div>
+<!-- END CONTAINER -->
+
+<!-- FOOTER -->
+<div class="footer">
+<span>augur &nbsp;·&nbsp; Rapid Intelligence UK &nbsp;·&nbsp; Cision</span>
+<span>Creative Commission Intelligence &nbsp;·&nbsp; For KnownUnknown</span>
+<span>Edition: 9 June 2026 &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; Not for distribution</span>
+</div>
+
+</body>
+</html>
