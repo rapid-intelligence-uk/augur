@@ -1,0 +1,1378 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Augur — Finance Industry Horizon Scan</title>
+<style>
+:root {
+  /* augur brand */
+  --aug-orange:       #FF6E29;
+  --aug-orange-dim:   rgba(255,110,41,0.12);
+  --aug-orange-glow:  rgba(255,110,41,0.25);
+  --aug-navy:         #16215B;
+  --aug-blue-mid:     #1F299C;
+  --aug-blue-bright:  #016CFF;
+
+  /* surfaces */
+  --bg:               #07090f;
+  --surface:          #0d1117;
+  --surface-2:        #111827;
+  --surface-3:        #0a0f1e;
+
+  /* borders */
+  --border:           rgba(255,255,255,0.06);
+  --border-hover:     rgba(255,255,255,0.10);
+  --border-orange:    rgba(255,110,41,0.30);
+
+  /* text */
+  --text-primary:     #f0f2f5;
+  --text-secondary:   rgba(240,242,245,0.58);
+  --text-muted:       rgba(240,242,245,0.28);
+
+  /* spectrum */
+  --reg:  #9333ea;
+  --eco:  #3b82f6;
+  --ind:  #22c55e;
+  --pol:  #eab308;
+  --cla:  #FF6E29;
+
+  /* status */
+  --red:    #f87171;
+  --red-bg: rgba(239,68,68,0.12);
+  --amb:    #fbbf24;
+  --amb-bg: rgba(234,179,8,0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─────────────────────────────────────────────
+   HEADER
+───────────────────────────────────────────── */
+.header {
+  background: linear-gradient(105deg, var(--aug-navy) 0%, var(--aug-blue-mid) 48%, var(--aug-blue-bright) 100%);
+  padding: 28px 48px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle grain overlay */
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Live signal pulse — top right */
+.signal-wrap {
+  position: absolute;
+  top: 22px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  z-index: 2;
+}
+
+.signal-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--aug-orange);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.signal-dot::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--aug-orange);
+  animation: signalPulse 2.2s ease-out infinite;
+  opacity: 0;
+}
+
+@keyframes signalPulse {
+  0%   { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+.signal-text {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+}
+
+/* Header content layout */
+.header-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* augur wordmark */
+.wm-svg {
+  width: 210px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* Right: briefing info */
+.header-info {
+  text-align: right;
+}
+
+.header-edition {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 6px;
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 5px;
+}
+
+.header-date {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 2px;
+}
+
+.header-byline {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+}
+
+/* Orange accent bar */
+.header-bar {
+  height: 2px;
+  background: linear-gradient(to right, var(--aug-orange) 0%, rgba(255,110,41,0.4) 40%, transparent 75%);
+}
+
+/* ─────────────────────────────────────────────
+   META BAR
+───────────────────────────────────────────── */
+.meta-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 48px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.meta-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.meta-value {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.meta-sep {
+  width: 1px;
+  height: 14px;
+  background: var(--border);
+}
+
+/* ─────────────────────────────────────────────
+   CONTAINER
+───────────────────────────────────────────── */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+}
+
+/* ─────────────────────────────────────────────
+   OVERVIEW
+───────────────────────────────────────────── */
+.overview {
+  background: var(--surface);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--aug-orange);
+  padding: 22px 26px;
+  margin-bottom: 16px;
+}
+
+.overview-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--aug-orange);
+  margin-bottom: 10px;
+}
+
+.overview p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* ─────────────────────────────────────────────
+   LANES
+───────────────────────────────────────────── */
+.lane {
+  background: var(--surface);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.lane.is-open {
+  border-color: var(--border-orange);
+}
+
+.lane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+  gap: 12px;
+}
+
+.lane-header:hover { background: rgba(255,255,255,0.018); }
+
+.lane-left {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.lane-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.lane-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.lane-subtitle {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.lane-right {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+}
+
+.lane-count {
+  background: var(--aug-orange);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.lane-count.muted {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text-muted);
+}
+
+.chevron {
+  width: 14px;
+  height: 14px;
+  color: var(--text-muted);
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.lane.is-open .chevron { transform: rotate(180deg); }
+
+.lane-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 18px;
+  display: none;
+}
+
+.lane.is-open .lane-divider { display: block; }
+
+.lane-body {
+  display: none;
+  padding: 4px 18px 10px;
+}
+
+.lane.is-open .lane-body { display: block; }
+
+/* ─────────────────────────────────────────────
+   EVENTS
+───────────────────────────────────────────── */
+.event {
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.event:last-child { border-bottom: none; }
+
+.event-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.pill {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pill-high {
+  background: var(--red-bg);
+  color: var(--red);
+  border: 1px solid rgba(239,68,68,0.18);
+}
+
+.pill-watch {
+  background: var(--amb-bg);
+  color: var(--amb);
+  border: 1px solid rgba(234,179,8,0.18);
+}
+
+.event-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+.event-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.inst-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--aug-orange);
+  background: var(--aug-orange-dim);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.event-date {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.event-sectors {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+
+.event-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.event-source {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+
+.event-source a {
+  color: rgba(255,110,41,0.65);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.event-source a:hover { color: var(--aug-orange); }
+
+/* Subsection headings */
+.sub-head {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amb);
+  background: var(--amb-bg);
+  border: 1px solid rgba(234,179,8,0.15);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 16px 0 10px;
+}
+
+/* Regulatory pipeline table */
+.reg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin: 10px 0 4px;
+}
+
+.reg-table th {
+  background: rgba(255,255,255,0.03);
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.reg-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: top;
+  color: var(--text-secondary);
+}
+
+.reg-table tr:last-child td { border-bottom: none; }
+
+.reg-table strong { color: var(--text-primary); }
+
+/* ─────────────────────────────────────────────
+   PATTERN WATCH LANE  (special)
+───────────────────────────────────────────── */
+.pattern-lane {
+  background: linear-gradient(135deg, #0a0f1e 0%, #0d1525 100%);
+  border-color: rgba(255,110,41,0.18);
+}
+
+.pattern-lane.is-open {
+  border-color: var(--aug-orange);
+}
+
+.pattern-lane .lane-icon {
+  background: var(--aug-orange-dim);
+  color: var(--aug-orange);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: -0.04em;
+}
+
+/* Spectrum legend */
+.spectrum-legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 14px 0 18px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.sl-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sl-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Pattern cards */
+.pattern-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pattern-card:last-child { border-bottom: none; }
+
+.p-bar {
+  width: 3px;
+  min-height: 64px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.p-body { flex: 1; min-width: 0; }
+
+.p-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 5px;
+}
+
+.p-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.p-cat {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+/* Confidence pips */
+.conf {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.pip {
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: rgba(255,255,255,0.1);
+}
+
+.pip.on { background: var(--aug-orange); }
+
+.p-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.68;
+  margin-bottom: 4px;
+}
+
+.p-timing {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────
+   ANALYST NOTES
+───────────────────────────────────────────── */
+.notes {
+  background: var(--surface-3);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--aug-orange);
+  padding: 22px 24px;
+  margin-top: 10px;
+}
+
+.notes-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--aug-orange);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notes-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.note {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 13px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.note:last-child { margin-bottom: 0; }
+
+.note-bar {
+  width: 2px;
+  background: var(--aug-orange);
+  border-radius: 1px;
+  flex-shrink: 0;
+  margin-top: 4px;
+  min-height: 14px;
+}
+
+.note strong { color: var(--text-primary); }
+
+/* ─────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-wm {
+  width: 80px;
+  height: auto;
+  opacity: 0.22;
+}
+
+.footer-text {
+  font-size: 10px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-sep {
+  width: 1px;
+  height: 12px;
+  background: var(--border);
+}
+
+/* ─────────────────────────────────────────────
+   EMPTY LANE
+───────────────────────────────────────────── */
+.empty-lane {
+  padding: 18px 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────
+   PRINT
+───────────────────────────────────────────── */
+@media print {
+  body { background: #fff; color: #000; }
+  .header { background: var(--aug-navy) !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .lane { border: 1px solid #e5e7eb; page-break-inside: avoid; }
+  .lane-body { display: block !important; }
+  .lane.is-open .lane-divider { display: block; }
+  .chevron, .signal-wrap { display: none; }
+  * { animation: none !important; transition: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════ -->
+<div class="header">
+
+  <!-- Signal pulse -->
+  <div class="signal-wrap">
+    <div class="signal-dot"></div>
+    <span class="signal-text">Live Intelligence</span>
+  </div>
+
+  <div class="header-inner">
+
+    <!-- augur wordmark SVG (full paths from the final wordmark) -->
+    <svg class="wm-svg" viewBox="160 118 710 238" xmlns="http://www.w3.org/2000/svg">
+      <!-- Bird — orange #FF6E29 -->
+      <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+      <!-- A -->
+      <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+      <!-- U1 -->
+      <path fill="#FFFFFF" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+      <!-- G -->
+      <path fill="#FFFFFF" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
+      <!-- U2 -->
+      <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+      <!-- R stem -->
+      <path fill="#FFFFFF" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+      <!-- R bowl -->
+      <path fill="#FFFFFF" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+      <!-- R leg -->
+      <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+    </svg>
+
+
+    <div class="header-info">
+    </div>
+      <div class="header-edition">Finance Industry · Forward Intelligence</div>
+      <div class="header-title">Horizon Scan</div>
+      <div class="header-date">Week commencing 11 May 2026</div>
+      <div class="header-byline">Rapid Intelligence UK · Cision · Internal use only</div>
+    </div>
+
+  </div>
+</div>
+<div class="header-bar"></div>
+
+<!-- ═══════════════════════════════════════════
+     META BAR
+══════════════════════════════════════════════ -->
+<div class="meta-bar">
+  <div class="meta-item">
+    <span class="meta-label">Sectors</span>
+    <span class="meta-value">Banking · Insurance · Wealth · Building Societies</span>
+  </div>
+  <div class="meta-sep"></div>
+  <div class="meta-item">
+    <span class="meta-label">Intensity</span>
+    <span class="meta-value" style="color:var(--amb)">Moderate–High ⚡</span>
+  </div>
+  <div class="meta-sep"></div>
+  <div class="meta-item">
+    <span class="meta-label">Active Patterns</span>
+    <span class="meta-value" style="color:var(--aug-orange)">4 flagged</span>
+  </div>
+  <div class="meta-sep"></div>
+  <div class="meta-item">
+    <span class="meta-label">Clash Alerts</span>
+    <span class="meta-value" style="color:var(--red)">2 this week</span>
+  </div>
+  <div class="meta-sep"></div>
+  <div class="meta-item">
+    <span class="meta-label">Read the signs</span>
+    <span class="meta-value" style="color:var(--text-muted);font-style:italic">Forward Intelligence · By Cision</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN CONTAINER
+══════════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- Overview -->
+  <div class="overview">
+    <div class="overview-label">Executive Overview</div>
+    <p>The week of 11–17 May 2026 is a moderate-to-high intensity period for UK financial services intelligence, anchored by the confirmed AFME/PRA Securitisation Roundtable on 14 May and the State Opening of Parliament on 13 May. The King's Speech will dominate the national media agenda mid-week — any announcements scheduled for 13 May carry material coverage risk. Augur Pattern Watch flags four active patterns this week, including the seasonal Motor Finance escalation arc (April peak at 53% briefing frequency) and a Pre-Legislative Watch period ahead of the King's Speech. Analysts should verify ONS CPI and Labour Market release dates directly before the week begins — a potential mid-week resource pressure point if both coincide with the AFME/PRA roundtable on Wednesday.</p>
+  </div>
+
+  <!-- ────────────────────────────────────────
+       PATTERN WATCH LANE
+  ─────────────────────────────────────────── -->
+  <div class="lane pattern-lane is-open">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left">
+        <div class="lane-icon">◎</div>
+        <div>
+          <div class="lane-title">Augur Pattern Watch</div>
+          <div class="lane-subtitle">Active signals from the Augur Archive Pattern Library · 48 patterns · 5 categories</div>
+        </div>
+      </div>
+      <div class="lane-right">
+        <span class="lane-count">4 active</span>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+      </div>
+    </div>
+    <div class="lane-divider"></div>
+    <div class="lane-body">
+
+      <div class="spectrum-legend">
+        <div class="sl-item"><div class="sl-dot" style="background:var(--reg)"></div>Regulatory</div>
+        <div class="sl-item"><div class="sl-dot" style="background:var(--eco)"></div>Economic</div>
+        <div class="sl-item"><div class="sl-dot" style="background:var(--ind)"></div>Industry / Results</div>
+        <div class="sl-item"><div class="sl-dot" style="background:var(--pol)"></div>Political</div>
+        <div class="sl-item"><div class="sl-dot" style="background:var(--cla)"></div>Clash Pattern</div>
+      </div>
+
+      <!-- Pattern 1: Pre-Legislative Watch -->
+      <div class="pattern-card">
+        <div class="p-bar" style="background:var(--pol)"></div>
+        <div class="p-body">
+          <div class="p-name">Pre-Legislative Watch Period</div>
+          <div class="p-meta">
+            <span class="p-cat" style="background:rgba(234,179,8,0.1);color:var(--pol);border:1px solid rgba(234,179,8,0.18)">Political</span>
+            <span class="conf">Confidence: High
+              <span style="margin-left:5px;display:inline-flex;gap:2px">
+                <span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span>
+              </span>
+            </span>
+          </div>
+          <div class="p-desc">The week before a King's Speech or Autumn Statement consistently surfaces pre-briefing activity from HM Government, increased parliamentary press enquiries, and potential legislative signal leaks. Financial services firms should expect heightened analyst interest in regulatory reform signals. GPA and communications teams should be on standby for rapid response requirements.</div>
+          <div class="p-timing">Typical timing: Pre-King's Speech / Autumn Statement · Precedent count: 12 · Pattern confidence: High</div>
+        </div>
+      </div>
+
+      <!-- Pattern 2: King's Speech Clash -->
+      <div class="pattern-card">
+        <div class="p-bar" style="background:var(--cla)"></div>
+        <div class="p-body">
+          <div class="p-name">King's Speech Clash Week ⚠️</div>
+          <div class="p-meta">
+            <span class="p-cat" style="background:var(--aug-orange-dim);color:var(--aug-orange);border:1px solid rgba(255,110,41,0.2)">Clash Pattern</span>
+            <span class="conf">Confidence: Very High
+              <span style="margin-left:5px;display:inline-flex;gap:2px">
+                <span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span>
+              </span>
+            </span>
+          </div>
+          <div class="p-desc">The State Opening of Parliament reliably dominates the national media agenda for 12–24 hours, severely compressing available editorial space for corporate and financial services announcements. Any planned publication or launch on 13 May carries material risk of being overshadowed. Pre-briefing journalists ahead of the day is the established mitigation strategy from the Augur Archive.</div>
+          <div class="p-timing">Typical timing: May · Precedent count: 8 · ⚠️ Active this week — 13 May 2026</div>
+        </div>
+      </div>
+
+      <!-- Pattern 3: Motor Finance -->
+      <div class="pattern-card">
+        <div class="p-bar" style="background:var(--cla)"></div>
+        <div class="p-body">
+          <div class="p-name">Motor Finance Commission Arc — April/May Peak</div>
+          <div class="p-meta">
+            <span class="p-cat" style="background:var(--aug-orange-dim);color:var(--aug-orange);border:1px solid rgba(255,110,41,0.2)">Clash Pattern</span>
+            <span class="conf">Confidence: Very High
+              <span style="margin-left:5px;display:inline-flex;gap:2px">
+                <span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip on"></span>
+              </span>
+            </span>
+          </div>
+          <div class="p-desc">Motor finance commission appeared in 53% of LBG briefings in April — the highest monthly frequency in the Augur Archive across 137 briefings. The issue continues into May with the FCA redress scheme decision overdue. Any FCA publication, court ruling, or firm provisioning announcement should be treated as a tier-one briefing event. Lloyds Banking Group, Barclays, and Close Brothers are directly exposed.</div>
+          <div class="p-timing">Trajectory: Jan 37% → Feb 21% → Mar 32% → Apr 53% (peak) · Precedent count: 31</div>
+        </div>
+      </div>
+
+      <!-- Pattern 4: FCA Supervisory Window -->
+      <div class="pattern-card">
+        <div class="p-bar" style="background:var(--reg)"></div>
+        <div class="p-body">
+          <div class="p-name">FCA Supervisory Publication Window</div>
+          <div class="p-meta">
+            <span class="p-cat" style="background:rgba(147,51,234,0.1);color:var(--reg);border:1px solid rgba(147,51,234,0.18)">Regulatory</span>
+            <span class="conf">Confidence: Medium
+              <span style="margin-left:5px;display:inline-flex;gap:2px">
+                <span class="pip on"></span><span class="pip on"></span><span class="pip on"></span><span class="pip"></span><span class="pip"></span>
+              </span>
+            </span>
+          </div>
+          <div class="p-desc">The FCA typically publishes Dear CEO letters, supervisory statements, and consultation papers on a rolling basis throughout May and June, ahead of the parliamentary summer recess. Multiple outstanding milestones — Consumer Duty distribution chain, BNPL final rules, Advice Guidance Boundary Review, SM&CR reforms, Basel 3.1 — remain unresolved. Any FCA publication this week should be assessed for immediate client relevance.</div>
+          <div class="p-timing">Typical timing: May–June pre-recess window · Precedent count: 18 · Multiple publications expected</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────
+       POLITICAL LANE
+  ─────────────────────────────────────────── -->
+  <div class="lane is-open">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left">
+        <div class="lane-icon">🏛️</div>
+        <div>
+          <div class="lane-title">Political &amp; Governmental</div>
+          <div class="lane-subtitle">HM Treasury · Parliament · OBR · No.10</div>
+        </div>
+      </div>
+      <div class="lane-right">
+        <span class="lane-count">3</span>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+      </div>
+    </div>
+    <div class="lane-divider"></div>
+    <div class="lane-body">
+
+      <div class="event">
+        <div class="event-top">
+          <span class="pill pill-high">⚠ Priority</span>
+          <div class="event-name">King's Speech — State Opening of Parliament</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">HM Government / UK Parliament</span>
+          <span class="event-date">Tuesday 13 May 2026 · Confirmed</span>
+        </div>
+        <div class="event-sectors">🏦 Banking · 🏗 Building Societies · 💰 Wealth · 🛡 Insurance</div>
+        <div class="event-desc">The State Opening of Parliament and King's Speech sets out the government's legislative programme for the coming session. Expected to include Bills relevant to financial services, housing, pensions, and economic growth. Will dominate the national media agenda on the day — any client announcements scheduled for 13 May should be reviewed for timing risk. GPA teams should be positioned to respond rapidly to any financial services legislation announced in the Speech. <strong>⚠️ CLASH ALERT — see Analyst Notes.</strong></div>
+        <div class="event-source">Source: <a href="https://www.parliament.uk/business/news/" target="_blank">parliament.uk/business/news</a></div>
+      </div>
+
+      <div class="event">
+        <div class="event-top">
+          <span class="pill pill-watch">Watch</span>
+          <div class="event-name">Pre-King's Speech — Financial Services Legislation Signals</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">HM Government</span>
+          <span class="event-date">Week of 11–17 May 2026</span>
+        </div>
+        <div class="event-sectors">🏦 Banking · 🏗 Building Societies · 💰 Wealth · 🛡 Insurance</div>
+        <div class="event-desc">With the King's Speech on 13 May, this week is a pre-legislative watch period — monitor for government pre-briefings or signals on financial services legislation, regulatory reform, mortgage market, or pension policy. Any announcement touching financial services will be a tier-one briefing event.</div>
+      </div>
+
+      <div class="event">
+        <div class="event-top">
+          <div class="event-name">Parliamentary Business — Pension Schemes Bill / FSMA Secondary Legislation</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">UK Parliament</span>
+          <span class="event-date">Week of 11–17 May · verify at parliament.uk</span>
+        </div>
+        <div class="event-sectors">💰 Wealth · 🛡 Insurance · 🏦 Banking</div>
+        <div class="event-desc">Parliament is expected to be sitting. The Pension Schemes Bill and FSMA secondary legislation may see further readings or committee stages. Analysts should check Hansard at the start of the week.</div>
+        <div class="event-source">Source: <a href="https://www.parliament.uk/business/news/" target="_blank">parliament.uk/business/news</a></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────
+       REGULATORY LANE
+  ─────────────────────────────────────────── -->
+  <div class="lane is-open">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left">
+        <div class="lane-icon">⚖️</div>
+        <div>
+          <div class="lane-title">Regulatory</div>
+          <div class="lane-subtitle">FCA · PRA · Bank of England · PSR · CMA</div>
+        </div>
+      </div>
+      <div class="lane-right">
+        <span class="lane-count">3</span>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+      </div>
+    </div>
+    <div class="lane-divider"></div>
+    <div class="lane-body">
+
+      <div class="event">
+        <div class="event-top">
+          <span class="pill pill-high">⚠ Priority</span>
+          <div class="event-name">AFME Roundtable with PRA — Securitisation (CP2/26)</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">AFME / PRA</span>
+          <span class="event-date">Wednesday 14 May 2026 · London · Confirmed</span>
+        </div>
+        <div class="event-sectors">🏦 Banking</div>
+        <div class="event-desc">Off-the-record roundtable with Phil Evans, PRA Director of Prudential Policy, on CP2/26 reforms to securitisation requirements. The only confirmed industry/regulatory event within the briefing window. Directly relevant to wholesale banking and capital markets clients.</div>
+        <div class="event-source">Source: <a href="https://www.afme.eu/events/events-calendar/" target="_blank">afme.eu/events</a></div>
+      </div>
+
+      <div class="event">
+        <div class="event-top">
+          <div class="event-name">FCA Safeguarding Rules — Payments &amp; E-Money Institutions</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">FCA</span>
+          <span class="event-date">May 2026 · confirmed month, exact date unconfirmed</span>
+        </div>
+        <div class="event-sectors">🏦 Banking · Fintech</div>
+        <div class="event-desc">New supplementary safeguarding regime rules come into effect for FCA-authorised payment institutions and e-money institutions. Relevant to Revolut, Monzo, Starling, and all regulated payment firms. Analysts covering fintech and payments should treat this as a live milestone.</div>
+        <div class="event-source">Source: <a href="https://www.fca.org.uk/news" target="_blank">fca.org.uk/news</a></div>
+      </div>
+
+      <div class="event">
+        <div class="event-top">
+          <div class="event-name">PRA Dynamic General Insurance Stress Test (DyGIST)</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">PRA</span>
+          <span class="event-date">May 2026 · live exercise throughout month</span>
+        </div>
+        <div class="event-sectors">🛡 Insurance</div>
+        <div class="event-desc">The PRA's DyGIST live exercise is active this week. Participating firms include Aviva, Legal &amp; General, Prudential, and Phoenix Group. No public output expected until December 2026, but internal resource implications for major insurers are significant.</div>
+        <div class="event-source">Source: <a href="https://www.bankofengland.co.uk/prudential-regulation" target="_blank">bankofengland.co.uk</a></div>
+      </div>
+
+      <div class="sub-head">Regulatory Pipeline — Watch Items</div>
+      <table class="reg-table">
+        <thead>
+          <tr>
+            <th>Initiative</th>
+            <th>Lead</th>
+            <th>Status</th>
+            <th>Sector</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Motor Finance Redress Scheme</strong></td><td>FCA</td><td>Overdue — monitor daily</td><td>🏦 Banking</td></tr>
+          <tr><td>Buy Now Pay Later — Final Rules</td><td>FCA/HMT</td><td>Regulated 15 July 2026</td><td>🏦 Consumer Credit</td></tr>
+          <tr><td>Advice Guidance Boundary Review</td><td>FCA/HMT</td><td>Regime live Apr–Jun 2026</td><td>💰 Wealth</td></tr>
+          <tr><td>Basel 3.1 — Final Policy Statement</td><td>BoE/PRA</td><td>Q1 2026 (may slip); Jan 2027 impl.</td><td>🏦 Banking</td></tr>
+          <tr><td>SM&amp;CR Reforms</td><td>FCA/PRA/HMT</td><td>Mid-2026</td><td>All regulated firms</td></tr>
+          <tr><td>PSR Card Scheme Market Review</td><td>PSR</td><td>May–June 2026</td><td>🏦 Payments</td></tr>
+          <tr><td>Consumer Duty — Distribution Chain</td><td>FCA</td><td>H1 2026</td><td>All retail-facing firms</td></tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────
+       ECONOMIC DATA LANE
+  ─────────────────────────────────────────── -->
+  <div class="lane is-open">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left">
+        <div class="lane-icon">📊</div>
+        <div>
+          <div class="lane-title">Economic Data Releases</div>
+          <div class="lane-subtitle">ONS · OBR · Bank of England MPC</div>
+        </div>
+      </div>
+      <div class="lane-right">
+        <span class="lane-count">3</span>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+      </div>
+    </div>
+    <div class="lane-divider"></div>
+    <div class="lane-body">
+
+      <div class="event">
+        <div class="event-top">
+          <span class="pill pill-high">⚠ Priority</span>
+          <div class="event-name">ONS Labour Market Statistics — April 2026</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">ONS</span>
+          <span class="event-date">Probable Tuesday 13 May · UNCONFIRMED — verify at ons.gov.uk</span>
+        </div>
+        <div class="event-sectors">🏦 Banking · 🏗 Building Societies · 💰 Wealth · 🛡 Insurance</div>
+        <div class="event-desc">Unemployment, wage growth (AWE), and vacancies data. Elevated wage growth remains a key MPC input. Directly relevant to mortgage affordability and consumer credit quality assessments across all banking briefings. If published on 13 May, adds further resource pressure to an already demanding day.</div>
+        <div class="event-source">Source: <a href="https://www.ons.gov.uk/releasecalendar" target="_blank">ons.gov.uk/releasecalendar</a></div>
+      </div>
+
+      <div class="event">
+        <div class="event-top">
+          <span class="pill pill-high">⚠ Priority</span>
+          <div class="event-name">ONS CPI Inflation — April 2026</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">ONS</span>
+          <span class="event-date">Probable Wednesday 14 May · UNCONFIRMED — verify at ons.gov.uk</span>
+        </div>
+        <div class="event-sectors">🏦 Banking · 🏗 Building Societies · 💰 Wealth · 🛡 Insurance</div>
+        <div class="event-desc">Consumer Price Index for April 2026. If published this week this would be the dominant economic story of the window — direct implications for the interest rate path, mortgage pricing, and MPC commentary. April data captures energy price changes and is closely watched for services inflation re-acceleration.</div>
+        <div class="event-source">Source: <a href="https://www.ons.gov.uk/releasecalendar" target="_blank">ons.gov.uk/releasecalendar</a></div>
+      </div>
+
+      <div class="event">
+        <div class="event-top">
+          <div class="event-name">Bank of England MPC — No Decision This Week</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">Bank of England</span>
+          <span class="event-date">Next confirmed MPC decision: 18 June 2026</span>
+        </div>
+        <div class="event-sectors">All sectors</div>
+        <div class="event-desc">No MPC decision falls within this window. Monitor for MPC member speeches that may signal the June decision direction. The April 2026 Monetary Policy Report will continue to generate analytical commentary throughout the month.</div>
+        <div class="event-source">Source: <a href="https://www.bankofengland.co.uk/monetary-policy/upcoming-mpc-dates" target="_blank">bankofengland.co.uk</a></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────
+       INDUSTRY & MARKET LANE
+  ─────────────────────────────────────────── -->
+  <div class="lane">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left">
+        <div class="lane-icon">🏦</div>
+        <div>
+          <div class="lane-title">Industry &amp; Market Events</div>
+          <div class="lane-subtitle">UK Finance · ABI · PIMFA · AFME · BSA</div>
+        </div>
+      </div>
+      <div class="lane-right">
+        <span class="lane-count">2</span>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+      </div>
+    </div>
+    <div class="lane-divider"></div>
+    <div class="lane-body">
+
+      <div class="event">
+        <div class="event-top">
+          <div class="event-name">AFME / PRA Securitisation Roundtable (CP2/26)</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">AFME / PRA</span>
+          <span class="event-date">Wednesday 14 May 2026 · London · Confirmed</span>
+        </div>
+        <div class="event-sectors">🏦 Banking</div>
+        <div class="event-desc">The only confirmed industry event within the briefing window. Analysts covering wholesale banking and capital markets should note this date. See Regulatory lane for full detail.</div>
+      </div>
+
+      <div class="event">
+        <div class="event-top">
+          <span class="pill pill-watch">Watch</span>
+          <div class="event-name">Halifax / Nationwide House Price Index — May Data</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">Halifax / Nationwide</span>
+          <span class="event-date">Probable 11–14 May · UNCONFIRMED — verify via lender IR pages</span>
+        </div>
+        <div class="event-sectors">🏗 Building Societies · 🏦 Banking</div>
+        <div class="event-desc">Monthly house price indices typically published in the first two weeks of the month. Relevant to mortgage market analysis, housing affordability commentary, and retail banking briefings. augur Archive confirms Halifax HPI typically releases Tuesday Week 1–2.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────
+       COMPETITOR WATCH
+  ─────────────────────────────────────────── -->
+  <div class="lane">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left">
+        <div class="lane-icon">🔭</div>
+        <div>
+          <div class="lane-title">Competitor &amp; Sector Watch</div>
+          <div class="lane-subtitle">Major Banks · Insurers · Challengers · Wealth Managers</div>
+        </div>
+      </div>
+      <div class="lane-right">
+        <span class="lane-count">3</span>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+      </div>
+    </div>
+    <div class="lane-divider"></div>
+    <div class="lane-body">
+
+      <div class="event">
+        <div class="event-top">
+          <span class="pill pill-high">⚠ Priority</span>
+          <div class="event-name">Motor Finance Redress — Lloyds / Barclays / Close Brothers</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">Multiple Institutions</span>
+          <span class="event-date">Ongoing · any development is a tier-one alert</span>
+        </div>
+        <div class="event-sectors">🏦 Banking</div>
+        <div class="event-desc">Motor finance redress remains the highest-impact live issue for UK retail banking. Any FCA publication, court ruling, or firm announcement on provisioning or redress scheme design should be treated as a tier-one briefing event regardless of the weekly cycle. Monitor FCA publications, court services listings, and firm IR pages daily.</div>
+      </div>
+
+      <div class="event">
+        <div class="event-top">
+          <div class="event-name">Revolut — UK Banking Licence Status</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">Revolut / FCA / PRA</span>
+          <span class="event-date">Ongoing watch item</span>
+        </div>
+        <div class="event-sectors">🏦 Banking · Fintech</div>
+        <div class="event-desc">Revolut's UK banking licence status remains a standing watch item. Any FCA or PRA announcement would be a significant market event for the fintech and challenger bank sector.</div>
+      </div>
+
+      <div class="event">
+        <div class="event-top">
+          <div class="event-name">Major UK Banks — Post-Results IR Engagement</div>
+        </div>
+        <div class="event-meta">
+          <span class="inst-badge">Barclays · HSBC · NatWest · Lloyds</span>
+          <span class="event-date">Week of 11–17 May · verify via IR pages</span>
+        </div>
+        <div class="event-sectors">🏦 Banking</div>
+        <div class="event-desc">Major UK banks typically held Q1 trading updates in late April/early May. Analyst briefings and investor engagement may continue into this week. Check IR pages for Barclays, HSBC, NatWest, Nationwide, St James's Place, Hargreaves Lansdown, Quilter, and Rathbones.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────
+       POLICY PIPELINE
+  ─────────────────────────────────────────── -->
+  <div class="lane">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left">
+        <div class="lane-icon">🧠</div>
+        <div>
+          <div class="lane-title">Policy Pipeline</div>
+          <div class="lane-subtitle">Resolution Foundation · IFS · NIESR · TheCityUK · Chatham House</div>
+        </div>
+      </div>
+      <div class="lane-right">
+        <span class="lane-count muted">Monitor</span>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+      </div>
+    </div>
+    <div class="lane-divider"></div>
+    <div class="lane-body">
+      <div class="empty-lane">No confirmed think tank publications with specific dates identified for this window. Resolution Foundation is likely to publish commentary in response to any ONS data released this week. Monitor all think tank publication pages and social media feeds in real time.</div>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────
+       ANALYST NOTES
+  ─────────────────────────────────────────── -->
+  <div class="notes">
+    <div class="notes-label">Analyst Notes</div>
+
+    <div class="sub-head" style="margin-top:0">⚠️ Clash Alerts</div>
+
+    <div class="note">
+      <div class="note-bar"></div>
+      <div><strong>KING'S SPEECH — 13 MAY:</strong> The State Opening of Parliament will dominate the national media agenda for 12–24 hours. Any planned publication or launch on 13 May carries material coverage risk. Pre-briefing key journalists ahead of Tuesday is the recommended mitigation. GPA teams should be positioned to respond rapidly to any financial services legislation announced in the Speech. This is the highest-risk editorial day of the week.</div>
+    </div>
+
+    <div class="note">
+      <div class="note-bar"></div>
+      <div><strong>MID-WEEK RESOURCE PRESSURE:</strong> Tuesday 13 May carries the King's Speech, probable ONS Labour Market data, and potential pre-Speech government announcements simultaneously. Wednesday 14 May adds the AFME/PRA roundtable and probable CPI data. Analyst resource should be pre-positioned across both days.</div>
+    </div>
+
+    <div class="sub-head">General Notes</div>
+
+    <div class="note">
+      <div class="note-bar"></div>
+      <div><strong>DATA GAP — ONS RELEASE CALENDAR:</strong> CPI and Labour Market Statistics are expected mid-week based on ONS publication patterns but were not confirmed in data retrieved. Analysts MUST verify at <a href="https://www.ons.gov.uk/releasecalendar" target="_blank" style="color:rgba(255,110,41,0.7)">ons.gov.uk/releasecalendar</a> before the week begins. If both fall on 13–14 May alongside the AFME/PRA roundtable, this creates a high-demand period requiring resource allocation across economic, regulatory, and industry tracks simultaneously.</div>
+    </div>
+
+    <div class="note">
+      <div class="note-bar"></div>
+      <div><strong>MOTOR FINANCE — STANDING TIER-ONE ALERT:</strong> Motor finance redress remains the highest-impact live issue for UK retail banking. Any FCA, court, or firm development should be escalated immediately regardless of the weekly briefing cycle. Monitor FCA publications, court services listings, and firm IR pages daily. Augur Archive confirms this issue appeared in 53% of LBG briefings in April 2026 — peak frequency in the dataset.</div>
+    </div>
+
+    <div class="note">
+      <div class="note-bar"></div>
+      <div><strong>REGULATORY PIPELINE PRESSURE:</strong> Multiple H1 2026 regulatory milestones remain outstanding — BNPL final rules, Advice Guidance Boundary Review, Incident Reporting final rules, Basel 3.1, Consumer Duty distribution chain consultation, SM&CR reforms. Any could publish during or adjacent to this window. Maintain a live watch across FCA and PRA publication feeds throughout May.</div>
+    </div>
+
+    <div class="note">
+      <div class="note-bar"></div>
+      <div><strong>INSTITUTIONS WITH NO CONFIRMED FORWARD DATA:</strong> FCA, PRA, Bank of England (beyond MPC dates), PSR, CMA, FOS, HM Treasury, Resolution Foundation, IFS, TheCityUK, NIESR, Chatham House, and all major financial institutions. Check all institutional websites directly at the start of each week. Do not assume silence means no publication.</div>
+    </div>
+
+  </div>
+
+</div>
+<!-- end container -->
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<div class="footer">
+  <!-- Mini augur wordmark -->
+  <svg class="footer-wm" viewBox="160 118 710 238" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+    <path fill="#ffffff" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+    <path fill="#ffffff" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+    <path fill="#ffffff" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
+    <path fill="#ffffff" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+    <path fill="#ffffff" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+    <path fill="#ffffff" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+    <path fill="#ffffff" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+  </svg>
+  <div class="footer-text">
+    <span>Prepared by Rapid Intelligence UK · Cision</span>
+    <div class="footer-sep"></div>
+    <span>Finance Industry Edition</span>
+    <div class="footer-sep"></div>
+    <span>Week commencing 11 May 2026</span>
+    <div class="footer-sep"></div>
+    <span>Internal use only · Not for distribution</span>
+  </div>
+</div>
+
+<script>
+function toggleLane(header) {
+  const lane = header.closest('.lane');
+  lane.classList.toggle('is-open');
+}
+
+// GleanBridge PDF export
+try {
+  window.GleanBridge.postMessage({
+    actionId: 'export-pdf',
+    type: 'glean-add-menu',
+    metadata: { label: 'Export as PDF', icon: 'export' }
+  });
+  window.GleanBridge.onMessage('action', d => {
+    if (d.actionId === 'export-pdf') window.print();
+  });
+} catch(e) {}
+</script>
+
+</body>
+</html>
