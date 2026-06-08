@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -292,6 +293,89 @@ body {
   white-space: nowrap;
 }
 
+/* ── QUESTION GAP ───────────────────────────────────────── */
+.qg-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-top: 32px;
+  background: var(--grey-3);
+}
+
+.qg-card {
+  background: var(--grey-1);
+  padding: 32px 28px;
+}
+
+.qg-card-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey-4);
+  margin-bottom: 16px;
+}
+
+.qg-stat {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  color: var(--orange);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.qg-stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.qg-stat-body {
+  font-size: 12px;
+  color: var(--grey-5);
+  line-height: 1.7;
+}
+
+.qg-mindsets {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 32px;
+  background: var(--grey-3);
+}
+
+.qg-mindset {
+  background: var(--grey-1);
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.qg-mindset-num {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--orange);
+  letter-spacing: 0.1em;
+  padding-top: 2px;
+}
+
+.qg-mindset-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.qg-mindset-body {
+  font-size: 12px;
+  color: var(--grey-5);
+  line-height: 1.6;
+}
+
 /* ── THE FIVE Fs ────────────────────────────────────────── */
 .five-f {
   display: grid;
@@ -513,8 +597,8 @@ body {
 
   <!-- ── HEADER ─────────────────────────────────────────── -->
   <header class="header">
+    <!-- Row 1: KnownUnknown | Cision -->
     <div class="header-logos">
-      <!-- KU Logo (white, from SVG path data) -->
       <div class="ku-logo-wrap">
         <svg viewBox="0 0 361.58 54.16" xmlns="http://www.w3.org/2000/svg">
           <path fill="#ffffff" d="M3.42,42.78H0V10.73h3.42v32.05ZM21.11,10.73L7.43,26.8l13.59,15.98h-4.02L3.42,26.8l13.67-16.07h4.02Z"/>
@@ -530,96 +614,82 @@ body {
           <path fill="#ffffff" d="M187.07,10.69l17.31,26.36V10.69h3.42V0h-54.16v10.73h3.42v20.51c0,5.17,4.02,9.4,8.97,9.4s8.97-4.23,8.97-9.4V10.73h3.42v20.51c0,6.84-5.55,12.39-12.39,12.39s-12.39-5.55-12.39-12.39v22.91h54.16v-11.42h-3.42l-17.31-26.32v26.32h-3.42V10.69h3.42Z"/>
         </svg>
       </div>
-
       <div class="divider-line"></div>
+      <span style="font-size:26px;font-weight:300;letter-spacing:-0.02em;color:#ffffff;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">Cision</span>
+    </div>
 
-      <!-- augur wordmark -->
-      <div class="augur-logo-wrap">
-        <svg viewBox="160 115 725 240" xmlns="http://www.w3.org/2000/svg">
-          <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
-          <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
-          <path fill="#FFFFFF" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
-          <path fill="#FFFFFF" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
-          <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
-          <path fill="#FFFFFF" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
-          <path fill="#FFFFFF" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
-          <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
-        </svg>
+    <!-- Row 2: meta -->
+    <div class="header-meta">
+      <span class="header-label">Collaboration Concept</span>
+      <span class="header-date">June 2026 Confidential</span>
+    </div>
+
+    <!-- Row 3: augur wordmark + Read the signs -->
+    <div style="display:flex;align-items:center;gap:20px;margin-bottom:36px;padding-top:4px;">
+      <svg style="width:140px;height:auto;flex-shrink:0;" viewBox="160 118 710 238" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+        <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+        <path fill="#FFFFFF" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+        <path fill="#FFFFFF" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
+        <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+        <path fill="#FFFFFF" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+        <path fill="#FFFFFF" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+        <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+      </svg>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <span style="font-size:10px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--orange);">Read the signs</span>
+        <span style="font-size:10px;letter-spacing:0.12em;color:var(--grey-4);text-transform:uppercase;">Forward Intelligence · By Cision</span>
       </div>
     </div>
 
-    <div class="header-meta">
-      <span class="header-label">Collaboration Concept</span>
-      <span class="header-date">June 2026 — Confidential</span>
-    </div>
-
     <h1 class="header-title">
-      Intelligence that tells you<br>
-      <em>which clients are about to need</em><br>
-      what your designers do
+      Which brands are about to need<br>
+      <em>your designers.</em>
     </h1>
 
-    <p class="header-sub">A concept for how KnownUnknown and Cision might build something neither could build alone — the intelligence layer underneath the world's most credible creative network.</p>
+    <p class="header-sub">KnownUnknown and Cision can build something neither could build alone: The intelligence layer powering the world's most credible creative network.</p>
   </header>
 
   <!-- ── OPENING STATEMENT ───────────────────────────────── -->
   <section class="opening">
-    <p class="opening-text">
-      James said it plainly: <strong>"Information is available everywhere. Access is exclusive."</strong>
-      The most valuable thing KU can offer its designers isn't a bigger roster or a better PDF —
-      it's <span class="highlight">signal before it becomes information.</span>
-      Knowing a CMO was appointed six weeks ago, that a brand just closed a Series B,
-      that an FCA consultation is closing in three weeks — before any brief has been written.
-      That's what Cision has been building. Applied to financial services. Until now.
-    </p>
-  </section>
-
-  <!-- ── THE GAP ─────────────────────────────────────────── -->
-  <section class="section">
-    <div class="section-label">The Problem</div>
-    <h2 class="section-title">Independent designers are the least-informed<br>people in a pitch room</h2>
-    <div class="section-body">
-      <p>Agency teams have research departments. Brand strategists. Account planners who spend weeks building client context before a single slide is written. KU designers go in alone — exceptional on craft, but thin on commercial intelligence.</p>
-      <p style="margin-top:16px;">That asymmetry is structural. And it's fixable. <strong>Cision's Rapid Intelligence operation produces executive-level briefings for financial services clients every single day.</strong> The same infrastructure, pointed at the design commissioning market, is the thing that levels the pitch room permanently.</p>
-    </div>
-
     <div class="pullquote">
-      <p>"KU needs to add something they cannot get anywhere else."</p>
+      <p>"Information is available everywhere. Access is exclusive."</p>
       <cite>— James Sommerville OBE, KnownUnknown</cite>
     </div>
+    <p class="opening-text" style="margin-top:32px;">The opportunity: bringing the full attention of Cision's intelligence apparatus to bear on the design industry, <span class="highlight">focused through KU's knowhow.</span></p>
   </section>
 
   <!-- ── THE PROPOSITIONS ────────────────────────────────── -->
   <section class="section">
     <div class="section-label">The Propositions</div>
-    <h2 class="section-title">Three things Cision can bring<br>that no one else can</h2>
+    <h2 class="section-title">Things Cision can bring<br>that no one else can</h2>
 
     <div class="props">
       <div class="prop-card">
         <div class="prop-number">01</div>
         <div class="prop-title">Client Signal Intelligence</div>
-        <div class="prop-body">A curated forward intelligence feed — which brands are entering design-commissioning moments right now. CMO appointments, funding rounds, M&A completions, product launches, IPO signals. The brief before the brief exists.</div>
+        <div class="prop-body">A curated forward intelligence feed which brands are entering design-commissioning moments right now. CMO appointments, funding rounds, M&A completions, product launches, IPO signals. The brief before the brief exists.</div>
         <span class="prop-tag">augur · Rapid Intelligence</span>
       </div>
 
       <div class="prop-card">
         <div class="prop-number">02</div>
         <div class="prop-title">Pre-Pitch Designer Briefings</div>
-        <div class="prop-body">When a KU designer secures a meeting, Cision produces a bespoke intelligence briefing on that client — leadership changes, competitive context, brand signals, upcoming pressures. They walk in knowing what the client doesn't know they know.</div>
+        <div class="prop-body">When a KU designer secures a meeting, Cision produces a bespoke intelligence briefing on that client leadership changes, competitive context, brand signals, upcoming pressures. They walk in knowing what the client doesn't know they know.</div>
         <span class="prop-tag">Rapid Intelligence · Trajaan</span>
       </div>
 
       <div class="prop-card">
         <div class="prop-number">03</div>
         <div class="prop-title">The KU Quarterly Intelligence Layer</div>
-        <div class="prop-body">The KU 100 becomes the only creative intelligence publication backed by live data. Cision provides the intelligence infrastructure — forward signals, search intent, social intelligence — underneath KU's editorial curation. Neither can do the other's job.</div>
+        <div class="prop-body">The KU 100 becomes the only creative intelligence publication backed by live data. Cision provides the intelligence infrastructure forward signals, search intent, social intelligence underneath KU's editorial curation. Neither can do the other's job.</div>
         <span class="prop-tag">augur · Trajaan · Brandwatch</span>
       </div>
 
       <div class="prop-card">
         <div class="prop-number">04</div>
         <div class="prop-title">Search Intent Intelligence</div>
-        <div class="prop-body">Trajaan reads billions of searches across Google, TikTok, Bing, ChatGPT and Gemini — not what people say, but what they privately seek. For a KU designer in a pitch, knowing what a brand's audience is searching for is a creative brief hidden in data.</div>
+        <div class="prop-body">Trajaan reads billions of searches across Google, TikTok, Bing, ChatGPT and Gemini not what people say, but what they privately seek. Cision's own CMO research found the average search query is just 5.4 words the unfiltered signal of what a brand's customers actually want. For a KU designer in a pitch, that's a creative brief hidden in data.</div>
         <span class="prop-tag">Trajaan</span>
       </div>
     </div>
@@ -630,7 +700,7 @@ body {
     <div class="section-label">Signal Taxonomy</div>
     <h2 class="section-title">The signals that tell you a brand<br>is about to need a designer</h2>
     <div class="section-body">
-      <p>These are readable, recurring, and currently invisible to most of the creative industry. augur is already built to detect them — it just hasn't been pointed at design demand until now.</p>
+      <p>These are readable, recurring, and currently invisible to most of the creative industry. Augur is already built to detect them — it just hasn't been pointed at design demand — until now.</p>
     </div>
 
     <table class="signal-table">
@@ -694,12 +764,12 @@ body {
     <div class="stack">
       <div class="stack-row">
         <div class="stack-layer">Forward event signals</div>
-        <div class="stack-desc">Institutional calendar intelligence — regulatory, economic, political events that create design demand before they're public knowledge</div>
+        <div class="stack-desc">Institutional calendar intelligence regulatory, economic, political events that create design demand before they're public knowledge</div>
         <div class="stack-tool">augur / RI</div>
       </div>
       <div class="stack-row">
         <div class="stack-layer">Consumer search intent</div>
-        <div class="stack-desc">What brands' audiences privately search for across Google, TikTok, ChatGPT, Gemini — surfacing creative need before it becomes a brief</div>
+        <div class="stack-desc">What brands' audiences privately search for across Google, TikTok, ChatGPT, Gemini surfacing creative need before it becomes a brief</div>
         <div class="stack-tool">Trajaan</div>
       </div>
       <div class="stack-row">
@@ -709,12 +779,12 @@ body {
       </div>
       <div class="stack-row">
         <div class="stack-layer">Pre-pitch client briefings</div>
-        <div class="stack-desc">Bespoke intelligence reports on prospective clients — produced by Cision Rapid Intelligence analysts before every significant pitch</div>
+        <div class="stack-desc">Bespoke intelligence reports on prospective clients produced by Cision Rapid Intelligence analysts before every significant pitch</div>
         <div class="stack-tool">Rapid Intelligence</div>
       </div>
       <div class="stack-row">
         <div class="stack-layer">KU curatorial intelligence</div>
-        <div class="stack-desc">James's editorial eye, 25 years of global brand experience, 6,000+ designers across 115 countries — the thing Cision cannot replicate</div>
+        <div class="stack-desc">James's editorial eye, 25 years of global brand experience, 6,000+ designers across 115 countries the thing Cision cannot replicate</div>
         <div class="stack-tool">KnownUnknown</div>
       </div>
       <div class="stack-row">
@@ -725,64 +795,92 @@ body {
     </div>
   </section>
 
-  <!-- ── THE 5-F TEST ────────────────────────────────────── -->
+  <!-- ── THE QUESTION GAP ────────────────────────────────── -->
   <section class="section">
-    <div class="section-label">The 5-F Test</div>
-    <h2 class="section-title">Running this through the framework<br>James still uses today</h2>
+    <div class="section-label">The Research</div>
+    <h2 class="section-title">Most brands are only reading<br>half the signal</h2>
+    <div class="section-body">
+      <p>Cision's own CMO, Amy Jones, published research in June 2026 that makes the case for exactly what a KU designer needs in a pitch room. The study analysed thousands of consumer purchase queries and found a structural difference between how people search and how they talk on social a gap that most brands have never measured.</p>
+    </div>
 
-    <div class="five-f">
-      <div class="f-card">
-        <div class="f-letter">F</div>
-        <div class="f-word">Forward</div>
-        <div class="f-yes"></div>
-        <div class="f-verdict">Gives KU the intelligence layer that justifies premium positioning and a private membership tier</div>
+    <div class="pullquote">
+      <p>"Brands can miss important parts of the consumer journey when they look at search intelligence and social intelligence in isolation. Search can show what people want to know. Social can show the context, emotion, and validation behind the decision."</p>
+      <cite>— Amy Jones, CMO, Cision · The Question Gap Research, June 2026</cite>
+    </div>
+
+    <div class="qg-split">
+      <div class="qg-card">
+        <div class="qg-card-label">Search queries</div>
+        <div class="qg-stat">5.4</div>
+        <div class="qg-stat-label">words on average</div>
+        <div class="qg-stat-body">Fact-finding, transactional. "What is X?" the private, unfiltered signal of what a brand's audience actually wants. Invisible to the brand unless they're reading search intelligence. This is what Trajaan surfaces.</div>
       </div>
-      <div class="f-card">
-        <div class="f-letter">F</div>
-        <div class="f-word">Financial</div>
-        <div class="f-yes"></div>
-        <div class="f-verdict">3–4 brand subscriptions to KU Quarterly at $50k each covers the partnership and generates margin</div>
+      <div class="qg-card">
+        <div class="qg-card-label">Social media questions</div>
+        <div class="qg-stat">113.8</div>
+        <div class="qg-stat-label">words on average</div>
+        <div class="qg-stat-body">Context-seeking, emotional, evaluative. "Should I do X? Has anyone else done X?" the social validation layer. Tells you not what people want, but why they want it and whether they trust the brand to deliver. This is what Brandwatch surfaces.</div>
       </div>
-      <div class="f-card">
-        <div class="f-letter">F</div>
-        <div class="f-word">Fame</div>
-        <div class="f-yes"></div>
-        <div class="f-verdict">"World's only intelligence-powered creative network" is a story design press will write themselves</div>
+    </div>
+
+    <div class="qg-mindsets">
+      <div class="qg-mindset">
+        <div class="qg-mindset-num">01</div>
+        <div>
+          <div class="qg-mindset-title">Information-oriented</div>
+          <div class="qg-mindset-body">Seeking facts, specs, definitions. The brand's customers are asking "what does this product actually do?" often a signal that current communications are unclear. A designer who knows this can pitch clarity and simplicity as the creative solution.</div>
+        </div>
       </div>
-      <div class="f-card">
-        <div class="f-letter">F</div>
-        <div class="f-word">Fun</div>
-        <div class="f-yes"></div>
-        <div class="f-verdict">Building a new category of product at the intersection of intelligence and design — that's the brief</div>
+      <div class="qg-mindset">
+        <div class="qg-mindset-num">02</div>
+        <div>
+          <div class="qg-mindset-title">Decision-validation</div>
+          <div class="qg-mindset-body">Seeking reassurance, social proof, peer experience. The brand's customers are not yet convinced they're looking for validation before committing. A designer who knows this can pitch brand trust and credibility as the creative priority.</div>
+        </div>
       </div>
-      <div class="f-card">
-        <div class="f-letter">F</div>
-        <div class="f-word">Forever</div>
-        <div class="f-yes"></div>
-        <div class="f-verdict">The intelligence infrastructure for the global creative industry. Changing design for big business — twice.</div>
+      <div class="qg-mindset">
+        <div class="qg-mindset-num">03</div>
+        <div>
+          <div class="qg-mindset-title">Context-timing</div>
+          <div class="qg-mindset-body">Seeking "is now the right moment?" signals. The brand's customers are ready to buy but looking for a trigger. A designer who knows this can pitch urgency, seasonal relevance and campaign timing as the creative lever.</div>
+        </div>
       </div>
+    </div>
+
+    <div class="section-body" style="margin-top:32px;">
+      <p><strong style="color:var(--grey-6)">For a KU designer in a pitch room, this is transformative.</strong> They arrive knowing not just what the client's brand looks like but what the client's customers are privately thinking, what reassurance they need, and what would tip them from interested to committed. That is a creative brief hidden in data. And it comes from the combined signal of Trajaan (search) and Brandwatch (social) a combination only Cision has built.</p>
+    </div>
+  </section>
+
+  
+
+  <!-- ── HUMAN THOUGHTS ────────────────────────────────── -->
+  <section class="section">
+    <div class="section-label">A Shared Philosophy</div>
+    <h2 class="section-title">Human thoughts —<br>AI thought partners</h2>
+    <div class="section-body">
+      <p>Cision has always differentiated itself from its peers through its human-curated approach to work. It has a deep institutional knowledge of the media landscape, developed over many years of people's reasoning. KU has curated a roster of great design minds. In this burgeoning era of AI, there is an opportunity to work together to prescribe human taste and sensibility to the artificial intelligence tools that are now available.</p>
     </div>
   </section>
 
   <!-- ── ROADMAP ─────────────────────────────────────────── -->
   <section class="section">
-    <div class="section-label">How We Get There</div>
-    <h2 class="section-title">Three phases, starting<br>with an easy yes</h2>
+    <div class="section-label">Avenues to Explore</div>
+    <h2 class="section-title">Initial phases</h2>
 
     <div class="roadmap">
       <div class="roadmap-phase">
-        <div class="phase-tag">Phase 1 — Now</div>
+        <div class="phase-tag">Phase 1</div>
         <div class="phase-title">Session Sponsorship</div>
         <ul class="phase-items">
-          <li>Cision sponsors KU Live — Paula Scher, Ian Anderson, Stefan Sagmeister</li>
-          <li>$7,500–$20,000. 1,200+ elite creatives, 30k email reach</li>
+          <li>Cision sponsors KU Live — 1,200+ elite creatives, 30k email reach</li>
           <li>Cision brand alongside the most respected names in design</li>
           <li>Low risk. Immediate. Relationship-building, not a vendor pitch</li>
         </ul>
       </div>
 
       <div class="roadmap-phase">
-        <div class="phase-tag">Phase 2 — Q4 2026</div>
+        <div class="phase-tag">Phase 2</div>
         <div class="phase-title">Intelligence Layer</div>
         <ul class="phase-items">
           <li>Cision provides intelligence infrastructure for KU Quarterly</li>
@@ -793,7 +891,7 @@ body {
       </div>
 
       <div class="roadmap-phase">
-        <div class="phase-tag">Phase 3 — 2027</div>
+        <div class="phase-tag">Phase 3</div>
         <div class="phase-title">Co-developed Product</div>
         <ul class="phase-items">
           <li>Standalone Creative Market Intelligence product, jointly owned</li>
@@ -809,7 +907,9 @@ body {
   <footer class="footer">
     <div class="footer-note">
       Prepared by Nathanael Jones, Intelligence Manager<br>
-      Cision Rapid Intelligence UK &nbsp;·&nbsp; June 2026<br>
+      Cision Rapid Intelligence UK<br>
+      and Nate Wisniewski, KU<br>
+      &nbsp;·&nbsp; June 2026<br>
       Confidential — for discussion purposes only
     </div>
     <div class="footer-logos">
@@ -827,12 +927,7 @@ body {
         <path fill="#ffffff" d="M187.07,10.69l17.31,26.36V10.69h3.42V0h-54.16v10.73h3.42v20.51c0,5.17,4.02,9.4,8.97,9.4s8.97-4.23,8.97-9.4V10.73h3.42v20.51c0,6.84-5.55,12.39-12.39,12.39s-12.39-5.55-12.39-12.39v22.91h54.16v-11.42h-3.42l-17.31-26.32v26.32h-3.42V10.69h3.42Z"/>
       </svg>
       <div class="footer-div"></div>
-      <svg viewBox="160 115 725 240" xmlns="http://www.w3.org/2000/svg">
-        <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
-        <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
-        <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
-        <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
-      </svg>
+      <span style="font-size:16px;font-weight:300;letter-spacing:-0.01em;color:#ffffff;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">Cision</span>
     </div>
   </footer>
 
