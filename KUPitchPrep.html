@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cision × KnownUnknown — Sponsorship Intelligence Dossier: Adobe & Canva</title>
+<style>
+  :root{
+    --navy:#16215B; --navy2:#1F299C; --blue:#016CFF; --orange:#FF6E29;
+    --bg:#0B0E1F; --bg2:#11152B; --card:#161B36; --card2:#1B2142;
+    --line:#2A3160; --txt:#EA ECF7; --txt:#EAECF7; --mut:#9AA2C4; --dim:#6E769C;
+    --good:#3DD68C; --warn:#FFC24B; --bad:#FF6B6B;
+    --adobe:#E34A2B; --canva:#21B5C9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;font-size:15px;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px 80px;}
+
+  /* Header */
+  .topbar{height:6px;background:linear-gradient(90deg,var(--navy),var(--navy2),var(--blue));}
+  header.hero{background:
+      radial-gradient(1200px 400px at 80% -10%, rgba(1,108,255,.18), transparent 60%),
+      linear-gradient(180deg,#0D1densify 0,#0B0E1F 100%);
+    background-color:#0C1024;border-bottom:1px solid var(--line);padding:30px 0 26px;}
+  .eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+  .lockup{font-weight:800;letter-spacing:.5px;font-size:13px;color:var(--mut);}
+  .lockup b{color:#fff}
+  .chip{margin-left:auto;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;
+    color:var(--orange);border:1px solid var(--orange);border-radius:30px;padding:5px 12px;font-weight:700;}
+  .wordmark{font-size:54px;font-weight:800;font-style:italic;letter-spacing:-1px;
+    background:linear-gradient(90deg,#fff,#C9D2FF);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;}
+  .wordmark .bird{color:var(--orange);-webkit-text-fill-color:var(--orange);}
+  .tagline{color:var(--orange);font-weight:700;font-style:italic;margin-top:6px;font-size:16px;}
+  .subline{color:var(--dim);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+  h1.doc{font-size:26px;margin:22px 0 6px;font-weight:750;color:#fff;}
+  .doc-meta{color:var(--mut);font-size:13px;}
+  .doc-meta b{color:var(--txt)}
+
+  /* Sections */
+  section{margin-top:34px;}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--orange);
+    margin:0 0 14px;font-weight:750;display:flex;align-items:center;gap:10px;}
+  h2:before{content:"";width:8px;height:8px;background:var(--orange);transform:rotate(45deg);display:inline-block;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;}
+
+  /* Strategic spine */
+  .spine{background:linear-gradient(135deg,var(--card2),var(--card));border-left:3px solid var(--orange);}
+  .spine p{margin:0 0 12px;font-size:15.5px;}
+  .spine p:last-child{margin-bottom:0}
+  .spine .big{font-size:18px;font-weight:700;color:#fff;line-height:1.45;}
+  .hl-a{color:var(--adobe);font-weight:700}
+  .hl-c{color:var(--canva);font-weight:700}
+
+  /* Two-brand grid */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:760px){.duo{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr!important}}
+  .brand{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--card);}
+  .brand .bhead{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;}
+  .brand.adobe .bhead{background:linear-gradient(90deg,rgba(227,74,43,.22),transparent);}
+  .brand.canva .bhead{background:linear-gradient(90deg,rgba(33,181,201,.20),transparent);}
+  .bname{font-size:20px;font-weight:800;color:#fff;}
+  .brole{font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-left:auto;font-weight:700;padding:4px 10px;border-radius:20px;}
+  .brand.adobe .brole{color:var(--adobe);border:1px solid var(--adobe);}
+  .brand.canva .brole{color:var(--canva);border:1px solid var(--canva);}
+  .bbody{padding:18px 20px;}
+  .kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;}
+  .kpi{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .kpi .v{font-size:19px;font-weight:800;color:#fff;line-height:1.1;}
+  .kpi .l{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+  .lab{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--dim);font-weight:700;margin:16px 0 6px;}
+  .brand ul{margin:6px 0 0;padding-left:18px;}
+  .brand li{margin-bottom:7px;font-size:14px;}
+  .vuln{background:rgba(255,110,41,.08);border:1px solid rgba(255,110,41,.35);border-radius:10px;padding:12px 14px;margin-top:8px;}
+  .vuln .t{color:var(--orange);font-weight:750;font-size:13px;margin-bottom:4px;}
+  .angle{background:rgba(61,214,140,.08);border:1px solid rgba(61,214,140,.35);border-radius:10px;padding:12px 14px;margin-top:12px;}
+  .angle .t{color:var(--good);font-weight:750;font-size:13px;margin-bottom:4px;}
+
+  /* live data placeholder */
+  .live{border:1.5px dashed var(--orange);border-radius:10px;padding:13px 15px;margin-top:12px;
+    background:repeating-linear-gradient(45deg,rgba(255,110,41,.04),rgba(255,110,41,.04) 10px,transparent 10px,transparent 20px);}
+  .live .tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+    color:#0B0E1F;background:var(--orange);border-radius:5px;padding:2px 8px;margin-bottom:7px;}
+  .live .src{color:var(--orange);font-weight:700;}
+  .live p{margin:4px 0 0;font-size:13px;color:var(--mut);}
+
+  /* why now */
+  .why{display:flex;gap:16px;align-items:flex-start;}
+  .why .date{flex:0 0 auto;text-align:center;background:var(--navy);border:1px solid var(--blue);border-radius:12px;padding:12px 16px;min-width:96px;}
+  .why .date .d{font-size:24px;font-weight:800;color:#fff;line-height:1;}
+  .why .date .m{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-top:4px;font-weight:700;}
+  .why .date .y{font-size:11px;color:var(--mut);margin-top:2px;}
+  .countdown{color:var(--orange);font-weight:800;}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{color:var(--dim);text-transform:uppercase;font-size:10.5px;letter-spacing:1px;}
+  td .who{font-weight:700;color:#fff;}
+  td .role{color:var(--mut);font-size:12px;}
+  .pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;}
+  .pill.a{color:var(--adobe);background:rgba(227,74,43,.15);}
+  .pill.c{color:var(--canva);background:rgba(33,181,201,.15);}
+
+  .weather{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:760px){.weather{grid-template-columns:1fr}}
+  .wcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+  .wcard h3{margin:0 0 6px;font-size:15px;color:#fff;}
+  .wcard p{margin:0;font-size:13.5px;color:var(--mut);}
+  .wcard .sig{font-size:11px;color:var(--orange);font-weight:700;margin-top:8px;text-transform:uppercase;letter-spacing:.5px;}
+
+  .foot{margin-top:46px;border-top:1px solid var(--line);padding-top:18px;color:var(--dim);font-size:12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+  .foot .fm{font-style:italic;font-weight:800;color:var(--mut);}
+  .note{color:var(--dim);font-size:12.5px;margin-top:8px;font-style:italic;}
+  a{color:var(--blue);}
+
+  @media print{
+    body{background:#fff;color:#111;print-color-adjust:exact;-webkit-print-color-adjust:exact;}
+    .wrap{max-width:100%!important;}
+    .card,.brand,.wcard,.kpi,.live,.vuln,.angle{break-inside:avoid;border:1px solid #ccc!important;}
+    .wordmark{color:#16215B!important;-webkit-text-fill-color:#16215B!important;}
+    .wordmark .bird{color:#FF6E29!important;-webkit-text-fill-color:#FF6E29!important;}
+    header.hero{background:#fff!important;}
+    section{break-inside:avoid;}
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+    button,[role="button"]{display:none!important;}
+  }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">
+      <span class="lockup">Partnership Intelligence</span>
+      <span class="chip">Confidential · Sponsorship Prep</span>
+    </div>
+    <div class="wordmark" style="font-size:46px;">Cision <span class="bird">×</span> KnownUnknown</div>
+    <div class="tagline">Intelligence that earns the room</div>
+    <div class="subline">Powered by Brandwatch · CisionOne · PR Newswire · augur</div>
+    <h1 class="doc">Sponsorship Intelligence Dossier — Adobe &amp; Canva</h1>
+    <div class="doc-meta">Prepared for <b>James / KnownUnknown</b> &nbsp;·&nbsp; Scope: <b>KU LIVE event + broader brand partnership</b> &nbsp;·&nbsp; Compiled <b>9 June 2026</b> &nbsp;·&nbsp;</b></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2>The strategic spine</h2>
+    <div class="card spine">
+      <p class="big">Adobe and Canva are fighting the same war for creative mindshare — but they are buying sponsorship for opposite reasons. James should walk in with two pitches, not one.</p>
+      <p><span class="hl-a">Adobe is the anxious incumbent.</span> It owns roughly two-thirds of the creative-software market but its stock fell ~30% in early 2026 on AI-disruption fears, and it is spending heavily to defend cultural relevance with "real" creatives. Adobe buys sponsorship to <b>defend legitimacy and repair trust</b>.</p>
+      <p><span class="hl-c">Canva is the insurgent.</span> $4bn+ revenue growing 36% a year, 265m users, an IPO on the horizon — but still fighting the "is it real design?" perception among professionals. Canva buys sponsorship to <b>buy credibility with the creative community</b>.</p>
+      <p>KnownUnknown sits in the exact gap both brands are trying to reach: a curated collective of working creatives. <b>The dossier is itself a demo of the partnership</b> — if KU arrives armed with Cision-grade intelligence, the prep <i>is</i> the product.</p>
+    </div>
+    <p class="note">Live-data placeholders (dashed orange) mark where Brandwatch and CisionOne outputs slot in. Everything else is populated from current open-source intelligence (June 2026).</p>
+  </section>
+
+  <section>
+    <h2>Two-brand profiles</h2>
+    <div class="duo">
+
+      <!-- ADOBE -->
+      <div class="brand adobe">
+        <div class="bhead"><span class="bname">Adobe</span><span class="brole">Anxious incumbent</span></div>
+        <div class="bbody">
+          <div class="kpis">
+            <div class="kpi"><div class="v">~66%</div><div class="l">Creative sw. market share (2024)</div></div>
+            <div class="kpi"><div class="v">−30%</div><div class="l">Share price, early 2026</div></div>
+            <div class="kpi"><div class="v">$55–70</div><div class="l">CC monthly price (Feb '26)</div></div>
+          </div>
+
+          <div class="lab">Strategic posture</div>
+          <ul>
+            <li>Defending the professional segment by embedding AI everywhere — <b>Firefly AI Assistant / "creative agent"</b> launched April 2026, framed around "keep humans in the loop" and "AI enhances, not replaces."</li>
+            <li>Pivoting to a <b>model marketplace</b> (Runway, Kling, Google Nano Banana, Anthropic's Claude) rather than one model to rule them all.</li>
+            <li>Flagship moments: <b>Adobe MAX</b> (creativity) and <b>Adobe Summit</b> (enterprise/marketing).</li>
+          </ul>
+
+          <div class="lab">The vulnerability KU answers</div>
+          <div class="vuln">
+            <div class="t">Eroded trust with working creatives</div>
+            Subscription-price backlash, the 2024 terms-of-service / AI-training controversy, and photographers publicly leaving have dented Adobe's standing with the very creatives it depends on. KU offers a <b>credible, human, pro-creative audience</b> to help Adobe rebuild authenticity.
+          </div>
+
+          <div class="lab">Decision-maker entry points</div>
+          <ul>
+            <li><b>Lara Balazs</b> — CMO &amp; EVP Global Marketing (joined Dec 2024; ex-Intuit, Amazon, Visa, Nike). Owns brand, events, campaigns. <b>~18-month tenure = still shaping her brand agenda.</b></li>
+            <li><b>David Wadhwani</b> — President, Creativity &amp; Productivity (the "humans in the loop" voice).</li>
+          </ul>
+
+          <div class="live">
+            <span class="tag">Live data → Brandwatch</span>
+            <div><span class="src">Adobe sentiment &amp; share of voice</span> in the creative community</div>
+            <p>Slot in: SOV vs Canva, net sentiment trend (expect negative spikes around price hikes / ToS), top negative drivers, audience overlap index with KU's collective.</p>
+          </div>
+          <div class="live">
+            <span class="tag">Live data → CisionOne / Gorkana</span>
+            <div><span class="src">Adobe brand-partnership &amp; comms contacts</span></div>
+            <p>Slot in: named sponsorship/community leads, warm-intro journalists bridging KU ↔ Adobe.</p>
+          </div>
+
+          <div class="angle">
+            <div class="t">Tailored pitch angle</div>
+            "Partner with the creatives you're trying to win back." Position KU as proof Adobe still belongs in authentic creative culture — human craft, real practitioners, trust repair.
+          </div>
+        </div>
+      </div>
+
+      <!-- CANVA -->
+      <div class="brand canva">
+        <div class="bhead"><span class="bname">Canva</span><span class="brole">Insurgent challenger</span></div>
+        <div class="bbody">
+          <div class="kpis">
+            <div class="kpi"><div class="v">$42bn</div><div class="l">Valuation (Aug '25 tender)</div></div>
+            <div class="kpi"><div class="v">$4bn+</div><div class="l">Annualised rev, +36% YoY</div></div>
+            <div class="kpi"><div class="v">265m</div><div class="l">Users · 31m paid seats</div></div>
+          </div>
+
+          <div class="lab">Strategic posture</div>
+          <ul>
+            <li>Aggressive march upmarket: <b>Affinity</b> (made free Oct 2024 — 5m+ downloads), <b>Leonardo.AI</b>, MagicBrief, <b>Mango.AI</b>, <b>Cavalry</b> (motion), Simtheory/Ortto.</li>
+            <li><b>Canva AI 2.0</b> + proprietary Canva Design Model launched at Canva Create 2026; 95% of Fortune 500 already use Canva.</li>
+            <li><b>IPO prep</b> underway (CFO Kelly Steckelberg, ex-Zoom) — a brand-credibility spending window.</li>
+          </ul>
+
+          <div class="lab">The vulnerability KU answers</div>
+          <div class="vuln">
+            <div class="t">The "is it real design?" credibility gap</div>
+            Canva is winning volume but still battles professional-designer scepticism and emerging IP-governance questions around its AI outputs. KU offers <b>legitimacy with the serious creative community</b> Canva needs to convert its enterprise/pro ambitions.
+          </div>
+
+          <div class="lab">Decision-maker entry points</div>
+          <ul>
+            <li><b>Meghan Gendelman</b> — CMO, B2B (publicly framing Canva around "taste, craft, and what stays authentically human" at Cannes).</li>
+            <li><b>Rob Giglio</b> — Chief Customer Officer (notably ex-Adobe). <b>Cameron Adams</b> — Co-founder/CPO (Cannes speaker). <b>Duncan Clark</b> — EMEA lead (UK-relevant for KU).</li>
+          </ul>
+
+          <div class="live">
+            <span class="tag">Live data → Brandwatch</span>
+            <div><span class="src">Canva sentiment &amp; share of voice</span> among pro creatives</div>
+            <p>Slot in: SOV vs Adobe, sentiment split (mass-market love vs pro scepticism), audience demographics &amp; overlap index with KU.</p>
+          </div>
+          <div class="live">
+            <span class="tag">Live data → CisionOne / Gorkana</span>
+            <div><span class="src">Canva partnership &amp; EMEA comms contacts</span></div>
+            <p>Slot in: named community/brand-partnership leads (esp. UK/EMEA), warm-intro paths.</p>
+          </div>
+
+          <div class="angle">
+            <div class="t">Tailored pitch angle</div>
+            "Buy the credibility your scale can't." Position KU as Canva's bridge to professional-creative legitimacy as it heads toward IPO and enterprise — taste and craft, not just reach.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Why now — the timing signal</h2>
+    <div class="card why">
+      <div class="date"><div class="d">22–26</div><div class="m">June</div><div class="y">2026</div></div>
+      <div>
+        <p style="margin:0 0 8px;"><b style="color:#fff;">Cannes Lions 2026 is <span class="countdown">under two weeks away</span></b> — and both targets are spending big to own it. This is the single sharpest "why now" in the dossier.</p>
+        <ul style="margin:0;padding-left:18px;">
+          <li><b style="color:var(--canva)">Canva</b> is tripling its <b>Creative Cabana</b> footprint (4,000 attendees last year), running 30+ sessions, the Variety "In the C-Suite" collaboration, and a Cannes activation explicitly themed on "taste, craft, and what stays authentically human."</li>
+          <li><b style="color:var(--adobe)">Adobe</b> is running the <b>"Adobe takeover"</b> activation and opening-week programming.</li>
+          <li><b>Implication for James:</b> both brands are in active sponsorship/partnership-spending mode <i>right now</i>. A post-Cannes follow-up (early July) lands exactly as teams review what their activations achieved and plan the next wave.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="live" style="margin-top:14px;">
+      <span class="tag">Live data → augur signal watch</span>
+      <div><span class="src">Trigger calendar</span> — map sponsorship-budget windows to each brand's own flagship moments</div>
+      <p>Slot in: Adobe MAX &amp; Adobe Summit dates, Canva Create cycle, earnings/IPO milestones, any CMO/brand-lead moves (60–90 day budget-opening lead time per augur taxonomy).</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Decision-maker map</h2>
+    <div class="card" style="padding:6px 8px;">
+      <table>
+        <thead><tr><th>Name</th><th>Role</th><th>Brand</th><th>Why they matter</th></tr></thead>
+        <tbody>
+          <tr><td><span class="who">Lara Balazs</span></td><td><span class="role">CMO &amp; EVP Global Marketing</span></td><td><span class="pill a">Adobe</span></td><td>Owns brand, events &amp; campaigns; still shaping agenda (~18 mo in)</td></tr>
+          <tr><td><span class="who">David Wadhwani</span></td><td><span class="role">President, Creativity &amp; Productivity</span></td><td><span class="pill a">Adobe</span></td><td>"Humans in the loop" narrative owner</td></tr>
+          <tr><td><span class="who">Meghan Gendelman</span></td><td><span class="role">CMO, B2B</span></td><td><span class="pill c">Canva</span></td><td>Public voice on craft &amp; "authentically human" at Cannes</td></tr>
+          <tr><td><span class="who">Rob Giglio</span></td><td><span class="role">Chief Customer Officer</span></td><td><span class="pill c">Canva</span></td><td>Ex-Adobe — understands both worlds; B2B growth mandate</td></tr>
+          <tr><td><span class="who">Cameron Adams</span></td><td><span class="role">Co-founder &amp; CPO</span></td><td><span class="pill c">Canva</span></td><td>Cannes speaker; product &amp; AI direction</td></tr>
+          <tr><td><span class="who">Duncan Clark</span></td><td><span class="role">EMEA lead</span></td><td><span class="pill c">Canva</span></td><td>UK/EMEA relevance for a KU partnership</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="live" style="margin-top:14px;">
+      <span class="tag">Live data → CisionOne / Gorkana</span>
+      <div><span class="src">Verified contact details &amp; reporting lines</span></div>
+      <p>Slot in: direct emails/LinkedIn, exact sponsorship-decision owners, and the journalist/creator network that bridges KU into each brand.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Creative-industry weather — the shared backdrop</h2>
+    <p class="note" style="margin-top:-4px;">Themes both brands want to attach to — and which KU's own design briefing is already tracking daily.</p>
+    <div class="weather">
+      <div class="wcard"><h3>Human craft vs "AI slop"</h3><p>The dominant cultural tension of 2026. Creatives are pushing back on over-polished AI output and re-valuing the human touch — a narrative both Adobe and Canva are racing to own.</p><div class="sig">KU brief signal: "The flaw is the feature" · "Fight back against AI slop"</div></div>
+      <div class="wcard"><h3>Brands buying creative culture</h3><p>Canva already pays to sit in creative-community spaces (Nicer Tuesdays with It's Nice That; Cat van der Werff fronting creative direction). Precedent that sponsoring a collective like KU is on-strategy.</p><div class="sig">KU brief signal: Cannes "Nicer Tuesdays" hosted by Canva</div></div>
+      <div class="wcard"><h3>The creator economy at Cannes</h3><p>20+ creator-economy activations at Cannes 2026; the festival is now where brand/creator partnerships are actually struck — KU's natural habitat.</p><div class="sig">augur: event-calendar commissioning wave</div></div>
+      <div class="wcard"><h3>Consolidation &amp; the AI arms race</h3><p>Canva's acquisition spree vs Adobe's partner-model marketplace. Both need external creative credibility to humanise an increasingly machine-made category.</p><div class="sig">augur: M&amp;A &amp; product-launch signals</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How Cision's apparatus produced this</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Cision capability</th><th>Job in this pitch</th></tr></thead>
+        <tbody>
+          <tr><td><b style="color:#fff">Brandwatch</b></td><td>Audience &amp; sentiment proof — SOV, brand affinity, KU-audience overlap (the heart of a sponsorship case)</td></tr>
+          <tr><td><b style="color:#fff">augur</b></td><td>Forward "why now" signals — budget-window triggers, leadership moves, event calendar</td></tr>
+          <tr><td><b style="color:#fff">CisionOne / Gorkana</b></td><td>Decision-maker map &amp; warm-intro paths</td></tr>
+          <tr><td><b style="color:#fff">PR Newswire</b></td><td>Each brand's announcement cadence — their priorities in their own words</td></tr>
+          <tr><td><b style="color:#fff">Trajaan</b></td><td>Synthesis layer — turning dashboards into the pitch-ready insight above</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span class="fm">Cision × KnownUnknown</span>
+    <span>Partnership Intelligence · Brandwatch · CisionOne · PR Newswire · augur</span>
+    <span style="margin-left:auto;">Confidential draft · 9 June 2026</span>
+  </div>
+</div>
+
+<script>
+  window.GleanBridge.postMessage({actionId:'export-pdf',type:'glean-add-menu',metadata:{label:'Export as PDF',icon:'export'}});
+  window.GleanBridge.onMessage('action',function(data){if(data.actionId==='export-pdf')window.print();});
+</script>
+</body>
+</html>
