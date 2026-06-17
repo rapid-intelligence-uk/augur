@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lloyds Banking Group — Forward Intelligence | Signscape</title>
+<style>
+:root {
+--ink: #0a1628;
+--ink-soft: #3a4556;
+--paper: #f4f1ea;
+--card: #ffffff;
+--line: #d8d2c4;
+--accent: #006a4d;
+--accent-soft: #e3f0eb;
+--regulatory: #b3261e;
+--economic: #1a5fb4;
+--industry: #9c6f00;
+--political: #6c3483;
+--clash: #b3261e;
+--muted: #6b7280;
+}
+
+{ margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: "Georgia", "Times New Roman", serif;
+background: var(--paper);
+color: var(--ink);
+line-height: 1.55;
+padding: 0 0 60px;
+}
+.masthead {
+background: var(--ink);
+color: var(--paper);
+padding: 32px 40px 24px;
+border-bottom: 4px solid var(--accent);
+}
+.masthead .kicker {
+font-size: 12px;
+letter-spacing: 3px;
+text-transform: uppercase;
+color: #9db8ae;
+margin-bottom: 8px;
+}
+.masthead h1 {
+font-size: 38px;
+letter-spacing: 1px;
+font-weight: 700;
+}
+.masthead .daterange {
+font-size: 16px;
+color: #c9d4d0;
+margin-top: 6px;
+font-style: italic;
+}
+.masthead .confidential {
+font-size: 11px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: #9db8ae;
+margin-top: 14px;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+.summary-bar {
+display: flex;
+flex-wrap: wrap;
+gap: 1px;
+background: var(--line);
+margin: 0 0 4px;
+border-bottom: 1px solid var(--line);
+}
+.summary-bar .cell {
+flex: 1 1 180px;
+background: var(--card);
+padding: 14px 20px;
+}
+.summary-bar .label {
+font-size: 10px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(--muted);
+}
+.summary-bar .value {
+font-size: 16px;
+font-weight: 700;
+margin-top: 3px;
+}
+.tagline {
+font-family: "Helvetica Neue", Arial, sans-serif;
+font-size: 11px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(--accent);
+padding: 14px 0 4px;
+text-align: right;
+}
+section { margin-top: 30px; }
+.section-head {
+font-size: 13px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(--ink);
+border-bottom: 2px solid var(--ink);
+padding-bottom: 6px;
+margin-bottom: 16px;
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+}
+.section-head .sub {
+font-size: 11px;
+color: var(--muted);
+letter-spacing: 1px;
+text-transform: none;
+font-style: italic;
+}
+.overview {
+background: var(--card);
+border-left: 4px solid var(--accent);
+padding: 20px 26px;
+font-size: 16px;
+color: var(--ink-soft);
+}
+.pattern-grid { display: flex; flex-direction: column; gap: 14px; }
+.pattern-card {
+background: var(--card);
+border: 1px solid var(--line);
+border-left: 5px solid var(--economic);
+padding: 16px 20px;
+}
+.pattern-card.clash { border-left-color: var(--clash); background: #fdf2f1; }
+.pattern-card.regulatory { border-left-color: var(--regulatory); }
+.pattern-card.economic { border-left-color: var(--economic); }
+.pattern-card.industry { border-left-color: var(--industry); }
+.pattern-card.political { border-left-color: var(--political); }
+.pattern-card .pname {
+font-size: 17px;
+font-weight: 700;
+margin-bottom: 4px;
+}
+.pattern-card .meta {
+font-family: "Helvetica Neue", Arial, sans-serif;
+font-size: 11px;
+letter-spacing: 1px;
+text-transform: uppercase;
+color: var(--muted);
+margin-bottom: 10px;
+display: flex;
+gap: 16px;
+flex-wrap: wrap;
+}
+.pattern-card .meta .tag {
+font-weight: 700;
+color: var(--ink);
+}
+.pattern-card .why { font-size: 14px; color: var(--ink-soft); margin-bottom: 10px; }
+.pattern-card .action {
+font-size: 13px;
+background: var(--accent-soft);
+padding: 8px 12px;
+border-radius: 3px;
+}
+.lanes { display: flex; flex-direction: column; gap: 22px; }
+.lane {
+background: var(--card);
+border: 1px solid var(--line);
+border-radius: 4px;
+overflow: hidden;
+}
+.lane-head {
+background: var(--ink);
+color: var(--paper);
+padding: 12px 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.lane-head h3 { font-size: 16px; letter-spacing: 1px; }
+.lane-count {
+font-family: "Helvetica Neue", Arial, sans-serif;
+font-size: 11px;
+letter-spacing: 1px;
+background: var(--accent);
+color: #fff;
+padding: 3px 10px;
+border-radius: 12px;
+}
+.lane-count.empty { background: var(--muted); }
+.lane-body { padding: 6px 20px 16px; }
+.event {
+border-bottom: 1px solid var(--line);
+padding: 14px 0;
+}
+.event:last-child { border-bottom: none; }
+.event .etitle { font-size: 16px; font-weight: 700; }
+.event .einst {
+font-family: "Helvetica Neue", Arial, sans-serif;
+font-size: 12px;
+color: var(--accent);
+letter-spacing: 1px;
+text-transform: uppercase;
+margin: 2px 0;
+}
+.event .edate {
+font-family: "Helvetica Neue", Arial, sans-serif;
+font-size: 12px;
+font-weight: 700;
+color: var(--ink);
+margin-bottom: 6px;
+}
+.event .edesc { font-size: 14px; color: var(--ink-soft); }
+.status {
+display: inline-block;
+font-family: "Helvetica Neue", Arial, sans-serif;
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 1px;
+padding: 2px 8px;
+border-radius: 3px;
+margin-right: 8px;
+vertical-align: middle;
+}
+.status.confirmed { background: #d6f0e4; color: #006a4d; }
+.status.expected { background: #fff2cc; color: #9c6f00; }
+.status.watch { background: #fde2e1; color: #b3261e; }
+.clash-warn { color: var(--clash); font-weight: 700; }
+.client-lane { border: 2px solid var(--accent); }
+.client-lane .lane-head { background: var(--accent); }
+.notes { display: flex; flex-direction: column; gap: 10px; }
+.note {
+background: var(--card);
+border-left: 4px solid var(--industry);
+padding: 12px 18px;
+font-size: 14px;
+color: var(--ink-soft);
+}
+.footer {
+margin-top: 40px;
+padding: 24px 28px;
+background: var(--ink);
+color: #c9d4d0;
+font-size: 12px;
+text-align: center;
+border-top: 4px solid var(--accent);
+}
+.footer .warn {
+color: #f0c4c1;
+font-weight: 700;
+margin-bottom: 10px;
+font-size: 13px;
+}
+table.pipeline {
+width: 100%;
+border-collapse: collapse;
+font-size: 13px;
+}
+table.pipeline th, table.pipeline td {
+border: 1px solid var(--line);
+padding: 8px 10px;
+text-align: left;
+}
+table.pipeline th {
+background: var(--accent-soft);
+font-family: "Helvetica Neue", Arial, sans-serif;
+font-size: 11px;
+letter-spacing: 1px;
+text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+<div class="masthead">
+<div class="wrap">
+<div class="kicker">Lloyds Banking Group · Forward Intelligence</div>
+<h1>Signscape</h1>
+<div class="daterange">17 June 2026 – 1 July 2026</div>
+<div class="confidential">Prepared for Group Corporate Affairs, Lloyds Banking Group · Confidential</div>
+</div>
+</div>
+
+<div class="summary-bar">
+<div class="cell"><div class="label">Client</div><div class="value">Lloyds Banking Group</div></div>
+<div class="cell"><div class="label">Window</div><div class="value">17 Jun – 1 Jul 2026</div></div>
+<div class="cell"><div class="label">Active Patterns</div><div class="value">5 flagged</div></div>
+<div class="cell"><div class="label">Clash Alerts</div><div class="value">1 this fortnight</div></div>
+</div>
+
+<div class="wrap">
+<div class="tagline">Read the signs · Forward Intelligence · By Cision</div>
+
+<section>
+<div class="section-head">Executive Overview</div>
+<div class="overview">
+The defining moment of this fortnight is Thursday 18 June 2026, when the ONS UK Labour Market Statistics (07:00) and the Bank of England MPC rate decision (noon) land within the same 24-hour period — a confirmed double-data day that will dominate national front pages. Reactive lines on the rate decision, employment and wage trends should be pre-positioned for both releases. Beyond this peak, analysts should watch for the June Financial Stability Report, several mid-2026 FCA milestones (Consumer Duty, SM&CR, motor finance redress), and prepare in advance for the Halifax House Price Index and Lloyds Business Barometer releases falling just beyond the window.
+</div>
+</section>
+
+<section>
+<div class="section-head">Augur Pattern Watch <span class="sub">Active signals from the Augur Archive Pattern Library · 48 patterns · 5 categories · 5 active</span></div>
+<div class="pattern-grid">
+
+<div class="pattern-card clash">
+<div class="pname">⚠ CLASH — MPC Decision + ONS Data Clash Week</div>
+<div class="meta"><span class="tag">Clash Pattern</span><span>Confidence: Very High</span><span>12 precedents</span></div>
+<div class="why">The ONS UK Labour Market Statistics release is CONFIRMED for Wednesday 18 June 2026 at 07:00, and the Bank of England MPC decision is CONFIRMED for 18 June 2026 (noon). 
+Both fall within the same 24-hour period, creating the highest-demand briefing scenario of the year. This pattern occurs roughly three times annually, with the June alignment confirmed for 2026.</div>
+<div class="action"><strong>Analyst action:</strong> Pre-position analyst resource for the full week. Prepare templates for both the ONS Labour Market data and the MPC rate decision. Ensure Group reactive lines are ready for both releases — this is a double-preparation requirement.</div>
+</div>
+
+<div class="pattern-card economic">
+<div class="pname">Bank of England MPC Decision</div>
+<div class="meta"><span class="tag">Economic</span><span>Confidence: Very High</span><span>60 precedents</span></div>
+<div class="why">MPC decision CONFIRMED for 18 June 2026. Current Bank Rate 3.75%. No Monetary Policy Report accompanies this meeting. 
+</div>
+<div class="action"><strong>Analyst action:</strong> Load MPC decision template. Prepare Group consumer comment on the rate decision. Monitor for any pre-decision signals from Bank of England speeches.</div>
+</div>
+
+<div class="pattern-card economic">
+<div class="pname">ONS Labour Market Statistics</div>
+<div class="meta"><span class="tag">Economic</span><span>Confidence: Very High</span><span>60 precedents</span></div>
+<div class="why">CONFIRMED for Wednesday 18 June 2026 at 07:00. Wage growth data is particularly significant for MPC rate commentary. 
+</div>
+<div class="action"><strong>Analyst action:</strong> Verify exact release time. Note wage growth figure for Bank rate commentary. Prepare Group economic commentary.</div>
+</div>
+
+<div class="pattern-card economic">
+<div class="pname">Bank of England Financial Stability Report</div>
+<div class="meta"><span class="tag">Economic</span><span>Confidence: High</span><span>8 precedents</span></div>
+<div class="why">The FSR is published bi-annually in June and December, typically in Week 2. 
+The current window falls within the expected publication period for the June 2026 FSR. No confirmed date identified from primary sources — verify at the Bank of England website.</div>
+<div class="action"><strong>Analyst action:</strong> Monitor Bank of England press releases from Week 1. Note any Group-specific references. Prepare for Governor press conference coverage.</div>
+</div>
+
+<div class="pattern-card industry">
+<div class="pname">Halifax House Price Index</div>
+<div class="meta"><span class="tag">Industry / Results</span><span>Confidence: Very High</span><span>60 precedents</span></div>
+<div class="why">The July 2026 Halifax HPI release is expected on Friday 3 July 2026 — just outside the current window but within the planning horizon. 
+The June 2026 release (reporting May data) would have published around 5 June 2026.</div>
+<div class="action"><strong>Analyst action:</strong> Verify the July release date at the Halifax HPI source. Prepare the housing market briefing template. Check for bank holiday delays.</div>
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="section-head">Intelligence Lanes <span class="sub">Full window · 17 June – 1 July 2026</span></div>
+<div class="lanes">
+
+<div class="lane">
+<div class="lane-head"><h3>Political &amp; Governmental</h3><span class="lane-count">3 watch items</span></div>
+<div class="lane-body">
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>HM Treasury — fiscal &amp; ministerial activity</div>
+<div class="einst">HM Treasury</div>
+<div class="edate">No confirmed event in window</div>
+<div class="edesc">No confirmed Treasury speeches, consultations or fiscal events fall within the window. The next major fiscal event (Autumn Budget) is expected October/November 2026. Monitor gov.uk for ad hoc ministerial statements or consultation closures.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>Treasury Select Committee</div>
+<div class="einst">UK Parliament</div>
+<div class="edate">No confirmed hearing in window</div>
+<div class="edesc">No confirmed TSC hearings identified within this window. The TSC typically holds FCA accountability hearings in H1 — verify the forward calendar at committees.parliament.uk for any late-June sessions.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status expected">Expected</span>UK Parliament — approaching summer recess</div>
+<div class="einst">UK Parliament</div>
+<div class="edate">Expected: late July recess</div>
+<div class="edesc">No King's Speech or major legislative event expected within this window. Bills of relevance — including the Pension Schemes Bill and Financial Services legislation — continue their passage; monitor for any readings or committee stages scheduled in this window.</div>
+</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-head"><h3>Regulatory</h3><span class="lane-count">8 items</span></div>
+<div class="lane-body">
+<div class="event">
+<div class="etitle"><span class="status confirmed">Confirmed</span>Monetary Policy Committee Decision</div>
+<div class="einst">Bank of England</div>
+<div class="edate">Thursday 18 June 2026 · noon</div>
+<div class="edesc">The next MPC decision is scheduled for 18 June 2026 — a standard Summary and minutes publication, no Monetary Policy Report (next MPR due 30 July 2026). Current Bank Rate 3.75%. 
+The single highest-priority event of the fortnight; have reactive lines on mortgages, savings and business customers ready ahead of the noon announcement.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>Motor Finance Redress Scheme</div>
+<div class="einst">FCA</div>
+<div class="edate">Policy Statement expected early 2026 — verify status</div>
+<div class="edesc">The FCA consultation closed December 2025, with a Policy Statement and final rules expected February/March 2026 per the Regulatory Initiatives Grid. 
+The statement may already be published or imminent — verify at fca.org.uk. Black Horse (the Group's motor finance brand) is named in this context. <span class="clash-warn">Standing reputational watchpoint for the Group.</span></div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>Consumer Duty — formal consultation on updates</div>
+<div class="einst">FCA</div>
+<div class="edate">Expected: mid-2026</div>
+<div class="edesc">The FCA committed to publishing a formal consultation on Consumer Duty updates in mid-2026. 
+This falls within or immediately adjacent to the window — monitor fca.org.uk for publication.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>SM&amp;CR Reforms — Phase 1 implementation</div>
+<div class="einst">FCA / PRA</div>
+<div class="edate">Expected: mid-2026</div>
+<div class="edesc">Mid-2026 is the indicated implementation date for the first phase of SM&amp;CR reforms, following Policy Statements from FCA and PRA. 
+Monitor for any Policy Statement publication during this window.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>Open Banking / Smart Data — Open Finance road map</div>
+<div class="einst">FCA</div>
+<div class="edate">Road map due before March 2026; SI expected Q4 2026</div>
+<div class="edesc">The Open Finance road map was due before March 2026, with an Open Banking statutory instrument expected Q4 2026. 
+No specific milestone falls in this window, but ongoing developments are relevant to the Group's digital strategy communications.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>Basel 3.1 / Capital Requirements</div>
+<div class="einst">PRA</div>
+<div class="edate">Final Policy Statement planned Q1 2026 — verify status</div>
+<div class="edesc">The final Basel 3.1 Policy Statement and rules were planned for Q1 2026, with implementation 1 January 2027. 
+Any PRA capital publication during this period is relevant to the Group's prudential communications.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>Pillar 2A Review — Phase I</div>
+<div class="einst">PRA</div>
+<div class="edate">Policy Statement expected Q2 2026</div>
+<div class="edesc">A Policy Statement for the Pillar 2A Review Phase I is expected in Q2 2026, which may fall within or adjacent to this window. 
+Verify at bankofengland.co.uk/prudential-regulation.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>Card Scheme &amp; Processing Fees Market Review — Final Decision</div>
+<div class="einst">PSR</div>
+<div class="edate">Expected: May–June 2026</div>
+<div class="edesc">The PSR's Final Decision on Remedies for its card scheme and processing fees review is expected May–June 2026. 
+May already be published or imminent — verify at psr.org.uk.</div>
+</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-head"><h3>Economic Data Releases</h3><span class="lane-count">6 items</span></div>
+<div class="lane-body">
+<div class="event">
+<div class="etitle"><span class="status confirmed">Confirmed</span>UK Labour Market Statistics</div>
+<div class="einst">Office for National Statistics</div>
+<div class="edate">Wednesday 18 June 2026 · 07:00</div>
+<div class="edesc">Confirmed release covering unemployment, employment and wage growth, alongside Public Sector Employment (March 2026), PAYE RTI Earnings &amp; Employment (June 2026), Labour Market Statistics Time Series and Labour Market in the Regions. 
+<span class="clash-warn">Clash warning: falls the same day as the MPC decision — a double economic data day. Wage growth data is significant for MPC rate commentary.</span></div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status confirmed">Confirmed</span>Real-time economic indicators</div>
+<div class="einst">Office for National Statistics</div>
+<div class="edate">Wednesday 18 June 2026 · 09:30</div>
+<div class="edesc">Economic Activity and Social Change in the UK and Business Insights and Impact on the UK Economy release on the same morning, providing supplementary economic context. 
+</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status expected">Expected</span>CPI Inflation</div>
+<div class="einst">Office for National Statistics</div>
+<div class="edate">Expected: Wednesday, Week 2/3 of month — verify</div>
+<div class="edesc">CPI is typically released on a Wednesday in Week 2 or 3. The June 2026 release may have occurred just before the window or fall within it — verify at ons.gov.uk/releasecalendar.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status expected">Expected</span>Monthly GDP Estimate</div>
+<div class="einst">Office for National Statistics</div>
+<div class="edate">Expected: Wednesday, Week 2 — verify</div>
+<div class="edesc">The monthly GDP estimate typically releases in Week 2 on a Wednesday — verify whether the June 2026 release falls within this window at ons.gov.uk/releasecalendar.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status expected">Expected</span>Retail Sales</div>
+<div class="einst">Office for National Statistics</div>
+<div class="edate">Expected: week of 19 June 2026 — verify</div>
+<div class="edesc">Retail Sales typically release on the third Friday of the month; the June 2026 release would be expected around Friday 19 June 2026 — verify at ons.gov.uk/releasecalendar.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status expected">Expected</span>UK House Price Index</div>
+<div class="einst">Office for National Statistics</div>
+<div class="edate">Expected: late June / early July — verify</div>
+<div class="edesc">The ONS UK HPI typically releases in Week 4, which may fall just outside the window. Monitor for any release around 24–30 June 2026 at ons.gov.uk/releasecalendar.</div>
+</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-head"><h3>Industry &amp; Market Events</h3><span class="lane-count">4 items</span></div>
+<div class="lane-body">
+<div class="event">
+<div class="etitle"><span class="status expected">Expected</span>Halifax House Price Index</div>
+<div class="einst">Halifax</div>
+<div class="edate">Expected: Friday 3 July 2026 — just outside window</div>
+<div class="edesc">Published on the first Friday of each month; the July release (reporting June data) is expected ~3 July 2026. 
+Consistently generates front-page national coverage — prepare the housing briefing template in advance and verify at halifax.co.uk/mortgages/house-price-index/.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status expected">Expected</span>Business Barometer</div>
+<div class="einst">Lloyds Banking Group</div>
+<div class="edate">Expected: Tuesday 7 July 2026 — just outside window</div>
+<div class="edesc">Published on the first Tuesday of each month; the July release is expected ~7 July 2026. 
+Check the newsroom at lloydsbankinggroup.com/newsroom.html for any mid-month or supplementary releases.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status expected">Expected</span>Mortgage Lending Data</div>
+<div class="einst">UK Finance</div>
+<div class="edate">Expected: Week 3 — may fall in window</div>
+<div class="edesc">UK Finance publishes monthly mortgage lending data typically in Week 3; a release may fall within this window. Monitor ukfinance.org.uk/data-and-research.</div>
+</div>
+<div class="event">
+<div class="etitle"><span class="status expected">Expected</span>Credit Conditions Survey</div>
+<div class="einst">Bank of England</div>
+<div class="edate">Expected: July (quarterly) — verify</div>
+<div class="edesc">Published quarterly (January, April, July, October), typically in Week 2. The July 2026 release may fall within or immediately after this window — monitor bankofengland.co.uk.</div>
+</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-head"><h3>Competitor Watch</h3><span class="lane-count empty">No confirmed events</span></div>
+<div class="lane-body">
+<div class="event">
+<div class="etitle"><span class="status watch">Watch</span>No competitor results within window</div>
+<div class="einst">Sector-wide</div>
+<div class="edate">H1 results expected late July – early August 2026</div>
+<div class="edesc">No major competitor results are expected within the window. Barclays, HSBC, NatWest and Nationwide H1/Q2 results are expected late July – early August 2026; Santander UK, Virgin Money and the challenger banks have no confirmed announcements. Aviva and L&amp;G full-year results were expected March 2026. Monitor IR pages for ad hoc announcements — the 18 June MPC decision may prompt competitor commentary on mortgage and savings rates that could draw the Group into the narrative.</div>
+</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-head"><h3>Policy Pipeline</h3><span class="lane-count">8 items</span></div>
+<div class="lane-body">
+<table class="pipeline">
+<tr><th>Initiative</th><th>Lead</th><th>Status</th><th>Milestone</th></tr>
+<tr><td>Consumer Duty — formal consultation on updates</td><td>FCA</td><td>WATCH</td><td>Mid-2026 — may fall in window 
+</td></tr>
+<tr><td>SM&amp;CR Reforms — Phase 1 implementation</td><td>FCA / PRA / HMT</td><td>WATCH</td><td>Mid-2026 target 
+</td></tr>
+<tr><td>Advice Guidance Boundary Review — regime goes live</td><td>FCA / HMT</td><td>EXPECTED</td><td>April 2026 (may already be live) 
+</td></tr>
+<tr><td>Buy Now Pay Later — BNPL becomes regulated</td><td>FCA / HMT</td><td>CONFIRMED</td><td>15 July 2026 — just outside window 
+</td></tr>
+<tr><td>PSR Card Scheme Market Review — Final Decision</td><td>PSR</td><td>WATCH</td><td>May–June 2026 
+</td></tr>
+<tr><td>FCA/PRA LTI Flow Limit — implementation</td><td>FCA / PRA</td><td>WATCH</td><td>H2 2026 
+</td></tr>
+<tr><td>Basel 3.1 — final Policy Statement</td><td>PRA</td><td>WATCH</td><td>Q1 2026 (may already be published) 
+</td></tr>
+<tr><td>Incident / Outsourcing / Third-Party Reporting — final rules</td><td>BoE / FCA / PRA</td><td>WATCH</td><td>H1 2026 
+</td></tr>
+</table>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-head"><h3>Lloyds Banking Group Standing Publications</h3><span class="lane-count">5 items</span></div>
+<div class="lane-body">
+<table class="pipeline">
+<tr><th>Publication</th><th>Brand</th><th>Expected Timing</th><th>Notes</th></tr>
+<tr><td>Halifax House Price Index</td><td>Halifax</td><td>First Friday — July release ~3 July 2026</td><td>Just outside window; prepare in advance</td></tr>
+<tr><td>Business Barometer</td><td>Lloyds Banking Group</td><td>First Tuesday — July release ~7 July 2026</td><td>Just outside window; check newsroom</td></tr>
+<tr><td>Sector Tracker</td><td>Lloyds</td><td>Periodic</td><td>Monitor newsroom</td></tr>
+<tr><td>Consumer Digital Index</td><td>Lloyds</td><td>Annual / Periodic</td><td>Monitor newsroom</td></tr>
+<tr><td>Women in Retirement Report</td><td>Scottish Widows</td><td>Annual</td><td>Monitor for any June publication</td></tr>
+</table>
+</div>
+</div>
+
+</div>
+</section>
+
+<section>
+<div class="section-head">Analyst Notes</div>
+<div class="notes">
+<div class="note"><strong>1.</strong> <span class="clash-warn">18 June 2026 is the critical date of this fortnight.</span> The ONS Labour Market release (07:00) and the MPC decision (noon) fall on the same day, creating the highest-demand briefing scenario. All resource should be pre-positioned for this date.</div>
+<div class="note"><strong>2.</strong> The 18 June MPC meeting does not include a Monetary Policy Report. The next MPR is 30 July 2026. Coverage will focus on the rate decision and minutes only. 
+</div>
+<div class="note"><strong>3.</strong> Motor finance redress scheme — verify current status. The FCA Policy Statement was expected February/March 2026 per the Regulatory Initiatives Grid. 
+Confirm whether it has been published before briefing stakeholders. Black Horse (the Group) is named in this context — a standing reputational watchpoint.</div>
+<div class="note"><strong>4.</strong> Consumer Duty consultation — the FCA committed to a formal consultation on updates in mid-2026, which may fall within this window. 
+Check fca.org.uk daily.</div>
+<div class="note"><strong>5.</strong> Bank of England Financial Stability Report — the June FSR is expected within this window on historical pattern (High confidence, 8 precedents) but no confirmed date has been identified from primary sources. 
+Verify at bankofengland.co.uk before briefing.</div>
+<div class="note"><strong>6.</strong> Halifax HPI and Business Barometer both fall just outside this window (~3 July and ~7 July respectively). Preparation should begin during this fortnight.</div>
+<div class="note"><strong>7.</strong> No competitor results announcements confirmed within this window. H1 results season for major UK banks begins late July. Monitor competitor IR pages for ad hoc announcements.</div>
+<div class="note"><strong>8.</strong> No client intelligence was provided this week. If the analyst receives any confirmed internal events, cross-reference them against 18 June (MPC/ONS clash day) before scheduling.</div>
+<div class="note"><strong>9.</strong> PSR Card Scheme Market Review Final Decision — expected May–June 2026. 
+Check psr.org.uk for publication status.</div>
+<div class="note"><strong>10.</strong> BNPL regulation goes live 15 July 2026 — just outside this window, but communications preparation is relevant now. 
+</div>
+</div>
+</section>
+
+</div>
+
+<div class="footer">
+<div class="warn">This briefing must not be distributed to Lloyds Banking Group client contacts (Emma Fairhurst, Matt Smith) until all flagged items have been verified.</div>
+Prepared by Rapid Intelligence UK · Cision<br>
+For Group Corporate Affairs, Lloyds Banking Group<br>
+17 June 2026 – 1 July 2026<br>
+Confidential · Not for distribution
+</div>
+
+</body>
+</html>
