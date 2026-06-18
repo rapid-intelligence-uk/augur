@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lloyds Banking Group — Augur Signscape</title>
+<style>
+:root {
+  --aug-orange:      #FF6E29;
+  --aug-orange-dim:  rgba(255,110,41,0.12);
+  --aug-navy:        #16215B;
+  --aug-blue-mid:    #1F299C;
+  --aug-blue-bright: #016CFF;
+  --lbg-green:       #006A4D;
+  --lbg-green-dim:   rgba(0,106,77,0.15);
+  --bg:              #07090f;
+  --surface:         #0d1117;
+  --surface-2:       #111827;
+  --surface-3:       #0a0f1e;
+  --border:          rgba(255,255,255,0.06);
+  --border-orange:   rgba(255,110,41,0.25);
+  --border-green:    rgba(0,106,77,0.30);
+  --text-primary:    #f0f2f5;
+  --text-secondary:  rgba(240,242,245,0.58);
+  --text-muted:      rgba(240,242,245,0.28);
+  --reg:   #9333ea;
+  --eco:   #3b82f6;
+  --ind:   #22c55e;
+  --pol:   #eab308;
+  --cla:   #FF6E29;
+  --red:   #f87171;
+  --red-bg:rgba(239,68,68,0.12);
+  --amb:   #fbbf24;
+  --amb-bg:rgba(234,179,8,0.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-primary);font-size:14px;line-height:1.6;min-height:100vh;}
+
+/* ── HEADER ── */
+.header{background:linear-gradient(105deg,var(--aug-navy) 0%,var(--aug-blue-mid) 48%,var(--aug-blue-bright) 100%);padding:28px 48px 24px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+.signal-wrap{position:absolute;bottom:28px;right:48px;display:flex;align-items:center;gap:7px;z-index:2;}
+.signal-dot{width:7px;height:7px;border-radius:50%;background:var(--aug-orange);position:relative;flex-shrink:0;}
+.signal-dot::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--aug-orange);animation:signalPulse 2.2s ease-out infinite;opacity:0;}
+@keyframes signalPulse{0%{transform:scale(0.6);opacity:0.8;}100%{transform:scale(2.4);opacity:0;}}
+.signal-text{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.38);}
+.header-inner{position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;}
+.wm-svg{width:210px;height:auto;flex-shrink:0;}
+.header-info{text-align:right;}
+.header-edition{font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:6px;}
+.header-title{font-size:24px;font-weight:700;color:#ffffff;letter-spacing:-0.02em;line-height:1.1;margin-bottom:5px;}
+.header-date{font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:2px;}
+.header-byline{font-size:11px;color:rgba(255,255,255,0.30);}
+.header-bar{height:2px;background:linear-gradient(to right,var(--lbg-green) 0%,rgba(0,106,77,0.4) 40%,transparent 75%);}
+
+/* ── HORSE STAGE ── */
+.horse-stage{position:relative;height:70px;background:linear-gradient(to bottom,var(--aug-blue-bright) 0%,var(--bg) 100%);overflow:visible;}
+.horse-wrap{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);animation:horseRise 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.4s both;opacity:0;z-index:10;}
+@keyframes horseRise{from{opacity:0;transform:translateX(-50%) translateY(20px) scale(0.85);}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}}
+.horse-img{width:110px;height:auto;display:block;filter:brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(90deg) brightness(0.4);}
+.horizon-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:300px;height:40px;background:radial-gradient(ellipse at center bottom,rgba(0,106,77,0.5) 0%,transparent 70%);pointer-events:none;}
+.horizon-line{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:1px;background:linear-gradient(to right,transparent,rgba(0,106,77,0.8) 30%,rgba(0,106,77,0.8) 70%,transparent);animation:lineSpread 0.8s ease 0.5s forwards;}
+@keyframes lineSpread{to{width:500px;}}
+
+/* ── META BAR ── */
+.meta-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 48px;display:flex;align-items:center;gap:28px;flex-wrap:wrap;}
+.meta-item{display:flex;align-items:center;gap:7px;}
+.meta-label{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);}
+.meta-value{font-size:11px;font-weight:600;color:var(--text-secondary);}
+.meta-sep{width:1px;height:14px;background:var(--border);}
+
+/* ── CONTAINER ── */
+.container{max-width:1000px;margin:0 auto;padding:36px 24px 80px;}
+
+/* ── OVERVIEW ── */
+.overview{background:var(--surface);border-radius:10px;border:1px solid var(--border);border-left:3px solid var(--lbg-green);padding:22px 26px;margin-bottom:16px;}
+.overview-label{font-size:9px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--lbg-green);margin-bottom:10px;}
+.overview p{color:var(--text-secondary);font-size:14px;line-height:1.75;}
+
+/* ── LANES ── */
+.lane{background:var(--surface);border-radius:10px;border:1px solid var(--border);margin-bottom:8px;overflow:hidden;transition:border-color 0.2s;}
+.lane.is-open{border-color:var(--border-green);}
+.lane-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;user-select:none;transition:background 0.15s;gap:12px;}
+.lane-header:hover{background:rgba(255,255,255,0.018);}
+.lane-left{display:flex;align-items:center;gap:13px;min-width:0;}
+.lane-icon{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.lane-title{font-size:13px;font-weight:700;color:var(--text-primary);letter-spacing:-0.01em;}
+.lane-subtitle{font-size:10px;color:var(--text-muted);margin-top:1px;}
+.lane-right{display:flex;align-items:center;gap:9px;flex-shrink:0;}
+.lane-count{background:var(--lbg-green);color:#fff;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;white-space:nowrap;}
+.lane-count.muted{background:transparent;border:1px solid rgba(255,255,255,0.12);color:var(--text-muted);}
+.lane-count.orange{background:var(--aug-orange);}
+.chevron{width:14px;height:14px;color:var(--text-muted);transition:transform 0.25s ease;flex-shrink:0;}
+.lane.is-open .chevron{transform:rotate(180deg);}
+.lane-divider{height:1px;background:var(--border);margin:0 18px;display:none;}
+.lane.is-open .lane-divider{display:block;}
+.lane-body{display:none;padding:4px 18px 10px;}
+.lane.is-open .lane-body{display:block;}
+
+/* ── PATTERN WATCH LANE ── */
+.pattern-lane{background:linear-gradient(135deg,#0a0f1e 0%,#0d1525 100%);border-color:rgba(255,110,41,0.18);}
+.pattern-lane.is-open{border-color:var(--aug-orange);}
+.pattern-lane .lane-icon{background:var(--aug-orange-dim);font-style:normal;font-weight:800;font-size:14px;}
+.spectrum-legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 18px;padding:10px 14px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid var(--border);}
+.sl-item{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);}
+.sl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.pattern-card{display:flex;align-items:flex-start;gap:13px;padding:14px 0;border-bottom:1px solid var(--border);}
+.pattern-card:last-child{border-bottom:none;}
+.p-bar{width:3px;min-height:64px;border-radius:2px;flex-shrink:0;margin-top:3px;}
+.p-body{flex:1;min-width:0;}
+.p-name{font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:5px;}
+.p-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.p-cat{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:2px 7px;border-radius:4px;}
+.conf{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:var(--text-muted);font-weight:600;}
+.pip{width:5px;height:5px;border-radius:1px;background:rgba(255,255,255,0.1);}
+.pip.on{background:var(--aug-orange);}
+.p-desc{font-size:12px;color:var(--text-secondary);line-height:1.68;margin-bottom:4px;}
+.p-action{font-size:10px;color:var(--lbg-green);font-weight:600;font-style:italic;}
+
+/* ── EVENTS ── */
+.event{padding:15px 0;border-bottom:1px solid var(--border);}
+.event:last-child{border-bottom:none;}
+.event-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;}
+.pill{font-size:9px;font-weight:700;letter-spacing:0.05em;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.pill-high{background:var(--red-bg);color:var(--red);border:1px solid rgba(239,68,68,0.18);}
+.pill-watch{background:var(--amb-bg);color:var(--amb);border:1px solid rgba(234,179,8,0.18);}
+.event-name{font-size:13px;font-weight:700;color:var(--text-primary);line-height:1.35;}
+.event-meta{display:flex;align-items:center;gap:9px;margin-bottom:6px;flex-wrap:wrap;}
+.inst-badge{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--lbg-green);background:var(--lbg-green-dim);padding:2px 7px;border-radius:4px;}
+.event-date{font-size:11px;font-weight:600;color:var(--text-muted);}
+.event-sectors{font-size:11px;color:var(--text-muted);margin-bottom:5px;}
+.event-desc{font-size:12px;color:var(--text-secondary);line-height:1.7;}
+.event-source{font-size:10px;color:var(--text-muted);margin-top:5px;}
+.event-source a{color:rgba(0,106,77,0.8);text-decoration:none;transition:color 0.15s;}
+.event-source a:hover{color:var(--lbg-green);}
+.empty-lane{padding:18px 0;font-size:12px;color:var(--text-muted);font-style:italic;}
+
+/* ── SUB HEADINGS / TABLES ── */
+.sub-head{font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amb);background:var(--amb-bg);border:1px solid rgba(234,179,8,0.15);padding:2px 8px;border-radius:4px;display:inline-block;margin:16px 0 10px;}
+.reg-table{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0 4px;}
+.reg-table th{background:rgba(255,255,255,0.03);color:var(--text-muted);font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-align:left;padding:7px 10px;border-bottom:1px solid var(--border);}
+.reg-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.03);vertical-align:top;color:var(--text-secondary);}
+.reg-table tr:last-child td{border-bottom:none;}
+.reg-table strong{color:var(--text-primary);}
+
+/* ── CLIENT INTELLIGENCE LANE ── */
+.client-lane{border-color:rgba(255,110,41,0.20);}
+.client-lane.is-open{border-color:var(--aug-orange);}
+.client-lane .lane-count{background:var(--aug-orange);}
+.client-lane .inst-badge{color:var(--aug-orange);background:var(--aug-orange-dim);}
+
+/* ── ANALYST NOTES ── */
+.notes{background:var(--surface-3);border-radius:10px;border:1px solid var(--border);border-top:3px solid var(--lbg-green);padding:22px 24px;margin-top:10px;}
+.notes-label{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--lbg-green);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.notes-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.note{display:flex;gap:12px;margin-bottom:13px;font-size:12px;line-height:1.7;color:var(--text-secondary);}
+.note:last-child{margin-bottom:0;}
+.note-bar{width:2px;background:var(--lbg-green);border-radius:1px;flex-shrink:0;margin-top:4px;min-height:14px;}
+.note-bar.orange{background:var(--aug-orange);}
+.note strong{color:var(--text-primary);}
+.dist-hold{margin-top:16px;background:rgba(220,38,38,0.10);border:1px solid rgba(220,38,38,0.25);border-radius:6px;padding:12px 16px;font-size:12px;color:#fca5a5;display:flex;gap:8px;align-items:flex-start;}
+
+/* ── FOOTER ── */
+.footer{border-top:1px solid var(--border);padding:20px 48px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.footer-wm{width:80px;height:auto;opacity:0.22;}
+.footer-text{font-size:10px;color:var(--text-muted);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.footer-sep{width:1px;height:12px;background:var(--border);}
+
+/* ── PRINT ── */
+@media print{body{background:#fff;color:#000;}.horse-stage{display:none;}.lane-body{display:block !important;}.lane.is-open .lane-divider{display:block;}.chevron,.signal-wrap{display:none;}*{animation:none !important;transition:none !important;}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms !important;}}
+
+/* ── STATUS BADGES (renderer) ── */
+.badge{font-size:8px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin-left:7px;vertical-align:middle;white-space:nowrap;}
+.badge-confirmed{background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.3);}
+.badge-expected{background:rgba(234,179,8,0.13);color:#fbbf24;border:1px solid rgba(234,179,8,0.3);}
+.badge-watch{background:rgba(59,130,246,0.13);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);}
+.badge-unconfirmed{background:rgba(239,68,68,0.13);color:#f87171;border:1px solid rgba(239,68,68,0.3);}
+.dim{opacity:0.55;}
+
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="signal-wrap"><div class="signal-dot"></div><span class="signal-text">Live Intelligence</span></div>
+  <div class="header-inner">
+    <svg class="wm-svg" viewBox="160 118 710 238" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+      <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+      <path fill="#FFFFFF" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+      <path fill="#FFFFFF" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
+      <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+      <path fill="#FFFFFF" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+      <path fill="#FFFFFF" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+      <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+    </svg>
+    <div class="header-info">
+      <div class="header-edition" id="hEdition">Lloyds Banking Group · Forward Intelligence</div>
+      <div class="header-title" id="hTitle">Signscape</div>
+      <div class="header-date" id="hDate">—</div>
+      <div class="header-byline" id="hByline">Confidential</div>
+    </div>
+  </div>
+</div>
+<div class="header-bar"></div>
+
+<!-- ── HORSE STAGE ── -->
+<div class="horse-stage">
+  <div class="horizon-glow"></div>
+  <div class="horizon-line"></div>
+  <div class="horse-wrap">
+    <img class="horse-img" src="https://raw.githubusercontent.com/NafeJonze/assets/a99548788a4fcf6e590632d3071340b34f3ec73b/blackhorse.gif" alt="Lloyds Black Horse">
+  </div>
+</div>
+
+<!-- ── META BAR ── -->
+<div class="meta-bar">
+  <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value" id="mClient">—</span></div>
+  <div class="meta-sep"></div>
+  <div class="meta-item"><span class="meta-label">Week</span><span class="meta-value" id="mWeek">—</span></div>
+  <div class="meta-sep"></div>
+  <div class="meta-item"><span class="meta-label">Active Patterns</span><span class="meta-value" id="mPatterns" style="color:var(--aug-orange)">—</span></div>
+  <div class="meta-sep"></div>
+  <div class="meta-item"><span class="meta-label">Clash Alerts</span><span class="meta-value" id="mClash" style="color:var(--red)">—</span></div>
+  <div class="meta-sep"></div>
+  <div class="meta-item"><span class="meta-label">Read the signs</span><span class="meta-value" style="color:var(--text-muted);font-style:italic">Forward Intelligence · By Cision</span></div>
+</div>
+
+<div class="container" id="root"></div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <svg class="footer-wm" viewBox="160 118 710 238" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+    <path fill="#ffffff" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+    <path fill="#ffffff" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+    <path fill="#ffffff" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+    <path fill="#ffffff" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+    <path fill="#ffffff" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+    <path fill="#ffffff" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+  </svg>
+  <div class="footer-text" id="footText"></div>
+</div>
+
+<script id="embedded-data" type="application/json">{"meta": {"client": "Lloyds Banking Group", "edition": "Lloyds Banking Group \u00b7 Forward Intelligence", "title": "Signscape", "dateRange": "Monday 22 June \u2013 Friday 27 June 2026", "byline": "Prepared for Group Corporate Affairs, Lloyds Banking Group \u00b7 Confidential", "clashAlerts": 0}, "overview": "The week of 22\u201327 June 2026 sits in the post-clash period following today's combined MPC decision and ONS Labour Market release, with no confirmed Bank of England or ONS data events falling within the window itself. Activity is dominated by an active regulatory pipeline \u2014 the overdue motor finance redress Policy Statement, Consumer Duty scope consultation, and PSR card fee remedies \u2014 alongside two strongly expected Bank of England publications, the Financial Stability Report and Annual Report. No major competitor results are anticipated, so analyst focus should be on verifying expected regulatory and central-bank items against primary sources before stakeholder briefing.", "patterns": [{"name": "Bank of England Financial Stability Report", "category": "Economic", "confidence": "High", "precedents": "8 precedents", "desc": "The bi-annual Financial Stability Report is typically published in June (Week 2) and December. If not yet released this June, it may fall in the 22\u201327 June window. The FT leads on systemic risk findings and a Governor press conference follows publication; national titles focus on consumer and housing implications.", "action": "Monitor Bank of England press releases from Week 1. Note any Lloyds Banking Group-specific references and prepare housing/consumer reaction lines.", "clash": false}, {"name": "Bank of England Annual Report", "category": "Economic", "confidence": "High", "precedents": "4 precedents", "desc": "The Bank of England Annual Report is typically published in June Week 3, which overlaps the 22\u201327 June window. Status is EXPECTED \u2014 verify at the Bank of England website.", "action": "Monitor the Bank of England website from June Week 1 for publication.", "clash": false}, {"name": "ONS UK House Price Index", "category": "Economic", "confidence": "High", "precedents": "60 precedents", "desc": "The ONS UK House Price Index typically publishes on Week 4 Wednesday and may fall in or just after this window. Cross-reference with Halifax HPI timing for a consistent housing narrative.", "action": "Verify the exact date on the ONS release calendar and prepare Lloyds Banking Group housing market comment.", "clash": false}, {"name": "PSR Card Scheme Remedies \u2014 Final Decision", "category": "Regulatory", "confidence": "Medium", "precedents": "FCA Grid timeline", "desc": "The PSR's Final Decision on Remedies for card scheme and processing fees was scheduled for May\u2013June 2026 per the FCA Regulatory Initiatives Grid, making it EXPECTED this window or imminently \u2014 a high-relevance item for payments infrastructure.", "action": "Monitor the PSR website. Note implications for payments infrastructure and the competitive landscape.", "clash": false}, {"name": "Mansion House Speech (Chancellor + Governor)", "category": "Political", "confidence": "High", "precedents": "4 precedents", "desc": "The Mansion House Speech typically occurs in July Week 2\u20133 (Thursday). It is not in this window but is approaching and is a major annual event for financial services policy.", "action": "Begin monitoring Treasury signals for expected themes and pre-brief a City/financial services reaction briefing.", "clash": false}], "lanes": [{"title": "Political & Governmental", "icon": "\ud83c\udfdb\ufe0f", "count": 1, "events": [{"name": "Treasury Select Committee \u2014 FCA Accountability Sessions", "badge": "watch", "institution": "House of Commons Treasury Select Committee", "date": "Date TBC \u2014 verify at parliament.uk", "desc": "TSC hearings on FCA accountability (motor finance, Consumer Duty) are an active annual pattern. The week of 22\u201327 June is likely still within the parliamentary sitting period; verify the parliamentary calendar for any sessions scheduled in this window. No MPC decision or HM Treasury speech is confirmed within the window \u2014 the June MPC decision falls today (18 June), with the next on 30 July 2026."}]}, {"title": "Regulatory", "icon": "\u2696\ufe0f", "count": 4, "events": [{"name": "Motor Finance Commission Redress Scheme \u2014 Policy Statement", "badge": "watch", "priority": true, "institution": "Financial Conduct Authority", "date": "Overdue \u2014 expected Feb/Mar 2026", "desc": "The FCA's consultation on the industry-wide consumer redress scheme closed 12 December 2025, with a Policy Statement and final rules expected in early 2026. As of this briefing it has not been confirmed as published. <strong>HIGH PRIORITY for the Group given Black Horse's direct exposure.</strong> Verify at fca.org.uk daily."}, {"name": "Consumer Duty \u2014 Scope & Distribution Chain Consultation", "badge": "expected", "institution": "Financial Conduct Authority", "date": "Planned H1 2026", "desc": "Consultation on the application and requirements of the Consumer Duty, including through distribution chains, was planned for H1 2026 \u2014 expected during this window or imminently. High relevance given distribution chain implications. Verify at fca.org.uk."}, {"name": "PSR Card Scheme & Processing Fees \u2014 Final Decision on Remedies", "badge": "expected", "institution": "Payment Systems Regulator", "date": "Scheduled May\u2013June 2026", "desc": "Final Decision on Remedies for the market review of card scheme and processing fees was scheduled for May\u2013June 2026 per the FCA Grid \u2014 expected this window or imminently. High relevance for payments infrastructure. Verify at psr.org.uk."}, {"name": "SM&CR Reforms \u2014 Phase 1 Implementation", "badge": "watch", "institution": "FCA / HM Treasury / PRA", "date": "Expected mid-2026", "desc": "Following Policy Statements and final rules, the first phase of SM&CR reforms was expected mid-2026, meaning implementation may be imminent. High relevance for senior management accountability. Verify at fca.org.uk."}]}, {"title": "Economic Data Releases", "icon": "\ud83d\udcca", "count": 2, "events": [{"name": "Bank of England Financial Stability Report", "badge": "expected", "institution": "Bank of England", "date": "Typically June Week 2 \u2014 may fall this window", "desc": "The bi-annual FSR is the highest-priority unconfirmed item for next week. If not yet published this June, it may fall in the 22\u201327 June window. Governor press conference follows publication. Verify immediately at bankofengland.co.uk."}, {"name": "ONS UK House Price Index", "badge": "expected", "institution": "Office for National Statistics", "date": "Typically Week 4 Wednesday \u2014 verify", "desc": "The ONS UK House Price Index typically publishes in late June and may fall in or just after this window. No ONS releases were confirmed within 22\u201327 June in the data retrieved; verify the full calendar at ons.gov.uk/releasecalendar. Today's Labour Market release (18 June) and the June MPC decision both sit outside next week's window."}]}, {"title": "Industry & Market Events", "icon": "\ud83c\udfe6", "count": 1, "events": [{"name": "UK Finance Mortgage Lending Data", "badge": "expected", "institution": "UK Finance", "date": "Typically Week 3 of the month", "desc": "UK Finance mortgage lending data is typically published in Week 3 and may fall within the 22\u201327 June window. Verify at ukfinance.org.uk/data-and-research. Note: Halifax House Price Index (first Friday) and the Lloyds Business Barometer (first Tuesday) have already been released this month \u2014 next releases are in July."}]}, {"title": "Competitor Watch", "icon": "\ud83d\udc41\ufe0f", "count": 0, "empty": "No major bank results expected in this window. H1 reporting begins late July/early August. Challenger banks (Revolut, Monzo, Starling) follow no fixed public calendar \u2014 monitor newsrooms daily for ad-hoc product news or any FCA enforcement action."}, {"title": "Policy Pipeline", "icon": "\ud83d\udee3\ufe0f", "count": 3, "events": [{"name": "Buy Now Pay Later \u2014 Regulation Go-Live Build-Up", "badge": "watch", "institution": "FCA / HM Treasury", "date": "Go-live 15 July 2026", "desc": "BNPL becomes a regulated activity on 15 July 2026. Expect pre-implementation communications and building media coverage in this window. Relevant for the Group's consumer credit and competitive positioning narrative."}, {"name": "Advice Guidance Boundary Review \u2014 Targeted Support Regime", "badge": "expected", "institution": "FCA / HM Treasury", "date": "Scheduled to go live Apr\u2013Jun 2026", "desc": "The new targeted support regime was scheduled to go live April\u2013June 2026 and may now be live or recently launched. If live, expect ongoing media and industry commentary. Monitor FCA communications and trade press."}, {"name": "LTI Flow Limit Changes", "badge": "watch", "institution": "PRA / FCA", "date": "H2 2026 implementation", "desc": "The PRA and FCA planned to implement the FPC's LTI recommendation during H2 2026, following a Q1 2026 Consultation Paper. The consultation may have closed; watch for a Policy Statement. High relevance for mortgage lending volumes."}]}, {"title": "Lloyds Banking Group Standing Publications", "icon": "\ud83d\udcf0", "count": 0, "empty": "The Halifax House Price Index (next: Friday 3 July 2026) and Lloyds Business Barometer (next: Tuesday 7 July 2026) fall outside this window. The Group's quarterly H1 results are next expected in July. No standing publication actions are required this week."}], "notes": [{"label": "MPC decision (today, not next week):", "text": "The June MPC decision falls today, Thursday 18 June 2026, not in next week's window. Bank Rate has been maintained at 3.75% since at least April 2026. Next decision: 30 July 2026. Ensure today's decision is captured in the current briefing cycle.", "clash": false}, {"label": "ONS Labour Market (today):", "text": "UK Labour Market statistics for June 2026 were released today at 7:00am \u2014 a major data release to capture in today's briefing. No ONS releases were confirmed within the 22\u201327 June window in the data retrieved; verify the full ONS calendar.", "clash": false}, {"label": "Motor finance redress scheme \u2014 OVERDUE:", "text": "The FCA's Policy Statement was expected Feb/Mar 2026 and is not confirmed as published. HIGH PRIORITY watch item given Black Horse's direct exposure \u2014 check fca.org.uk daily.", "clash": false}, {"label": "Bank of England FSR \u2014 top unconfirmed item:", "text": "The bi-annual Financial Stability Report is typically June (Week 2). If not yet published this June, it may fall in the 22\u201327 June window \u2014 verify immediately at bankofengland.co.uk.", "clash": false}, {"label": "Parliamentary recess:", "text": "Parliament typically rises in late July, so the week of 22\u201327 June is likely still a sitting period. Verify the parliamentary calendar for any Treasury Select Committee hearings.", "clash": false}, {"label": "Think tanks / policy bodies:", "text": "No confirmed publications from the Resolution Foundation, IFS, NIESR or TheCityUK were identified for this window \u2014 monitor their websites directly.", "clash": false}, {"label": "No clash alert this week:", "text": "The \"MPC Decision + ONS Data Clash Week\" pattern (Very High confidence, 12 precedents) is active today but both events fall on 18 June, outside next week's window. No clash is detected for 22\u201327 June.", "clash": false}, {"label": "Verification reminder:", "text": "All items marked EXPECTED or WATCH must be verified against primary sources before inclusion in any client-facing briefing. Do not state specific dates for unconfirmed events.", "clash": false}], "clientIntelligence": null, "distHold": "This briefing must not be distributed to Lloyds Banking Group client contacts (Emma Fairhurst, Matt Smith) until all flagged items have been verified."}</script>
+<script>
+
+const CAT = {
+  "Regulatory":"#9333ea","Economic":"#3b82f6","Industry":"#22c55e",
+  "Industry / Results":"#22c55e","Results":"#22c55e","Political":"#eab308","Clash Pattern":"#FF6E29","Clash":"#FF6E29"
+};
+const CONF_PIPS = {"Very High":5,"High":4,"Medium":3,"Low":2,"Inferred":1};
+function esc(s){return (s==null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;}
+function pips(level){const on=CONF_PIPS[level]||0;let h="";for(let i=0;i<5;i++)h+=`<span class="pip${i<on?' on':''}"></span>`;return h;}
+function badge(b){if(!b)return "";const k=String(b).toLowerCase();const lbl={confirmed:"Confirmed",expected:"Expected",watch:"Watch",unconfirmed:"Unconfirmed"}[k]||b;return `<span class="badge badge-${k}">${esc(lbl)}</span>`;}
+
+function patternCard(p){
+  const col = CAT[p.category]||"#3b82f6";
+  const name = (p.clash?"⚠️ ":"")+esc(p.name);
+  return `<div class="pattern-card">
+    <div class="p-bar" style="background:${col}"></div>
+    <div class="p-body">
+      <div class="p-name">${name}</div>
+      <div class="p-meta">
+        <span class="p-cat" style="background:${rgba(col,0.1)};color:${col};border:1px solid ${rgba(col,0.25)}">${esc(p.category)}</span>
+        <span class="conf">Confidence: ${esc(p.confidence)} <span style="margin-left:5px;display:inline-flex;gap:2px">${pips(p.confidence)}</span></span>
+        ${p.precedents?`<span style="font-size:10px;color:var(--text-muted)">${esc(p.precedents)}</span>`:""}
+      </div>
+      <div class="p-desc">${p.desc||""}</div>
+      ${p.action?`<div class="p-action">Analyst action: ${esc(p.action)}</div>`:""}
+    </div></div>`;
+}
+function eventRow(e){
+  const pill = e.priority?`<span class="pill pill-high">⚠ Priority</span>`:"";
+  return `<div class="event">
+    <div class="event-top">${pill}<div class="event-name">${esc(e.name)}${badge(e.badge)}</div></div>
+    <div class="event-meta">${e.institution?`<span class="inst-badge">${esc(e.institution)}</span>`:""}${e.date?`<span class="event-date">${esc(e.date)}</span>`:""}</div>
+    ${e.desc?`<div class="event-desc">${e.desc}</div>`:""}
+  </div>`;
+}
+function lane(l){
+  const open = l.count>0 ? " is-open":"";
+  const cntClass = l.count>0 ? "" : " muted";
+  let inner = "";
+  if(!l.events || l.events.length===0){
+    inner = `<div class="empty-lane">${esc(l.empty||"No confirmed events within this window.")}</div>`;
+  } else {
+    inner = l.events.map(eventRow).join("");
+  }
+  return `<div class="lane${open}">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left">
+        <div class="lane-icon">${l.icon||"•"}</div>
+        <div><div class="lane-title">${esc(l.title)}</div>${l.subtitle?`<div class="lane-subtitle">${esc(l.subtitle)}</div>`:""}</div>
+      </div>
+      <div class="lane-right">
+        <span class="lane-count${cntClass}">${l.count} ${l.count===1?"item":"items"}</span>
+        <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+      </div>
+    </div>
+    <div class="lane-divider"></div>
+    <div class="lane-body">${inner}</div>
+  </div>`;
+}
+function patternLane(d){
+  const cards = (d.patterns&&d.patterns.length)? d.patterns.map(patternCard).join("")
+    : `<div class="empty-lane">No patterns flagged as active for this week.</div>`;
+  return `<div class="lane pattern-lane is-open">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left">
+        <div class="lane-icon" style="color:var(--aug-orange)">◎</div>
+        <div><div class="lane-title">augur Pattern Watch</div>
+        <div class="lane-subtitle">Active signals from the augur Archive Pattern Library · 48 patterns · 5 categories</div></div>
+      </div>
+      <div class="lane-right"><span class="lane-count orange">${(d.patterns||[]).length} active</span>
+      <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg></div>
+    </div>
+    <div class="lane-divider"></div>
+    <div class="lane-body">
+      <div class="spectrum-legend">
+        <div class="sl-item"><div class="sl-dot" style="background:#9333ea"></div>Regulatory</div>
+        <div class="sl-item"><div class="sl-dot" style="background:#3b82f6"></div>Economic</div>
+        <div class="sl-item"><div class="sl-dot" style="background:#22c55e"></div>Industry / Results</div>
+        <div class="sl-item"><div class="sl-dot" style="background:#eab308"></div>Political</div>
+        <div class="sl-item"><div class="sl-dot" style="background:#FF6E29"></div>Clash Pattern</div>
+      </div>${cards}</div></div>`;
+}
+function notesBlock(d){
+  if(!d.notes||!d.notes.length) return "";
+  const items = d.notes.map(n=>`<div class="note"><div class="note-bar${n.clash?' orange':''}"></div><div>${n.clash?"<strong>⚠️ CLASH ALERT:</strong> ":(n.label?`<strong>${esc(n.label)}</strong> `:"")}${n.text||""}</div></div>`).join("");
+  const hold = d.distHold?`<div class="dist-hold">⚠️ <span>${esc(d.distHold)}</span></div>`:"";
+  return `<div class="notes"><div class="notes-label">Analyst Notes</div>${items}${hold}</div>`;
+}
+function clientLane(d){
+  if(!d.clientIntelligence||!d.clientIntelligence.events||!d.clientIntelligence.events.length) return "";
+  const evs = d.clientIntelligence.events.map(eventRow).join("");
+  return `<div class="lane client-lane is-open">
+    <div class="lane-header" onclick="toggleLane(this)">
+      <div class="lane-left"><div class="lane-icon">📣</div>
+      <div><div class="lane-title">Lloyds Banking Group — Client Intelligence</div>
+      <div class="lane-subtitle">Confirmed client activity · ${esc(d.meta.dateRange||"")}</div></div></div>
+      <div class="lane-right"><span class="lane-count">${d.clientIntelligence.events.length} items</span>
+      <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg></div>
+    </div><div class="lane-divider"></div><div class="lane-body">${evs}</div></div>`;
+}
+
+function render(d){
+  const m=d.meta||{};
+  document.getElementById('hEdition').textContent=m.edition||"";
+  document.getElementById('hTitle').textContent=m.title||"Signscape";
+  document.getElementById('hDate').textContent=m.dateRange||"";
+  document.getElementById('hByline').textContent=m.byline||"";
+  document.getElementById('mClient').textContent=m.client||"";
+  document.getElementById('mWeek').textContent=m.dateRange||"";
+  document.getElementById('mPatterns').textContent=((d.patterns||[]).length)+" flagged";
+  document.getElementById('mClash').textContent=(m.clashAlerts!=null?m.clashAlerts:0)+" this week";
+  document.title = (m.client||"augur")+" — Signscape";
+
+  let html = "";
+  if(d.overview) html += `<div class="overview"><div class="overview-label">Executive Overview</div><p>${d.overview}</p></div>`;
+  html += patternLane(d);
+  (d.lanes||[]).forEach(l=>html+=lane(l));
+  html += clientLane(d);
+  html += notesBlock(d);
+  document.getElementById('root').innerHTML = html;
+
+  document.getElementById('footText').innerHTML =
+    `<span>Prepared by Rapid Intelligence UK · Cision</span><div class="footer-sep"></div>`+
+    `<span>${esc(m.byline||"")}</span><div class="footer-sep"></div>`+
+    `<span>${esc(m.dateRange||"")}</span><div class="footer-sep"></div><span>Confidential · Not for distribution</span>`;
+}
+function toggleLane(h){h.closest('.lane').classList.toggle('is-open');}
+
+(async function(){
+  let data=null;
+  try{ const r=await fetch('signscape-data.json',{cache:'no-store'}); if(r.ok) data=await r.json(); }catch(e){}
+  if(!data){ try{ data=JSON.parse(document.getElementById('embedded-data').textContent); }catch(e){} }
+  if(data) render(data);
+})();
+try{window.GleanBridge.postMessage({actionId:'export-pdf',type:'glean-add-menu',metadata:{label:'Export as PDF',icon:'export'}});window.GleanBridge.onMessage('action',d=>{if(d.actionId==='export-pdf')window.print();});}catch(e){}
+
+</script>
+</body>
+</html>
