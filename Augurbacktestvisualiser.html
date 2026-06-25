@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>augur Vantage · Back-Test Scorecard</title>
+<style>
+:root{
+  --aug-orange:#FF6E29; --aug-orange-dim:rgba(255,110,41,0.12); --aug-navy:#16215B;
+  --aug-blue-mid:#1F299C; --aug-blue-bright:#016CFF;
+  --bg:#06080f; --surface:#0d1117; --surface-2:#0a0f1e;
+  --border:rgba(255,255,255,0.07); --border-orange:rgba(255,110,41,0.25);
+  --text-primary:#f0f2f5; --text-secondary:rgba(240,242,245,0.62); --text-muted:rgba(240,242,245,0.34);
+  --reg:#9333ea; --eco:#3b82f6; --ind:#22c55e; --pol:#eab308; --cla:#FF6E29;
+  --hit:#22c55e; --miss:#ef4444;
+  --hit-dim:rgba(34,197,94,0.12); --miss-dim:rgba(239,68,68,0.12);
+}
+*{box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--text-primary);font-size:15px;line-height:1.6;margin:0;
+  background-image:radial-gradient(circle at 18% 8%,rgba(31,41,156,0.18),transparent 45%),radial-gradient(circle at 85% 0%,rgba(255,110,41,0.07),transparent 40%);}
+.wrap{max-width:1180px;margin:0 auto;padding:26px 28px 60px;}
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--border);margin-bottom:30px;flex-wrap:wrap;}
+.nav-left{display:flex;align-items:center;gap:16px;}
+.wm-svg{height:42px;width:auto;display:block;}
+.nav-tag{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);border-left:1px solid var(--border);padding-left:16px;}
+.nav-tag b{color:var(--aug-orange);font-weight:600;}
+.edpill{font-size:12px;color:var(--text-secondary);background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:7px 15px;}
+.edpill .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--hit);margin-right:8px;box-shadow:0 0 8px var(--hit);vertical-align:middle;}
+/* hero */
+.hero{display:grid;grid-template-columns:300px 1fr;gap:22px;margin-bottom:14px;}
+@media(max-width:820px){.hero{grid-template-columns:1fr;}}
+.verdict{background:linear-gradient(160deg,var(--surface),var(--surface-2));border:1px solid var(--border-orange);border-radius:18px;padding:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;}
+.verdict::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(255,110,41,0.12),transparent 60%);pointer-events:none;}
+.ring{position:relative;width:150px;height:150px;}
+.ring svg{transform:rotate(-90deg);}
+.ring-c{font-size:44px;font-weight:700;line-height:1;}
+.ring-l{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-secondary);margin-top:5px;}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.verdict-sub{margin-top:16px;font-size:13px;color:var(--text-secondary);}
+.verdict-sub b{color:var(--text-primary);}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:520px){.tiles{grid-template-columns:1fr;}}
+.tile{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;}
+.tile .v{font-size:34px;font-weight:700;letter-spacing:-.02em;}
+.tile .l{font-size:12px;color:var(--text-secondary);margin-top:4px;}
+.tile .sub{font-size:11px;color:var(--text-muted);margin-top:8px;}
+.tile .accent{position:absolute;top:0;left:0;width:3px;height:100%;}
+/* flow */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin:24px 0 34px;}
+@media(max-width:720px){.flow{grid-template-columns:1fr;gap:14px;}.flow .arrow{display:none;}}
+.fnode{text-align:center;}
+.fnode .ico{width:40px;height:40px;border-radius:11px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:19px;border:1px solid var(--border);}
+.fnode h4{margin:0 0 4px;font-size:14px;}
+.fnode p{margin:0;font-size:12px;color:var(--text-secondary);line-height:1.5;}
+.arrow{color:var(--aug-orange);font-size:22px;opacity:.7;}
+.sec-h{display:flex;align-items:baseline;gap:12px;margin:36px 0 16px;}
+.sec-h h2{font-size:18px;margin:0;font-weight:650;letter-spacing:-.01em;}
+.sec-h .note{font-size:12px;color:var(--text-muted);}
+/* calls grid */
+.calls{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:720px){.calls{grid-template-columns:1fr;}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 18px 16px;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;position:relative;}
+.card:hover{border-color:var(--border-orange);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.35);}
+.card.miss{border-color:rgba(239,68,68,0.3);background:linear-gradient(160deg,var(--surface),rgba(239,68,68,0.04));}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.cid{display:flex;align-items:center;gap:9px;}
+.cid .chip{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--text-secondary);background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:3px 7px;}
+.cid .band{width:9px;height:9px;border-radius:50%;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.1em;padding:4px 10px;border-radius:999px;}
+.badge.HIT{color:var(--hit);background:var(--hit-dim);border:1px solid rgba(34,197,94,0.3);}
+.badge.MISS{color:var(--miss);background:var(--miss-dim);border:1px solid rgba(239,68,68,0.3);}
+.card h3{font-size:15px;margin:0 0 8px;font-weight:600;line-height:1.35;}
+.card .callt{font-size:13px;color:var(--text-secondary);margin:0 0 12px;}
+.crit{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:var(--text-muted);background:var(--surface-2);border:1px solid var(--border);border-radius:7px;padding:7px 10px;margin-bottom:10px;}
+.confrow{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+.conf{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-secondary);}
+.bars{display:flex;gap:2px;}
+.bars i{width:6px;height:11px;border-radius:1px;background:var(--border);display:block;}
+.bars i.on.high{background:var(--hit);}
+.bars i.on.med{background:var(--pol);}
+.bars i.on.low{background:var(--aug-orange);}
+.bars i.on.lowmed{background:var(--aug-orange);}
+.reveal{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.card.open .reveal{max-height:260px;}
+.reveal-in{padding-top:12px;margin-top:12px;border-top:1px solid var(--border);}
+.reveal-in .res{font-size:13px;margin:0 0 9px;}
+.reveal-in .res b{color:var(--text-primary);}
+.reveal-in .why{font-size:12.5px;color:var(--text-secondary);margin:0;font-style:italic;}
+.exp{font-size:11px;color:var(--text-muted);margin-top:11px;text-align:right;}
+.card.open .exp{color:var(--aug-orange);}
+/* analytics */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+@media(max-width:820px){.two{grid-template-columns:1fr;}}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;}
+.panel h3{margin:0 0 4px;font-size:15px;font-weight:600;}
+.panel .ph{font-size:12px;color:var(--text-secondary);margin:0 0 18px;}
+/* ai meter */
+.meter{display:flex;align-items:flex-end;gap:5px;height:140px;padding-top:10px;}
+.mbar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%;}
+.mbar .b{width:100%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,var(--aug-orange),rgba(255,110,41,0.35));transition:height .6s ease;}
+.mbar.train .b{background:linear-gradient(180deg,rgba(59,130,246,0.7),rgba(59,130,246,0.25));}
+.mbar .wl{font-size:9px;color:var(--text-muted);}
+.mbar .vl{font-size:10px;color:var(--text-secondary);font-weight:600;}
+.legend{display:flex;gap:16px;font-size:11px;color:var(--text-secondary);margin-top:14px;}
+.legend span{display:flex;align-items:center;gap:6px;}
+.legend i{width:11px;height:11px;border-radius:3px;display:block;}
+/* heatmap */
+.hm{display:grid;gap:3px;font-size:11px;}
+.hm-row{display:grid;grid-template-columns:84px repeat(7,1fr);gap:3px;align-items:center;}
+.hm-lab{color:var(--text-secondary);font-size:11px;text-align:right;padding-right:6px;display:flex;align-items:center;justify-content:flex-end;gap:5px;}
+.hm-lab .band{width:7px;height:7px;border-radius:50%;flex:none;}
+.hm-cell{aspect-ratio:1.4/1;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,255,255,0.85);border:1px solid var(--border);transition:transform .12s;cursor:default;min-height:26px;}
+.hm-cell:hover{transform:scale(1.12);z-index:2;border-color:var(--aug-orange);}
+.hm-head{display:grid;grid-template-columns:84px repeat(7,1fr);gap:3px;margin-bottom:5px;}
+.hm-head div{font-size:10px;color:var(--text-muted);text-align:center;}
+.hm-head .corner{}
+/* miss spotlight */
+.spot{background:linear-gradient(160deg,var(--surface),rgba(239,68,68,0.05));border:1px solid rgba(239,68,68,0.28);border-radius:16px;padding:24px 26px;margin-top:18px;}
+.spot-h{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+.spot-h .badge{flex:none;}
+.spot-h h3{margin:0;font-size:17px;}
+.spot .lead{font-size:13.5px;color:var(--text-secondary);margin:0 0 20px;max-width:760px;}
+.prism{display:grid;grid-template-columns:160px 1fr;gap:20px;align-items:center;}
+@media(max-width:620px){.prism{grid-template-columns:1fr;}}
+.prism-in{text-align:center;}
+.prism-in .n{font-size:38px;font-weight:700;}
+.prism-in .nl{font-size:11px;color:var(--text-secondary);letter-spacing:.08em;text-transform:uppercase;}
+.prism-in .kw{font-family:"SF Mono",ui-monospace,monospace;font-size:11px;color:var(--text-muted);margin-top:8px;}
+.splits{display:flex;flex-direction:column;gap:8px;}
+.split{display:flex;align-items:center;gap:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;}
+.split .tag{font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:5px;flex:none;}
+.split.phantom .tag{color:var(--miss);background:var(--miss-dim);}
+.split.real .tag{color:var(--hit);background:var(--hit-dim);}
+.split .txt{font-size:13px;}
+.split .txt b{color:var(--text-primary);}
+.split.real{border-color:rgba(34,197,94,0.3);}
+.spot-foot{margin-top:20px;font-size:13px;color:var(--text-secondary);border-top:1px solid var(--border);padding-top:16px;}
+.spot-foot b{color:var(--aug-orange);}
+/* footer */
+.foot{margin-top:46px;padding-top:26px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.foot-wm{height:30px;opacity:.85;}
+.foot p{margin:0;font-size:11.5px;color:var(--text-muted);max-width:620px;line-height:1.6;}
+.foot .tagline{color:var(--aug-orange);font-style:italic;font-size:13px;}
+.fade{opacity:0;transform:translateY(10px);animation:fadein .5s ease forwards;}
+@keyframes fadein{to{opacity:1;transform:none;}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.fade{opacity:1;transform:none;}}
+@media print{
+  body{background:#fff!important;color:#111!important;}
+  body,.wrap{background:#fff!important;}
+  .card,.panel,.tile,.verdict,.flow,.spot,.split,.crit,.hm-cell{box-shadow:none!important;}
+  .card .reveal{max-height:none!important;}
+  *{animation:none!important;transition:none!important;}
+  .exp{display:none!important;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav fade">
+    <div class="nav-left">
+      <svg class="wm-svg" viewBox="160 115 725 240" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+      <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+      <path fill="#FFFFFF" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+      <path fill="#FFFFFF" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
+      <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+      <path fill="#FFFFFF" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+      <path fill="#FFFFFF" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+      <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+    </svg>
+      <div class="nav-tag">Vantage · <b>Back-Test Scorecard</b></div>
+    </div>
+    <div class="edpill"><span class="dot"></span>LBG Edition · 30 Apr – 23 Jun 2026</div>
+  </div>
+
+  <div class="hero fade" style="animation-delay:.05s">
+    <div class="verdict">
+      <div class="ring">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+          <circle cx="75" cy="75" r="64" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="11"/>
+          <circle cx="75" cy="75" r="64" fill="none" stroke="#22c55e" stroke-width="11" stroke-linecap="round"
+            stroke-dasharray="402" stroke-dashoffset="50" style="filter:drop-shadow(0 0 6px rgba(34,197,94,0.5));"/>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-c">7<span style="color:var(--text-muted);font-size:26px;">/8</span></div>
+          <div class="ring-l">calls landed</div>
+        </div>
+      </div>
+      <div class="verdict-sub">augur committed <b>8 calls</b> from training, froze them, and reality voted on a week it had <b>never seen</b>.</div>
+    </div>
+    <div class="tiles">
+      <div class="tile"><span class="accent" style="background:var(--eco)"></span><div class="v">39</div><div class="l">weekday editions read</div><div class="sub">30 Apr – 23 Jun 2026</div></div>
+      <div class="tile"><span class="accent" style="background:var(--cla)"></span><div class="v">1,167</div><div class="l">signals parsed</div><div class="sub">machine-readable HTML, lane-tagged</div></div>
+      <div class="tile"><span class="accent" style="background:var(--ind)"></span><div class="v">32<span style="color:var(--text-muted);font-size:20px;"> / 7</span></div><div class="l">train / held-out split</div><div class="sub">derive on 32, test on 7 unseen</div></div>
+      <div class="tile"><span class="accent" style="background:var(--miss)"></span><div class="v">1</div><div class="l">instructive miss</div><div class="sub">named the next engine upgrade</div></div>
+    </div>
+  </div>
+
+  <div class="flow fade" style="animation-delay:.1s">
+    <div class="fnode"><div class="ico" style="color:var(--eco);border-color:rgba(59,130,246,.4)">&#9737;</div><h4>1 &middot; Derive</h4><p>Patterns mined from the 32 training editions only. Calendar anchor harvested from training text.</p></div>
+    <div class="arrow">&rarr;</div>
+    <div class="fnode"><div class="ico" style="color:var(--aug-orange);border-color:var(--border-orange)">&#128274;</div><h4>2 &middot; Freeze</h4><p>8 dated, falsifiable calls committed to a sealed file <i>before</i> any test edition was opened.</p></div>
+    <div class="arrow">&rarr;</div>
+    <div class="fnode"><div class="ico" style="color:var(--hit);border-color:rgba(34,197,94,.4)">&#9989;</div><h4>3 &middot; Score</h4><p>The same tagger read the 7 held-out editions. Reality voted by code, not by recall.</p></div>
+  </div>
+
+  <div class="sec-h"><h2>The eight calls</h2><span class="note">click any card to see the result &amp; reasoning</span></div>
+  <div class="calls" id="calls"></div>
+
+  <div class="sec-h"><h2>The evidence</h2><span class="note">what the held-out week actually did</span></div>
+  <div class="two">
+    <div class="panel fade">
+      <h3>AI = the meter</h3>
+      <p class="ph">Weekly AI signal volume. Not a spike &mdash; a rising baseline the rest of the coverage is read against.</p>
+      <div class="meter" id="meter"></div>
+      <div class="legend">
+        <span><i style="background:rgba(59,130,246,0.7)"></i>Training (wk 18–24)</span>
+        <span><i style="background:var(--aug-orange)"></i>Held-out (wk 25–26)</span>
+      </div>
+    </div>
+    <div class="panel fade" style="animation-delay:.08s">
+      <h3>Held-out week, theme by theme</h3>
+      <p class="ph">Signal counts across the 7 unseen editions. Darker = louder. The motor-finance row is the dropped beat that barks on 23 Jun.</p>
+      <div class="hm-head" id="hmhead"></div>
+      <div class="hm" id="hm"></div>
+    </div>
+  </div>
+
+  <div class="sec-h"><h2>The instructive miss</h2><span class="note">why P4 is the most valuable result</span></div>
+  <div class="spot fade">
+    <div class="spot-h"><span class="badge MISS">MISS</span><h3>P4 &middot; Motor finance &mdash; the dropped beat that barked</h3></div>
+    <p class="lead">The pattern was vindicated: motor finance fell silent 15–22 Jun, then barked on 23 Jun with the FCA’s £9bn redress story. But the keyword classifier tagged <b>4 stories</b> as motor finance — and only one was real. That single false positive is the whole argument for the bounded LLM in Station&nbsp;4.</p>
+    <div class="prism">
+      <div class="prism-in">
+        <div class="n" style="color:var(--miss)">3 <span style="color:var(--text-muted);font-size:24px;">+ 1</span></div>
+        <div class="nl">phantoms &middot; real</div>
+        <div class="kw">match: "redress" / "finance"</div>
+      </div>
+      <div class="splits">
+        <div class="split phantom"><span class="tag">PHANTOM</span><div class="txt"><b>UK–Japan £18bn deal</b> &mdash; matched on “finance”, unrelated</div></div>
+        <div class="split phantom"><span class="tag">PHANTOM</span><div class="txt"><b>KKR EV / battery debt raise</b> &mdash; wrong kind of “car finance”</div></div>
+        <div class="split phantom"><span class="tag">PHANTOM</span><div class="txt"><b>Scottish Widows pension redress</b> &mdash; matched on “redress”, a different scheme entirely</div></div>
+        <div class="split real"><span class="tag">REAL</span><div class="txt"><b>23 Jun &middot; FCA scolds motor-finance lenders over £9bn redress</b> &mdash; the genuine bark</div></div>
+      </div>
+    </div>
+    <div class="spot-foot">A hit that flatters is a win wasted; <b>a miss that teaches is the loop earning its keep.</b> The keyword stub is a floor &mdash; it cannot separate a phantom rhyme from a real one. This is precisely the judgement a bounded LLM is for, and the back-test handed us its acceptance test: re-run P4, watch the three phantoms drop out, and confirm the 23 Jun bark survives.</div>
+  </div>
+
+  <div class="foot">
+    <svg class="foot-wm" viewBox="160 115 725 240" xmlns="http://www.w3.org/2000/svg"><path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/></svg>
+    <p><span class="tagline">Read the signs.</span><br>First falsifiable hold-out back-test of the augur engine, run end-to-end over the LBG corpus. Patterns derived from 30 Apr–12 Jun and frozen; scored against the unseen 15–23 Jun window. <i>Caveat: the cleanest proof requires the zero-foreknowledge Copilot Studio agent to derive in place.</i></p>
+  </div>
+</div>
+
+<script>
+const DATA = {"calls": [{"id": "P1", "theme": "eco", "title": "MPC rate decision + coverage spike", "call": "A rate decision lands in the window (~18 Jun), most likely a HOLD; rate coverage spikes that week.", "crit": "rates present in \u22655/7 test editions", "result": "Present in 7/7. MPC held on 18 Jun, coverage peaked mid-window.", "verdict": "HIT", "conf": [["Direction", "high"], ["Hold call", "med"]], "why": "The 12 Jun edition itself said the MPC \u2018decides next week\u2019; Alan Taylor (10 Jun) signalled a likely hold. The calendar anchor was harvested from training only \u2014 augur knew the date without seeing the result."}, {"id": "P2", "theme": "eco", "title": "Post-MPC mortgage repricing cascade", "call": "Lenders reprice after the decision; mortgage coverage visible across the window and after the MPC date.", "crit": "mortgage present in \u22654/7 test editions", "result": "Present in 5/7, clustered from 18 Jun onward \u2014 the cascade fired on cue.", "verdict": "HIT", "conf": [["Confidence", "high"]], "why": "A rate decision is a starting gun; the repricing cascade is the report that follows. Short fuse, fast-scoring \u2014 exactly the pattern type a 7-day window can test."}, {"id": "P3", "theme": "cla", "title": "AI = the meter (rising baseline)", "call": "AI persists as the dominant recurring theme at or near its peak baseline.", "crit": "AI in \u22656/7 editions AND \u226512 signals total", "result": "Present in 6/7, 28 signals \u2014 the drumbeat held at peak.", "verdict": "HIT", "conf": [["Confidence", "high"]], "why": "AI isn\u2019t a spike, it\u2019s the meter the rest of the coverage is measured against. It climbed 3\u219224 signals/week across training and stayed loud in the held-out week."}, {"id": "P4", "theme": "pol", "title": "Motor finance = the dropped beat", "call": "Motor finance stays quiet early, then BARKS when an FCA/redress trigger appears.", "crit": "\u22641/edition early, then a single edition with \u22653", "result": "Genuinely silent 15\u201322 Jun, then barked 23 Jun (FCA \u00a39bn redress). But the keyword stub tagged 3 phantoms + 1 real \u2014 mechanical MISS.", "verdict": "MISS", "conf": [["Bark", "med"], ["Timing", "low"]], "why": "The pattern was vindicated; the classifier was not. The stub counted a Scottish-Widows pension-redress story as motor finance. This miss is the headline \u2014 it names the next engine upgrade."}, {"id": "P5", "theme": "ind", "title": "Results / earnings season over", "call": "Earnings coverage falls below the training rate as the season closes.", "crit": "test avg/edition < 1.0 (training 1.22)", "result": "0.43 per edition vs 1.22 in training \u2014 the season visibly closed.", "verdict": "HIT", "conf": [["Confidence", "med"]], "why": "A seasonal floor, not a spike. The absence of earnings coverage was itself the predicted signal \u2014 and it scored cleanly."}, {"id": "P6", "theme": "reg", "title": "Pensions standing presence", "call": "Pensions remains a standing, high-persistence theme.", "crit": "pensions present in \u22655/7 test editions", "result": "Present in 7/7 \u2014 the most persistent theme in the window.", "verdict": "HIT", "conf": [["Confidence", "high"]], "why": "Scottish Widows keeps pensions permanently on the LBG meter. A standing presence is the easiest rhyme to call and the easiest to take for granted."}, {"id": "P7", "theme": "eco", "title": "Private-credit / stress-test murmur", "call": "The private-credit thread persists or upticks.", "crit": "private-credit present in \u22652/7 test editions", "result": "Present in 4/7 \u2014 the murmur grew into the BoE\u2019s first-of-its-kind private-markets stress test.", "verdict": "HIT", "conf": [["Confidence", "low-med"]], "why": "A low-confidence murmur from the Forward Watch thread that the held-out week promoted into a genuine, causally-linked sequence."}, {"id": "P8", "theme": "pol", "title": "Pre-Mansion House deregulation drumbeat", "call": "Regulatory / deregulation coverage continues building toward Mansion House.", "crit": "dereg present in \u22655/7 test editions", "result": "Present in 7/7, spiking to 8 signals on 23 Jun \u2014 the drumbeat accelerated.", "verdict": "HIT", "conf": [["Confidence", "high"]], "why": "A calendar-anchored build toward a known July set-piece. The drumbeat got louder exactly as the date approached."}], "test_dates": ["2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-19", "2026-06-22", "2026-06-23"], "themes": [["mpc_boe_rates", "Rates", "eco"], ["mortgage_rates", "Mortgage", "eco"], ["ai_general", "AI", "cla"], ["motor_finance", "Motor fin.", "pol"], ["results_earnings", "Earnings", "ind"], ["pensions", "Pensions", "reg"], ["private_credit", "Priv. credit", "eco"], ["regulation_dereg", "Dereg", "pol"]], "heat": {"2026-06-15": {"mpc_boe_rates": 1, "mortgage_rates": 0, "ai_general": 0, "motor_finance": 2, "results_earnings": 1, "pensions": 2, "private_credit": 0, "regulation_dereg": 0}, "2026-06-16": {"mpc_boe_rates": 2, "mortgage_rates": 3, "ai_general": 2, "motor_finance": 0, "results_earnings": 1, "pensions": 1, "private_credit": 0, "regulation_dereg": 0}, "2026-06-17": {"mpc_boe_rates": 6, "mortgage_rates": 4, "ai_general": 6, "motor_finance": 0, "results_earnings": 3, "pensions": 6, "private_credit": 1, "regulation_dereg": 1}, "2026-06-18": {"mpc_boe_rates": 2, "mortgage_rates": 5, "ai_general": 4, "motor_finance": 4, "results_earnings": 1, "pensions": 5, "private_credit": 2, "regulation_dereg": 2}, "2026-06-19": {"mpc_boe_rates": 5, "mortgage_rates": 4, "ai_general": 6, "motor_finance": 2, "results_earnings": 0, "pensions": 1, "private_credit": 1, "regulation_dereg": 3}, "2026-06-22": {"mpc_boe_rates": 2, "mortgage_rates": 0, "ai_general": 4, "motor_finance": 1, "results_earnings": 3, "pensions": 5, "private_credit": 1, "regulation_dereg": 1}, "2026-06-23": {"mpc_boe_rates": 5, "mortgage_rates": 3, "ai_general": 5, "motor_finance": 1, "results_earnings": 4, "pensions": 6, "private_credit": 0, "regulation_dereg": 2}}, "ai_weekly": [{"week": 18, "count": 3}, {"week": 19, "count": 11}, {"week": 20, "count": 12}, {"week": 21, "count": 13}, {"week": 22, "count": 16}, {"week": 23, "count": 10}, {"week": 24, "count": 24}, {"week": 25, "count": 18}, {"week": 26, "count": 9}]};
+const bandColor = {reg:'var(--reg)',eco:'var(--eco)',ind:'var(--ind)',pol:'var(--pol)',cla:'var(--cla)'};
+function confBars(level){
+  const map={high:3,med:2,'low-med':2,lowmed:2,low:1};
+  const cls={high:'high',med:'med','low-med':'lowmed',low:'low'};
+  const n=map[level]||1; const c=cls[level]||'low';
+  let s='<span class="bars">';
+  for(let i=0;i<3;i++){s+='<i class="'+(i<n?('on '+c):'')+'"></i>';}
+  s+='</span>'; return s;
+}
+// calls
+const cwrap=document.getElementById('calls');
+DATA.calls.forEach((c,idx)=>{
+  const d=document.createElement('div');
+  d.className='card fade'+(c.verdict==='MISS'?' miss':'');
+  d.style.animationDelay=(0.12+idx*0.04)+'s';
+  let conf=c.conf.map(([lab,lv])=>'<span class="conf">'+lab+' '+confBars(lv)+'</span>').join('');
+  d.innerHTML=
+    '<div class="card-top"><div class="cid"><span class="band" style="background:'+bandColor[c.theme]+'"></span><span class="chip">'+c.id+'</span></div><span class="badge '+c.verdict+'">'+c.verdict+'</span></div>'+
+    '<h3>'+c.title+'</h3>'+
+    '<p class="callt">'+c.call+'</p>'+
+    '<div class="crit">criterion &middot; '+c.crit+'</div>'+
+    '<div class="confrow">'+conf+'</div>'+
+    '<div class="reveal"><div class="reveal-in"><p class="res"><b>Result &middot;</b> '+c.result+'</p><p class="why">'+c.why+'</p></div></div>'+
+    '<div class="exp">details &#9662;</div>';
+  d.addEventListener('click',()=>d.classList.toggle('open'));
+  cwrap.appendChild(d);
+});
+// meter
+const mwrap=document.getElementById('meter');
+const maxAI=Math.max(...DATA.ai_weekly.map(w=>w.count));
+DATA.ai_weekly.forEach(w=>{
+  const test=w.week>=25;
+  const m=document.createElement('div');
+  m.className='mbar'+(test?'':' train');
+  m.innerHTML='<span class="vl">'+w.count+'</span><div class="b" style="height:'+(w.count/maxAI*100)+'%"></div><span class="wl">w'+w.week+'</span>';
+  mwrap.appendChild(m);
+});
+// heatmap
+const hh=document.getElementById('hmhead');
+hh.innerHTML='<div class="corner"></div>'+DATA.test_dates.map(d=>{const p=d.slice(5).replace('-','/');return '<div>'+p+'</div>';}).join('');
+const hm=document.getElementById('hm');
+let hmax=0;
+DATA.themes.forEach(([k])=>DATA.test_dates.forEach(d=>{hmax=Math.max(hmax,DATA.heat[d][k]);}));
+DATA.themes.forEach(([key,lab,band])=>{
+  const row=document.createElement('div');row.className='hm-row';
+  let cells='<div class="hm-lab"><span class="band" style="background:'+bandColor[band]+'"></span>'+lab+'</div>';
+  DATA.test_dates.forEach(d=>{
+    const val=DATA.heat[d][key];
+    const intensity=val/hmax;
+    const bg=val===0?'var(--surface-2)':'color-mix(in srgb,'+bandColor[band]+' '+(18+intensity*72)+'%, transparent)';
+    cells+='<div class="hm-cell" style="background:'+bg+'" title="'+lab+' &middot; '+d+' &middot; '+val+' signal'+(val===1?'':'s')+'">'+(val||'')+'</div>';
+  });
+  row.innerHTML=cells;hm.appendChild(row);
+});
+</script>
+<script>
+  if(window.GleanBridge){
+    window.GleanBridge.postMessage({actionId:'export-pdf',type:'glean-add-menu',metadata:{label:'Export as PDF',icon:'export'}});
+    window.GleanBridge.onMessage('action',function(data){if(data.actionId==='export-pdf')window.print();});
+  }
+</script>
+</body>
+</html>
