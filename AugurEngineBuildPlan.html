@@ -1,0 +1,358 @@
+</div></body></html><!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>augur — The Engine Build Plan</title>
+<style>
+:root{
+  --aug-orange:#FF6E29;
+  --aug-orange-dim:rgba(255,110,41,0.12);
+  --aug-navy:#16215B;
+  --aug-blue-mid:#1F299C;
+  --aug-blue-bright:#016CFF;
+  --bg:#06080f;
+  --surface:#0d1117;
+  --surface-2:#0a0f1e;
+  --border:rgba(255,255,255,0.07);
+  --border-orange:rgba(255,110,41,0.25);
+  --text-primary:#f0f2f5;
+  --text-secondary:rgba(240,242,245,0.62);
+  --text-muted:rgba(240,242,245,0.34);
+  --reg:#9333ea;--eco:#3b82f6;--ind:#22c55e;--pol:#eab308;--cla:#FF6E29;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-primary);font-size:15px;line-height:1.72;}
+.nebula{position:fixed;inset:0;background:radial-gradient(ellipse 60% 45% at 50% 18%,rgba(31,41,156,0.16) 0%,transparent 70%),radial-gradient(ellipse 35% 50% at 88% 72%,rgba(147,51,234,0.06) 0%,transparent 60%),radial-gradient(ellipse 30% 40% at 8% 60%,rgba(255,110,41,0.05) 0%,transparent 55%);pointer-events:none;z-index:0;}
+.wrap{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 26px 90px;}
+.header{background:linear-gradient(110deg,var(--aug-navy) 0%,var(--aug-blue-mid) 52%,var(--aug-blue-bright) 100%);margin:0 -26px;padding:46px 56px 40px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;}
+.header-inner{position:relative;z-index:1;}
+.wm-svg{width:230px;height:auto;display:block;margin-bottom:26px;}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:14px;}
+.doc-title{font-size:38px;font-weight:700;color:#fff;letter-spacing:-0.025em;line-height:1.08;margin-bottom:14px;}
+.doc-sub{font-size:15px;color:rgba(255,255,255,0.72);max-width:600px;line-height:1.6;}
+.doc-tag{margin-top:20px;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.4);font-style:italic;}
+.header-bar{height:2px;background:linear-gradient(to right,var(--aug-orange) 0%,rgba(255,110,41,0.4) 38%,transparent 72%);margin:0 -26px 0;}
+.epigraph{margin:48px 0 6px;padding:0 0 0 22px;border-left:2px solid var(--aug-orange);}
+.epigraph p{font-size:23px;line-height:1.45;font-weight:300;font-style:italic;color:#fff;letter-spacing:-0.01em;}
+.epigraph .attr{display:block;margin-top:12px;font-size:13px;font-style:normal;font-weight:600;letter-spacing:0.04em;color:var(--aug-orange);}
+.preamble{font-size:18px;line-height:1.75;color:var(--text-primary);margin:42px 0 10px;font-weight:300;}
+.preamble strong{font-weight:600;color:#fff;}
+.drop::first-letter{font-size:58px;font-weight:700;float:left;line-height:0.82;margin:6px 14px 0 0;color:var(--aug-orange);}
+.part{margin-top:48px;}
+.part-num{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--aug-orange);margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.part-num::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border-orange),transparent);}
+.part-title{font-size:23px;font-weight:700;color:#fff;letter-spacing:-0.015em;line-height:1.2;margin-bottom:16px;}
+.part p{color:var(--text-secondary);margin-bottom:15px;}
+.part p strong{color:var(--text-primary);font-weight:600;}
+.lede{color:var(--text-primary)!important;font-size:16px;}
+.quote{margin:22px 0;padding:18px 24px;background:var(--surface);border-left:3px solid var(--aug-blue-bright);border-radius:0 8px 8px 0;}
+.quote p{font-size:15px;line-height:1.7;color:var(--text-primary);font-style:italic;margin:0 0 8px;}
+.quote .cite{font-size:11px;letter-spacing:0.04em;color:var(--text-muted);font-style:normal;text-transform:none;}
+.quote.orange{border-left-color:var(--aug-orange);}
+.principle{margin:20px 0;padding:16px 20px;background:var(--aug-orange-dim);border:1px solid var(--border-orange);border-radius:8px;display:flex;gap:13px;align-items:flex-start;}
+.principle-mark{font-size:13px;font-weight:800;color:var(--aug-orange);letter-spacing:0.1em;white-space:nowrap;text-transform:uppercase;padding-top:1px;}
+.principle-text{font-size:14px;color:var(--text-primary);line-height:1.62;}
+.principle-text strong{color:#fff;font-weight:700;}
+.map{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:center;margin:20px 0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.map-cell{padding:14px 18px;}
+.map-cell.anc{background:rgba(255,255,255,0.015);}
+.map-arrow{padding:0 4px;color:var(--aug-orange);font-size:16px;}
+.map-k{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;}
+.map-v{font-size:13px;color:var(--text-primary);line-height:1.5;}
+/* PIPELINE STRIP */
+.pipe{margin:24px 0;display:flex;flex-direction:column;gap:2px;}
+.pipe-row{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:stretch;}
+.pipe-stage{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px 18px;flex:1;}
+.pipe-n{width:30px;height:30px;border-radius:8px;background:var(--aug-orange-dim);border:1px solid var(--border-orange);color:var(--aug-orange);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-variant-numeric:tabular-nums;}
+.pipe-body h4{font-size:14.5px;font-weight:700;color:#fff;margin-bottom:3px;}
+.pipe-body p{font-size:13px;color:var(--text-secondary);margin:0;line-height:1.55;}
+.pipe-gate{margin:2px 0 2px 48px;padding:9px 16px;background:rgba(1,108,255,0.06);border:1px dashed rgba(1,108,255,0.34);border-radius:7px;font-size:12px;color:#7fb3ff;line-height:1.5;}
+.pipe-gate b{color:#a9cdff;font-weight:700;}
+.pipe-gate.fire{background:rgba(255,110,41,0.06);border-color:rgba(255,110,41,0.4);color:#ffae82;}
+.pipe-gate.fire b{color:var(--aug-orange);}
+/* TWO-LLM TABLE */
+.cmp{width:100%;border-collapse:collapse;margin:22px 0 8px;}
+.cmp th{text-align:left;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);padding:0 14px 11px 0;border-bottom:1px solid var(--border);vertical-align:bottom;}
+.cmp th.b{color:var(--aug-orange);}
+.cmp th.l{color:#4d9bff;}
+.cmp td{padding:12px 14px 12px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px;color:var(--text-secondary);vertical-align:top;line-height:1.55;}
+.cmp td:first-child{font-weight:600;color:var(--text-primary);white-space:nowrap;font-size:12px;}
+.cmp tr:last-child td{border-bottom:none;}
+/* TIERS */
+.tier{margin:14px 0;padding:18px 22px;background:var(--surface);border:1px solid var(--border);border-radius:10px;border-left:3px solid var(--border);}
+.tier.t1{border-left-color:var(--ind);}
+.tier.t2{border-left-color:var(--eco);}
+.tier.t3{border-left-color:var(--reg);}
+.tier-h{display:flex;align-items:baseline;gap:12px;margin-bottom:7px;flex-wrap:wrap;}
+.tier-tag{font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border-radius:5px;}
+.t1 .tier-tag{background:rgba(34,197,94,0.13);color:#4ade80;}
+.t2 .tier-tag{background:rgba(59,130,246,0.13);color:#60a5fa;}
+.t3 .tier-tag{background:rgba(147,51,234,0.14);color:#c084fc;}
+.tier-name{font-size:15px;font-weight:700;color:#fff;}
+.tier-status{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-left:auto;}
+.tier p{font-size:13.5px;color:var(--text-secondary);margin:0;line-height:1.6;}
+.tier p strong{color:var(--text-primary);}
+.tier .eng{margin-top:8px;font-size:12px;color:var(--text-muted);}
+.tier .eng b{color:var(--aug-orange);font-weight:600;}
+/* RUNGS */
+.rung{margin:16px 0;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.rung-head{display:flex;gap:16px;align-items:center;padding:18px 22px;background:rgba(255,255,255,0.015);border-bottom:1px solid var(--border);}
+.rung-n{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,var(--aug-navy),var(--aug-blue-bright));color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rung-n.now{background:linear-gradient(135deg,#b5440f,var(--aug-orange));}
+.rung-ttl{font-size:16px;font-weight:700;color:#fff;line-height:1.2;}
+.rung-meta{font-size:11px;color:var(--text-muted);margin-top:3px;letter-spacing:0.04em;}
+.rung-badge{margin-left:auto;font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:5px;white-space:nowrap;}
+.rb-now{background:rgba(255,110,41,0.14);color:var(--aug-orange);border:1px solid var(--border-orange);}
+.rb-next{background:rgba(1,108,255,0.12);color:#4d9bff;border:1px solid rgba(1,108,255,0.34);}
+.rb-later{background:rgba(255,255,255,0.04);color:var(--text-muted);border:1px solid var(--border);}
+.rung-body{padding:18px 22px;}
+.rung-body p{font-size:13.5px;color:var(--text-secondary);margin:0 0 12px;line-height:1.62;}
+.rung-body p:last-child{margin-bottom:0;}
+.rung-body strong{color:var(--text-primary);font-weight:600;}
+.rung-list{list-style:none;margin:6px 0 0;padding:0;}
+.rung-list li{font-size:13px;color:var(--text-secondary);padding:6px 0 6px 22px;position:relative;line-height:1.55;}
+.rung-list li::before{content:'';position:absolute;left:2px;top:12px;width:6px;height:6px;border-radius:50%;background:var(--aug-orange);}
+.accept{margin-top:13px;padding:12px 16px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.24);border-radius:8px;font-size:12.5px;color:var(--text-secondary);line-height:1.58;}
+.accept b{color:#4ade80;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;font-size:10px;display:block;margin-bottom:4px;}
+.depends{margin-top:9px;font-size:11.5px;color:var(--text-muted);}
+.depends b{color:var(--text-secondary);}
+.distinction{margin-top:46px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.dist-col{padding:22px 24px;border-radius:12px;}
+.dist-is{background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.28);}
+.dist-not{background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.25);}
+.dist-tag{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.dist-is .dist-tag{color:#4ade80;}
+.dist-not .dist-tag{color:#f87171;}
+.dist-col p{font-size:14px;line-height:1.66;color:var(--text-secondary);margin-bottom:10px;}
+.dist-col p:last-child{margin-bottom:0;}
+.dist-col strong{color:#fff;}
+.code-box{margin-top:50px;background:linear-gradient(135deg,#0a0f1e 0%,#0d1525 100%);border:1px solid var(--border-orange);border-radius:14px;padding:34px 34px 30px;}
+.code-label{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--aug-orange);margin-bottom:6px;}
+.code-head{font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;letter-spacing:-0.015em;}
+.code-box p{font-size:14px;color:var(--text-secondary);line-height:1.7;}
+.code-box p strong{color:#fff;}
+.footer{margin:54px -26px 0;border-top:1px solid var(--border);padding:24px 56px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.footer-wm{width:84px;height:auto;opacity:0.24;}
+.footer-text{font-size:10.5px;color:var(--text-muted);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.footer-sep{width:1px;height:12px;background:var(--border);}
+@media(max-width:680px){
+  .distinction{grid-template-columns:1fr;}
+  .map{grid-template-columns:1fr;}
+  .map-arrow{display:none;}
+  .doc-title{font-size:30px;}
+  .cmp th:nth-child(2),.cmp td:nth-child(2){display:none;}
+}
+@media print{
+  body{background:#fff;color:#000;}
+  .nebula{display:none;}
+  *{animation:none!important;}
+  .header,.header-bar,.footer{margin-left:0;margin-right:0;}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;}}
+</style></head>
+<body>
+<div class="nebula"></div>
+<div class="wrap">
+
+<div class="header"><div class="header-inner">
+<svg class="wm-svg" viewBox="160 115 725 240" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+      <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+      <path fill="#FFFFFF" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+      <path fill="#FFFFFF" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
+      <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+      <path fill="#FFFFFF" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+      <path fill="#FFFFFF" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+      <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+    </svg>
+<div class="eyebrow">augur · canon · the build</div>
+<h1 class="doc-title">The Engine Build Plan</h1>
+<p class="doc-sub">From a proven corpus to a living engine — how augur ingests, classifies, remembers, discovers, and answers. The rungs, in order, and the gates that keep each one honest.</p>
+<div class="doc-tag">Forward Intelligence · By Cision</div>
+</div></div>
+<div class="header-bar"></div>
+
+<div class="epigraph">
+<p>History doesn't repeat itself, but it often rhymes.</p>
+<span class="attr">— attributed to Mark Twain</span>
+</div>
+
+<p class="preamble drop">The back-test proved the method. It also drew the map: it named the one broken part — the keyword floor that mistook a pension story for motor finance — and the one thing missing for a clean proof — a derivation with no foreknowledge. Both are LLM-shaped holes. <strong>This plan fills them without forking the canon.</strong> Everything below hangs off the Cerebro pipeline you already designed; nothing here replaces it.</p>
+
+<div class="part">
+<div class="part-num">Part I</div>
+<h2 class="part-title">The pipeline we build on</h2>
+<p class="lede">augur already has a spine. Cerebro produces; augur remembers and reads forward. The build extends this skeleton — it does not draw a new one.</p>
+
+<div class="pipe">
+  <div class="pipe-stage"><div class="pipe-n">1</div><div class="pipe-body"><h4>Cerebro Meridian — produce</h4><p>Claude-drafted briefing from client notes + prior editions → analyst QC → Copy / Download HTML.</p></div></div>
+  <div class="pipe-gate"><b>Intake Checkpoint</b> — a human approves the edition before anything is remembered.</div>
+  <div class="pipe-stage"><div class="pipe-n">2</div><div class="pipe-body"><h4>SharePoint library — the Corpus (Layer 1)</h4><p>Raw <code>.html</code> lands governed, versioned, named <code>client_YYYY-MM-DD.html</code>. The long memory.</p></div></div>
+  <div class="pipe-stage"><div class="pipe-n">3</div><div class="pipe-body"><h4>The Extractor — Signal Ledger (Layer 2)</h4><p>Deterministic parse (Stations 1–3) shreds stories into rows; <b>Station 4</b> classifies. This is where the bounded LLM lands.</p></div></div>
+  <div class="pipe-gate fire"><b>The Firebreak</b> — a signal enters instantly; a <i>pattern</i> earns the right to shape future briefings only after mining <b>and</b> scoring.</div>
+  <div class="pipe-stage"><div class="pipe-n">4</div><div class="pipe-body"><h4>augur Engine — Core · Archive · PathFinder</h4><p>Signals enter the ledger, mining finds rhymes, PathFinder issues dated, scored predictions.</p></div></div>
+  <div class="pipe-stage"><div class="pipe-n">5</div><div class="pipe-body"><h4>Vantage &amp; Signscape — read forward</h4><p>The observation surface and the deliverable. Foresight folds back to Stage 1.</p></div></div>
+</div>
+
+<div class="principle"><div class="principle-mark">The line</div><div class="principle-text">Cerebro is augur's <strong>intake</strong>; augur is Cerebro's <strong>memory and foresight</strong>. The bounded LLM is Station 4 of Stage 3. The query librarian reads Stages 2–4. Discovery is a new loop hanging off the Signal Ledger. Every new piece clips onto a stage that already exists.</div></div>
+</div>
+
+<div class="part">
+<div class="part-num">Part II</div>
+<h2 class="part-title">Two LLMs, two jobs, two trust models</h2>
+<p>The instinct is "add AI to augur." The discipline is to notice AI enters in <strong>two</strong> places, with opposite risk profiles — and to never let them blur. The single rule that binds them: <strong>classify once, at write time, and freeze it. The librarian reads what's frozen; it never re-judges on the fly.</strong> That is the arrow of time applied to classification — without it, the ledger is a moving target and no back-test is reproducible.</p>
+
+<table class="cmp">
+<thead><tr><th></th><th class="b">Bounded LLM · Station 4</th><th class="l">Query Librarian · Copilot Studio</th></tr></thead>
+<tbody>
+<tr><td>When</td><td>Write time — as a signal enters</td><td>Read time — when someone asks</td></tr>
+<tr><td>Cadence</td><td>High, mechanical, per-signal</td><td>Low, conversational, per-query</td></tr>
+<tr><td>Job</td><td>Classify what's already extracted</td><td>Reason over what's already classified</td></tr>
+<tr><td>Output</td><td>Controlled vocabulary only (an enum)</td><td>Prose + drafts + citations</td></tr>
+<tr><td>Risk</td><td>A misclassification plants a phantom</td><td>A hallucination or a firebreak breach</td></tr>
+<tr><td>Leash</td><td>Structured JSON, temp 0, no free text</td><td>Flow-backed retrieval; can't answer from imagination</td></tr>
+<tr><td>Home</td><td>Power Automate AI-prompt action (Azure OpenAI, in-tenant)</td><td>Copilot Studio agent over the augur site</td></tr>
+</tbody>
+</table>
+
+<p><strong>The bounded LLM, concretely.</strong> Not a chatbot improvising the parse. Stations 1–3 stay deterministic BeautifulSoup and hand it a clean, already-extracted signal — headline + section/lane + sub-entity + source + date. It answers exactly the two questions the keyword stub fakes:</p>
+<ul class="rung-list">
+<li><strong>SignalType</strong> — one term from a controlled enum, or <em>unclassified</em>.</li>
+<li><strong>Event vs. mention</strong> — a fresh event, or an article <em>referencing</em> something older? (article date vs. referenced-thing date).</li>
+</ul>
+<div class="principle"><div class="principle-mark">Acceptance</div><div class="principle-text">Run the held-out week back through it: the three phantoms — the UK–Japan deal, the KKR EV debt, the <strong>Scottish Widows pension-redress</strong> story — drop out, while the real 23 June FCA bark survives. <strong>The back-test is the bounded LLM's own acceptance test.</strong> If P4 doesn't reproduce that, it isn't bounded enough.</div></div>
+</div>
+
+<div class="part">
+<div class="part-num">Part III</div>
+<h2 class="part-title">The capacity for the new</h2>
+<p class="lede">Everything proven so far is a <strong>matching</strong> engine — "have I seen this rhyme?" Discovery is the opposite motion — "is a new rhyme establishing itself?" The design has the bones; the mechanism is still manual, and it looks in the wrong place.</p>
+<div class="principle"><div class="principle-mark">The move</div><div class="principle-text">Novelty does not live in the matched signals. <strong>It lives in the residue — the signals that matched nothing.</strong> The residual bucket is the nursery where new patterns gestate, not waste to be swept up.</div></div>
+
+<div class="tier t1"><div class="tier-h"><span class="tier-tag">Tier 1</span><span class="tier-name">New instance of a known pattern</span><span class="tier-status">Solved</span></div><p>A fresh rhyme in a scheme augur already holds — another post-MPC repricing. This is matching; it is what the back-test scored.</p><div class="eng">Engine: <b>keyword / matching</b> (have it today).</div></div>
+
+<div class="tier t2"><div class="tier-h"><span class="tier-tag">Tier 2</span><span class="tier-name">New pattern from known vocabulary</span><span class="tier-status">Bones exist</span></div><p>A theme we <strong>can</strong> name starts recurring enough to earn pattern status. <strong>AI-and-jobs is exactly this</strong> — it wasn't authored, it earned the meter by recurring. Done once, by batch mine.</p><div class="eng">Engine: <b>frequency + co-occurrence mining</b> over the relational ledger.</div></div>
+
+<div class="tier t3"><div class="tier-h"><span class="tier-tag">Tier 3</span><span class="tier-name">Genuinely novel theme, no vocabulary</span><span class="tier-status">Frontier</span></div><p>Something the tagger has no words for, because it has never happened. A keyword floor is <strong>structurally blind</strong> here — it can only find novelty made of words it already knows.</p><div class="eng">Engine: <b>semantic — embeddings + clustering</b> (the vector store), fed by the bounded LLM's <em>unclassified</em> route.</div></div>
+
+<p style="margin-top:18px;"><strong>Where the bounded LLM becomes a discovery instrument.</strong> Give it one more permitted output — <em>unclassified</em> — and classification and novelty-detection turn out to be the same action seen from two sides. The keyword stub can't say "I don't recognise this"; it forces everything into a known box (which is how the Scottish Widows phantom happened). Every honest "I don't know what this is" is a candidate for a pattern we haven't named yet — routed into the nursery.</p>
+
+<div class="distinction" style="margin-top:24px;">
+<div class="dist-col dist-is"><div class="dist-tag">Discovery is</div><p>A <strong>hypothesis</strong> generator. A discovered pattern is born <strong>experimental</strong>, provenance <strong>mined</strong>, candidate-only — it cannot issue a prediction. It earns promotion the one way every pattern must: <strong>frozen, then scored forward.</strong></p><p>Discovery <strong>feeds</strong> the back-test loop: mine the residual → propose → freeze a prediction → score it → promote or retire.</p></div>
+<div class="dist-col dist-not"><div class="dist-tag">Discovery is not</div><p>A <strong>finding</strong>. A pattern noticed after the fact in existing data can never be wrong — that is a coincidence wearing a signal's clothes. The more aggressively you hunt, the more you "find," and most is noise.</p><p>The tell of the vicious loop: <strong>confidence climbing while the scorecard stays flat.</strong> Discovery is the most dangerous capability in augur, so it inherits the firebreak <em>doubled</em>.</p></div>
+</div>
+<div class="principle" style="margin-top:14px;"><div class="principle-mark">The brake</div><div class="principle-text">Discovery runs as a <strong>periodic mine</strong> (weekly / monthly), not on every ingestion. The cadence itself is a guardrail against hyperactive agency — and a human christens or dismisses every candidate at the promotion gate.</div></div>
+</div>
+
+<div class="part">
+<div class="part-num">Part IV</div>
+<h2 class="part-title">The rungs, in order</h2>
+<p>Sequenced so each rung unblocks the next, and so the highest-leverage build — the write path — comes early, because four other things hang off it. Two tracks run in parallel: the <strong>write path</strong> (the serious build) and the <strong>librarian</strong> (momentum from day one on what's already indexed).</p>
+
+<div class="rung">
+  <div class="rung-head"><div class="rung-n now">0</div><div><div class="rung-ttl">HTML backfill — grow the long memory</div><div class="rung-meta">Track: corpus · no code</div></div><span class="rung-badge rb-now">Do now</span></div>
+  <div class="rung-body">
+    <p>Re-save the back-catalogue editions as <strong>HTML</strong> into the LBG HTML folder, then keep adding subsequent editions. This routes the long history through the <strong>same machine-readable front door</strong> we already proved — no PDF-parsing detour.</p>
+    <p>Depth is what discovery needs: a seven-week window can't reveal a quarterly or seasonal rhyme because the second occurrence isn't in the data. The deeper corpus is where slow patterns become visible.</p>
+    <div class="accept"><b>Done when</b>The full LBG back-catalogue sits in the HTML folder, Glean-indexed, ready for one corpus-agnostic write path to replay.</div>
+  </div>
+</div>
+
+<div class="rung">
+  <div class="rung-head"><div class="rung-n now">1</div><div><div class="rung-ttl">The bounded-LLM write path — Station 4</div><div class="rung-meta">Track: write · the load-bearing build</div></div><span class="rung-badge rb-now">Do now</span></div>
+  <div class="rung-body">
+    <p>Build the ingestion flow: Power Automate reads an edition's HTML, deterministic Stations 1–3 parse it, the bounded LLM classifies each signal (SignalType + event-vs-mention + <em>unclassified</em>), and the result writes to the Signals list.</p>
+    <ul class="rung-list">
+      <li>Inputs are the <strong>parsed fields, not the whole briefing</strong> — it classifies, it doesn't roam.</li>
+      <li><strong>Structured JSON, enum-constrained, temperature 0</strong>, one signal at a time.</li>
+      <li>The write path is <strong>corpus-agnostic</strong>: same Station 4 whether the front door is new Cerebro HTML or the replayed back-catalogue.</li>
+    </ul>
+    <div class="accept"><b>Done when</b>P4 re-run over the held-out week drops all three phantoms and keeps the real FCA bark — the back-test as acceptance test.</div>
+  </div>
+</div>
+
+<div class="rung">
+  <div class="rung-head"><div class="rung-n now">L</div><div><div class="rung-ttl">Query librarian, step 1 — RAG over the corpus</div><div class="rung-meta">Track: read · zero dependencies</div></div><span class="rung-badge rb-now">Parallel now</span></div>
+  <div class="rung-body">
+    <p>A Copilot Studio agent with the SharePoint document library as a knowledge source. Answers "what did we say about motor finance, and when" / "show me the AI-and-jobs thread." <strong>Read-only, no flows, no firebreak risk</strong> — works today on what's already indexed, and teaches you how analysts actually phrase questions.</p>
+    <div class="accept"><b>Done when</b>An analyst can interrogate the briefing archive conversationally, every answer traceable to an edition.</div>
+  </div>
+</div>
+
+<div class="rung">
+  <div class="rung-head"><div class="rung-n">2</div><div><div class="rung-ttl">Backfill, cleanup &amp; the zero-foreknowledge re-test</div><div class="rung-meta">Track: write · three payoffs, one path</div></div><span class="rung-badge rb-next">Next</span></div>
+  <div class="rung-body">
+    <p>Run the write path <strong>backward</strong> over the archive. One build does three jobs: it <strong>populates</strong> the Signals list from the corpus, <strong>cleans the phantoms</strong> the keyword stub planted, and — if the agent re-derives from the cleaned ledger — produces the <strong>leak-proof proof</strong> the canon flagged as the next rung.</p>
+    <div class="depends"><b>Depends on:</b> Rung 1 (the write path) + Rung 0 (the depth to replay).</div>
+    <div class="accept"><b>Done when</b>A zero-foreknowledge derivation reproduces the 7/8 result — augur scoring itself, not the analyst scoring augur.</div>
+  </div>
+</div>
+
+<div class="rung">
+  <div class="rung-head"><div class="rung-n">3</div><div><div class="rung-ttl">Query librarian, step 2 — structured flows</div><div class="rung-meta">Track: read · the ledger, queryable</div></div><span class="rung-badge rb-next">Next</span></div>
+  <div class="rung-body">
+    <p>Give the librarian hands: small Power Automate flows it calls with parameters, each mapping 1:1 to an ontology Action and emitting an audit row.</p>
+    <ul class="rung-list">
+      <li><code>GetSignals(filter)</code> — OData on <strong>indexed columns only</strong> (SignalDate, Category, Lane, Client, State). Never pull the whole list.</li>
+      <li><code>GetActivePatterns(date)</code> — the Pattern Watch query already wired into the LBG Signscape agent.</li>
+    </ul>
+    <p>Why flows, not direct List reasoning: scale. You're at 1,167 signals from 39 editions; a year × several clients is tens of thousands of rows, well past the 5,000-item view ceiling.</p>
+    <div class="depends"><b>Depends on:</b> Rung 2 (a populated Signals list to query).</div>
+    <div class="accept"><b>Done when</b>"What motor-finance regulatory signals fired in the last 18 months?" returns rows with citations, not prose from imagination.</div>
+  </div>
+</div>
+
+<div class="rung">
+  <div class="rung-head"><div class="rung-n">4</div><div><div class="rung-ttl">The discovery loop — the nursery</div><div class="rung-meta">Track: discover · Tier 2 first</div></div><span class="rung-badge rb-later">Later</span></div>
+  <div class="rung-body">
+    <p>Stand up the <strong>residual bucket</strong> (a home for <em>unclassified</em> signals) and a <strong>periodic mine</strong> over it: frequency + co-occurrence thresholds for Tier 2, with the <strong>human-in-the-loop promotion gate</strong> — the agent surfaces "these signals are clustering; name it?", the analyst christens a candidate or dismisses it.</p>
+    <p>Tier 3 (semantic emergence / vector store) is a deliberate later rung — reach genuinely-novel themes once Tier 2 is proven and the corpus is deep enough to cluster meaningfully.</p>
+    <div class="depends"><b>Depends on:</b> Rung 2 (clean ledger) + Rung 0 (depth). Tier 3 adds the vector engine.</div>
+    <div class="accept"><b>Done when</b>A candidate pattern, born experimental, survives a frozen forward score and is promoted by a human — discovery feeding the loop, not bypassing it.</div>
+  </div>
+</div>
+
+<div class="rung">
+  <div class="rung-head"><div class="rung-n">5</div><div><div class="rung-ttl">Drafting tools — gated</div><div class="rung-meta">Track: read+write · the firebreak as config</div></div><span class="rung-badge rb-later">Later</span></div>
+  <div class="rung-body">
+    <p>Let the librarian draft, never commit. <code>DraftPrediction</code> / <code>DraftCandidatePattern</code> write in <strong>open / experimental</strong> state only. <code>PromoteToPattern</code> and <code>ScorePrediction</code> stay <strong>analyst-witnessed</strong> — the agent tees them up, a human commits. The firebreak, encoded as configuration.</p>
+    <div class="depends"><b>Depends on:</b> Rung 3 (flows) + Rung 4 (something worth drafting).</div>
+    <div class="accept"><b>Done when</b>The agent can draft a Pattern Watch lane and propose a candidate, and a human's click is the only thing that makes either real.</div>
+  </div>
+</div>
+</div>
+
+<div class="part">
+<div class="part-num">Part V</div>
+<h2 class="part-title">Where the human stands</h2>
+<p>Human-in-the-loop isn't a feature bolted on — it's the three gates that already define the pipeline, now made explicit for every new capability:</p>
+<div class="map"><div class="map-cell anc"><div class="map-k">Gate 1 · Intake</div><div class="map-v">Analyst approves the edition before augur remembers it (Stage 1→2).</div></div><div class="map-arrow">→</div><div class="map-cell"><div class="map-k">Unchanged</div><div class="map-v">The Cerebro QC step you already run.</div></div></div>
+<div class="map"><div class="map-cell anc"><div class="map-k">Gate 2 · Firebreak</div><div class="map-v">A pattern earns the right to shape briefings only after mining <b>and</b> scoring (Stage 3→4).</div></div><div class="map-arrow">→</div><div class="map-cell"><div class="map-k">Now enforced for discovery</div><div class="map-v">Candidates are born experimental; promotion is a human verb.</div></div></div>
+<div class="map"><div class="map-cell anc"><div class="map-k">Gate 3 · Commit</div><div class="map-v">PromoteToPattern &amp; ScorePrediction stay analyst-witnessed.</div></div><div class="map-arrow">→</div><div class="map-cell"><div class="map-k">The librarian's ceiling</div><div class="map-v">It drafts and proposes; it never crosses the gate alone.</div></div></div>
+</div>
+
+<div class="code-box">
+<div class="code-label">The shape of it</div>
+<h2 class="code-head">One write path, three loops, one librarian</h2>
+<p>You don't build an ingestion pipeline, then a backfill, then a cleaner, then a discovery engine. You build <strong>one bounded write path</strong> and run it forward (each new Cerebro edition) and backward (replay the archive) — and it populates the ledger, kills the phantoms, enables the zero-foreknowledge re-test, and feeds the nursery, all at once. The <strong>librarian</strong> reads what the write path makes clean. The <strong>discovery loop</strong> mines what it can't classify. And the <strong>firebreak</strong> stands at every gate, so emergence can propose but never manufacture fate. <strong>Start now with Rung 0 and the RAG librarian; the write path is the serious build everything else hangs off.</strong></p>
+</div>
+
+<div class="footer">
+<svg class="footer-wm" viewBox="160 115 725 240" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+      <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+      <path fill="#FFFFFF" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+      <path fill="#FFFFFF" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
+      <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+      <path fill="#FFFFFF" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+      <path fill="#FFFFFF" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+      <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+    </svg>
+<div class="footer-text">
+<span>augur · The Engine Build Plan</span><div class="footer-sep"></div>
+<span>Cerebro intake · bounded Station 4 · discovery nursery · query librarian</span><div class="footer-sep"></div>
+<span>Rapid Intelligence UK · Cision</span>
+</div>
+</div>
+
+</div></body></html>
