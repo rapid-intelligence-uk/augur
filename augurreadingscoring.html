@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>augur — A Reading</title>
+<style>
+:root{
+  --aug-orange:#FF6E29;
+  --aug-orange-dim:rgba(255,110,41,0.12);
+  --aug-navy:#16215B;
+  --aug-blue-mid:#1F299C;
+  --aug-blue-bright:#016CFF;
+  --bg:#06080f;
+  --surface:#0d1117;
+  --surface-2:#0a0f1e;
+  --border:rgba(255,255,255,0.07);
+  --border-orange:rgba(255,110,41,0.25);
+  --text-primary:#f0f2f5;
+  --text-secondary:rgba(240,242,245,0.62);
+  --text-muted:rgba(240,242,245,0.34);
+  --reg:#9333ea;--eco:#3b82f6;--ind:#22c55e;--pol:#eab308;--cla:#FF6E29;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-primary);font-size:15px;line-height:1.72;}
+
+/* starfield / nebula */
+.nebula{position:fixed;inset:0;background:radial-gradient(ellipse 60% 45% at 50% 18%,rgba(31,41,156,0.16) 0%,transparent 70%),radial-gradient(ellipse 35% 50% at 88% 72%,rgba(147,51,234,0.06) 0%,transparent 60%),radial-gradient(ellipse 30% 40% at 8% 60%,rgba(255,110,41,0.05) 0%,transparent 55%);pointer-events:none;z-index:0;}
+
+.wrap{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 26px 90px;}
+
+/* HEADER */
+.header{background:linear-gradient(110deg,var(--aug-navy) 0%,var(--aug-blue-mid) 52%,var(--aug-blue-bright) 100%);margin:0 -26px;padding:46px 56px 40px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;}
+.header-inner{position:relative;z-index:1;}
+.wm-svg{width:230px;height:auto;display:block;margin-bottom:26px;}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:14px;}
+.doc-title{font-size:38px;font-weight:700;color:#fff;letter-spacing:-0.025em;line-height:1.08;margin-bottom:14px;}
+.doc-sub{font-size:15px;color:rgba(255,255,255,0.72);max-width:580px;line-height:1.6;}
+.doc-tag{margin-top:20px;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.4);font-style:italic;}
+.header-bar{height:2px;background:linear-gradient(to right,var(--aug-orange) 0%,rgba(255,110,41,0.4) 38%,transparent 72%);margin:0 -26px 0;}
+
+/* PREAMBLE */
+.epigraph{margin:48px 0 6px;padding:0 0 0 22px;border-left:2px solid var(--aug-orange);}
+.epigraph p{font-size:23px;line-height:1.45;font-weight:300;font-style:italic;color:#fff;letter-spacing:-0.01em;}
+.epigraph .attr{display:block;margin-top:12px;font-size:13px;font-style:normal;font-weight:600;letter-spacing:0.04em;color:var(--aug-orange);}
+.preamble{font-size:18px;line-height:1.75;color:var(--text-primary);margin:42px 0 10px;font-weight:300;}
+.preamble strong{font-weight:600;color:#fff;}
+.drop::first-letter{font-size:58px;font-weight:700;float:left;line-height:0.82;margin:6px 14px 0 0;color:var(--aug-orange);}
+
+/* SECTIONS */
+.part{margin-top:48px;}
+.part-num{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--aug-orange);margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.part-num::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border-orange),transparent);}
+.part-title{font-size:23px;font-weight:700;color:#fff;letter-spacing:-0.015em;line-height:1.2;margin-bottom:16px;}
+.part p{color:var(--text-secondary);margin-bottom:15px;}
+.part p strong{color:var(--text-primary);font-weight:600;}
+.lede{color:var(--text-primary)!important;font-size:16px;}
+
+/* PULL QUOTE (academic source) */
+.quote{margin:22px 0;padding:18px 24px;background:var(--surface);border-left:3px solid var(--aug-blue-bright);border-radius:0 8px 8px 0;}
+.quote p{font-size:15px;line-height:1.7;color:var(--text-primary);font-style:italic;margin:0 0 8px;}
+.quote .cite{font-size:11px;letter-spacing:0.04em;color:var(--text-muted);font-style:normal;text-transform:none;}
+.quote.orange{border-left-color:var(--aug-orange);}
+
+/* PRINCIPLE CALLOUT inline */
+.principle{margin:20px 0;padding:16px 20px;background:var(--aug-orange-dim);border:1px solid var(--border-orange);border-radius:8px;display:flex;gap:13px;align-items:flex-start;}
+.principle-mark{font-size:13px;font-weight:800;color:var(--aug-orange);letter-spacing:0.1em;white-space:nowrap;text-transform:uppercase;padding-top:1px;}
+.principle-text{font-size:14px;color:var(--text-primary);line-height:1.62;}
+.principle-text strong{color:#fff;font-weight:700;}
+
+/* MAP STRIP (ancient -> product) */
+.map{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:center;margin:20px 0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.map-cell{padding:14px 18px;}
+.map-cell.anc{background:rgba(255,255,255,0.015);}
+.map-arrow{padding:0 4px;color:var(--aug-orange);font-size:16px;}
+.map-k{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;}
+.map-v{font-size:13px;color:var(--text-primary);line-height:1.5;}
+
+/* DESIGN CODE BOX */
+.code-box{margin-top:50px;background:linear-gradient(135deg,#0a0f1e 0%,#0d1525 100%);border:1px solid var(--border-orange);border-radius:14px;padding:34px 34px 30px;}
+.code-label{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--aug-orange);margin-bottom:6px;}
+.code-head{font-size:22px;font-weight:700;color:#fff;margin-bottom:22px;letter-spacing:-0.015em;}
+.code-item{display:flex;gap:16px;padding:15px 0;border-bottom:1px solid var(--border);}
+.code-item:last-child{border-bottom:none;}
+.code-n{font-size:20px;font-weight:800;color:var(--aug-orange);line-height:1;width:32px;flex-shrink:0;font-variant-numeric:tabular-nums;}
+.code-body h4{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
+.code-body p{font-size:13.5px;color:var(--text-secondary);line-height:1.6;margin:0;}
+
+/* DISTINCTION */
+.distinction{margin-top:46px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.dist-col{padding:22px 24px;border-radius:12px;}
+.dist-is{background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.28);}
+.dist-not{background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.25);}
+.dist-tag{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;}
+.dist-is .dist-tag{color:#4ade80;}
+.dist-not .dist-tag{color:#f87171;}
+.dist-col p{font-size:14px;line-height:1.66;color:var(--text-secondary);}
+.dist-col strong{color:#fff;}
+
+/* SOURCES */
+.sources{margin-top:46px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:26px 28px;}
+.sources-label{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.sources-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.src{font-size:12.5px;color:var(--text-secondary);line-height:1.55;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03);}
+.src:last-child{border-bottom:none;}
+.src strong{color:var(--text-primary);font-weight:600;}
+
+/* FOOTER */
+.footer{margin:54px -26px 0;border-top:1px solid var(--border);padding:24px 56px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.footer-wm{width:84px;height:auto;opacity:0.24;}
+.footer-text{font-size:10.5px;color:var(--text-muted);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.footer-sep{width:1px;height:12px;background:var(--border);}
+
+@media(max-width:680px){
+  .distinction{grid-template-columns:1fr;}
+  .map{grid-template-columns:1fr;}
+  .map-arrow{display:none;}
+  .doc-title{font-size:30px;}
+}
+@media print{
+  body{background:#fff;color:#000;}
+  .nebula{display:none;}
+  *{animation:none!important;}
+  .header,.header-bar,.footer{margin-left:0;margin-right:0;}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;}}
+
+/* SCORING-SPECIFIC */
+.verdict{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 10px;border-radius:5px;margin-left:8px;vertical-align:middle;}
+.v-hit{background:rgba(34,197,94,0.14);color:#22c55e;border:1px solid rgba(34,197,94,0.4);}
+.v-partial{background:rgba(234,179,8,0.13);color:#eab308;border:1px solid rgba(234,179,8,0.38);}
+.v-open{background:rgba(1,108,255,0.13);color:#4d9bff;border:1px solid rgba(1,108,255,0.4);}
+.v-miss{background:rgba(248,113,113,0.13);color:#f87171;border:1px solid rgba(248,113,113,0.4);}
+.score-table{width:100%;border-collapse:collapse;margin:24px 0 8px;}
+.score-table th{text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);padding:0 14px 10px 0;border-bottom:1px solid var(--border);}
+.score-table td{padding:14px 14px 14px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13.5px;color:var(--text-secondary);vertical-align:top;line-height:1.6;}
+.score-table td:first-child{font-weight:600;color:var(--text-primary);white-space:nowrap;}
+.score-table tr:last-child td{border-bottom:none;}
+.predcard{margin:22px 0;padding:22px 26px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--aug-orange);border-radius:10px;}
+.predcard .pc-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--aug-orange);margin-bottom:10px;}
+.predcard .pc-call{font-size:15px;color:var(--text-primary);line-height:1.66;}
+.predcard .pc-meta{margin-top:14px;font-size:12px;color:var(--text-muted);display:flex;gap:18px;flex-wrap:wrap;}
+.predcard .pc-meta b{color:var(--text-secondary);font-weight:600;}
+.votecard{margin:22px 0;padding:22px 26px;background:rgba(1,108,255,0.05);border:1px solid rgba(1,108,255,0.22);border-radius:10px;}
+.votecard .pc-label{color:#4d9bff;}
+.calib{margin:20px 0;padding:16px 20px;background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.28);border-radius:8px;font-size:13.5px;color:var(--text-secondary);line-height:1.66;}
+.calib b{color:#eab308;}
+</style><body>
+<div class="nebula"></div>
+<div class="wrap">
+
+<div class="header">
+  <div class="header-inner">
+    <svg class="wm-svg" viewBox="160 115 725 240" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+      <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+      <path fill="#FFFFFF" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+      <path fill="#FFFFFF" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
+      <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+      <path fill="#FFFFFF" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+      <path fill="#FFFFFF" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+      <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+    </svg>
+    <div>
+      <div class="eyebrow">A Worked Scoring · Practice</div>
+    </div>
+  </div>
+</div>
+<div class="header-bar"></div>
+
+<div class="epigraph">
+  <p>"History doesn't repeat itself, but it often rhymes."<span class="attr">— attributed to Mark Twain</span></p>
+</div>
+
+<div class="doc-tag">augur in practice</div>
+<div class="doc-title">A Scoring</div>
+<div class="doc-sub">A prediction on the record, reality's vote, and what the result teaches — the falsifiability step, worked end to end.</div>
+
+<p class="lede">This is the companion to <em>A Reading</em>. The Reading flagged a rhyme and committed a forward call; the Scoring is what happens when reality votes. It is the step that separates augur from superstition — because <strong>a prediction can fail, and a coincidence cannot.</strong> Here, for the first time, the scorecard speaks: a call made on <strong>19 June 2026</strong>, an event that landed on <strong>20 June 2026</strong>, and an honest verdict that is more useful for its nuance than any clean win would have been.</p>
+
+<div class="flowbar">
+  <div class="flowstep">1 · The call on record</div>
+  <div class="flowstep">2 · Reality votes</div>
+  <div class="flowstep">3 · The verdict</div>
+  <div class="flowstep">4 · The calibration update</div>
+  <div class="flowstep">5 · The disciplines that held</div>
+</div>
+
+<div class="part">
+  <div class="part-num">Part I · The Prediction on the Record</div>
+  <div class="part-title">What we committed, before the fact</div>
+</div>
+<p>The Reading of the 19 June LBG briefing identified its strongest signal not in any single story but in a <strong>convergence</strong> — the AI-and-jobs narrative rhyming across eight separate items in one week: NatWest's Thwaite ("AI will absolutely take over some banking jobs"), Standard Chartered's Winters ("lower-value human capital"), Deutsche Bank's timelines collapsing, HSBC and Goldman echoing, youth unemployment at an 11-year high, and Lloyds' own survey naming AI the top growth lever. Same meter, many voices, one week. From that rhyme we committed a falsifiable call:</p>
+
+<div class="predcard">
+  <div class="pc-label">The forward call · committed 19 June 2026</div>
+  <div class="pc-call"><em>Competitor-narrative convergence forces a position.</em> When every major peer stakes a public stance on a charged theme, the silent player becomes the story. Lloyds Banking Group will face the AI-and-jobs conversation <strong>within ~2-4 weeks</strong>, with <strong>late-July results / strategy season</strong> the likely trigger — so Group Corporate Affairs should <strong>pre-position a line now, rather than react.</strong></div>
+  <div class="pc-meta"><span><b>Pattern:</b> Competitor-narrative convergence</span><span><b>Lead-time window:</b> 2-4 weeks</span><span><b>Confidence:</b> High</span><span><b>Provenance:</b> Mined rhyme (8 sources)</span></div>
+</div>
+
+<div class="principle">
+  <div class="principle-mark">&#10227;</div>
+  <div class="principle-text"><strong>The arrow of time holds.</strong> The call was committed on the 19th; the event landed on the 20th. The prediction <em>preceded</em> the event, so it is legitimately scoreable. This is what makes it a signal and not a coincidence — we said it before we could possibly know.</div>
+</div>
+
+<div class="part">
+  <div class="part-num">Part II · Reality Votes</div>
+  <div class="part-title">What actually happened, 20 June 2026</div>
+</div>
+
+<div class="votecard">
+  <div class="pc-label">The event · 20 June 2026 · The Guardian</div>
+  <div class="pc-call">Lloyds Banking Group announced an <strong>AI recruitment drive — 300 tech experts hired</strong> to build out its AI capability, framed explicitly and positively: Lloyds hires <em>into</em> AI, deliberately set against Standard Chartered's cut <em>because</em> of AI (the piece resurfaces Winters' "lower-value human capital" line to draw the contrast). The article confirms <strong>CEO Charlie Nunn will unveil a multi-year strategy next month.</strong></div>
+</div>
+<p>The silent player did not merely get drawn in — it stepped forward and took a position, exactly the move the rhyme implied the smart player would make. And it pre-positioned <em>ahead</em> of the strategy reveal, rather than waiting to be defined by it.</p>
+
+<div class="part">
+  <div class="part-num">Part III · The Verdict</div>
+  <div class="part-title">Scored honestly, dimension by dimension</div>
+</div>
+<p>A score is worth nothing if it is graded generously. augur grades each dimension of the call separately, because a hit that also reveals a flaw teaches the model more than a clean win.</p>
+
+<table class="score-table">
+  <thead><tr><th>Dimension</th><th>What we called</th><th>What happened</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td>Direction</td><td>AI-and-jobs becomes an LBG-centred story</td><td>It did — squarely</td><td><span class="verdict v-hit">Hit</span></td></tr>
+    <tr><td>Mechanism</td><td>Convergence forces LBG to take a position</td><td>LBG took a position — proactively, and sharper than called: it counter-framed the peer narrative</td><td><span class="verdict v-hit">Hit +</span></td></tr>
+    <tr><td>Timing</td><td>Within 2-4 weeks</td><td>One day</td><td><span class="verdict v-partial">Calibration miss</span></td></tr>
+    <tr><td>Trigger</td><td>Late-July results / strategy season</td><td>Confirmed pending — Nunn's multi-year strategy lands next month; this drive is the pre-position</td><td><span class="verdict v-open">Open</span></td></tr>
+  </tbody>
+</table>
+
+<p>The headline result: <strong>a hit on direction and mechanism, a calibration miss on speed, and a primary trigger still open.</strong> Not a clean win — a <em>useful</em> one.</p>
+
+<div class="part">
+  <div class="part-num">Part IV · The Calibration Update</div>
+  <div class="part-title">What the score teaches the model</div>
+</div>
+<p>This is the step the vicious loop never performs. The score does not just sit in a ledger as a tick — it <em>updates the pattern.</em> Two lessons feed back:</p>
+
+<div class="calib">
+  <b>Lesson 1 — tighten the window when the rhyme is dense.</b> We called 2-4 weeks; it moved in one day. An eight-source convergence is not a slow-burning signal — when the rhyme is this loud, the forced position arrives in <em>days</em>. The "Competitor-narrative convergence" pattern's lead-time should be re-tuned: density of the rhyme inversely scales the lead-time. A dense rhyme is a short fuse.
+</div>
+<div class="calib">
+  <b>Lesson 2 — the pattern earns confidence, but stays open.</b> The pattern scored a real directional hit on its first live test, which raises its standing. But the named trigger (the July strategy reveal) has not yet resolved, so the signal is <b>not closed</b> — it remains an open thread to be scored again next month. Confidence rises; the book stays open. The pattern has earned the right to prime attention a little more — in proportion to this one scored hit, no more.</div>
+
+<div class="part">
+  <div class="part-num">Part V · The Disciplines That Held</div>
+  <div class="part-title">What augur refused to do</div>
+</div>
+<p>The 20 June coverage also offered two traps. Catching them is as much the craft as making the call.</p>
+
+<div class="callout"><strong>&#9888; The phantom rhyme, caught live.</strong> Watch the number <strong>93%</strong>. On 19 June it was "93% of finance execs name AI the top growth lever" (Lloyds' survey). On 20 June it was "93% of UK bank execs believe they could operate through an AI outage" (KPMG's survey). Same number, different surveys, no connection. An undisciplined extractor seeing "93% + AI + banking" twice would log a recurrence and plant a <em>phantom rhyme</em> in the ledger. Two coincidental 93%s are not a rhyme. Flagged and discarded.</div>
+
+<div class="callout"><strong>&#9888; A new candidate, logged not acted on.</strong> Buried in that KPMG thread: AI <strong>operational resilience</strong> — 93% confident they would survive an outage, but only 47% have tested and 26% never have. That gap is the seed of a future regulatory narrative: the FCA / PRA will eventually ask banks to <em>prove</em> AI resilience. New low-confidence candidate, provenance: hunch. It enters the ledger as a watch item; it does not yet drive a prediction.</div>
+
+<div class="part">
+  <div class="part-num">Part VI · Why This Is the Proof</div>
+  <div class="part-title">From clever observation to demonstrated value</div>
+</div>
+<p>This single scored entry is worth more to the Strategic Projects room than any amount of conceptual elegance. The claim is no longer "augur is clever." The claim is now demonstrable: <strong>augur committed a falsifiable forward call on the 19th; reality voted on the 20th; the call landed; and the miss on timing made the model sharper.</strong> That is the entire thesis made real — synchronicity with a scorecard.</p>
+<p>And it shows precisely how a <strong>Signscape</strong> proves its worth to a client. The AI-operational-resilience candidate is the live example: an augur Signscape would surface that gap <em>now</em> — quietly, weeks or months before the FCA or PRA formalises the expectation — and tell the client to position ahead of it. Not "here is what happened." <strong>Here is what is coming, and here is the move to make before it does.</strong> A reading is only worth the decision it changes.</p>
+
+<div class="distinction">
+  <div class="dist-col dist-is">
+    <div class="dist-tag">A hit that teaches</div>
+    <p>Scored by dimension. Direction and mechanism confirmed; timing miss logged as a calibration lesson; trigger held open for re-scoring. The pattern's lead-time is re-tuned and its confidence rises in proportion. The loop closes with reality's vote, and the model is sharper than before it was tested.</p>
+  </div>
+  <div class="dist-col dist-not">
+    <div class="dist-tag">A hit that flatters</div>
+    <p>Scored as a single tick. "We called AI-and-jobs and we were right" — confidence climbs, nothing is learned, the over-long window goes uncorrected, the phantom 93% slips into the ledger. A win celebrated is a win wasted. This is how the scorecard quietly becomes a trophy cabinet — and the vicious loop begins.</p>
+  </div>
+</div>
+
+<div class="tally">
+  <div class="tally-item"><div class="tally-n">2</div><div class="tally-l">dimensions hit (direction, mechanism)</div></div>
+  <div class="tally-item"><div class="tally-n">1</div><div class="tally-l">calibration miss (timing: 1 day vs 2-4 wks)</div></div>
+  <div class="tally-item"><div class="tally-n">1</div><div class="tally-l">trigger still open (July strategy reveal)</div></div>
+  <div class="tally-item"><div class="tally-n">1</div><div class="tally-l">phantom rhyme caught &amp; discarded</div></div>
+  <div class="tally-item"><div class="tally-n">1</div><div class="tally-l">new candidate logged (AI resilience)</div></div>
+</div>
+
+<p class="fn">First live scoring of an augur prediction. Call committed 19 June 2026 (see <em>A Reading</em>); event 20 June 2026 (The Guardian, "Lloyds Banking Group AI recruitment drive"). The companion practice document to <em>A Reading</em> — the Reading flags, the Scoring settles. Together they are one turn of the virtuous loop: hold &#8594; predict &#8594; score &#8594; update.</p>
+
+<div class="footer">
+  <svg class="footer-wm" viewBox="160 115 725 240" xmlns="http://www.w3.org/2000/svg"><path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/></svg>
+  <div class="footer-text">
+    <span>augur · A Reading</span><div class="footer-sep"></div>
+    <span>Source: LBG daily coverage, 19 June 2026</span><div class="footer-sep"></div>
+    <span>Rapid Intelligence UK · Cision</span>
+  </div>
+</div>
+
+</div></body></html>
