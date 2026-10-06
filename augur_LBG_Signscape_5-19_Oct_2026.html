@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="glean-artifact-type" content="tracker_tables">
+<meta name="glean-artifact-type" content="data_analysis">
+<title>Horizon Scan · Lloyds Banking Group · 5–19 October 2026</title>
+<style>
+:root{
+  --artifact-bg:#FBFAF7; --artifact-surface:#FFFFFF; --artifact-tint:#FFF3EA; --artifact-tint-blue:#EEF0FA;
+  --artifact-ink:#16215B; --artifact-text:#232B52; --artifact-muted:#5B6490; --artifact-line:#DFE2EE;
+  --artifact-accent:#FF6E29; --artifact-accent-ink:#B8470A; --artifact-on-accent:#FFFFFF;
+  --artifact-hero-bg:#16215B; --artifact-hero-text:#FFFFFF; --artifact-hero-muted:#B9C0E6;
+  --artifact-ok:#1E7A4C; --artifact-ok-bg:#E6F4EC; --artifact-amber:#8A5A00; --artifact-amber-bg:#FDF1D8;
+  --artifact-risk:#B3362E; --artifact-risk-bg:#FBE9E7;
+  --lane-p:#6B3FA0; --lane-r:#1F5FBF; --lane-e:#0F7B7B; --lane-i:#E85A12; --lane-c:#6C7390;
+}
+html[data-theme='dark']{
+  --artifact-bg:#0E1230; --artifact-surface:#171C44; --artifact-tint:#2A2030; --artifact-tint-blue:#1C2250;
+  --artifact-ink:#F2F3FB; --artifact-text:#DADEF3; --artifact-muted:#9AA3D1; --artifact-line:#2C3366;
+  --artifact-accent:#FF7F40; --artifact-accent-ink:#FF9A66; --artifact-on-accent:#1A1030;
+  --artifact-hero-bg:#0A0D26; --artifact-hero-text:#FFFFFF; --artifact-hero-muted:#9AA3D1;
+  --artifact-ok:#5FD39A; --artifact-ok-bg:#12352A; --artifact-amber:#F2C55C; --artifact-amber-bg:#3A2E10;
+  --artifact-risk:#FF8A80; --artifact-risk-bg:#3B1A1E;
+  --lane-p:#B993E8; --lane-r:#7FA8F0; --lane-e:#5FD0CF; --lane-i:#FF7F40; --lane-c:#A0A8CC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--artifact-bg);color:var(--artifact-text);line-height:1.55;font-size:16px}
+a{color:var(--artifact-accent-ink)}
+header.top{background:var(--artifact-hero-bg);color:var(--artifact-hero-text);padding:30px 0 28px}
+.inner{max-width:1240px;margin:0 auto;padding:0 28px}
+.org{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--artifact-hero-muted)}
+h1.title{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(30px,4.2vw,44px);line-height:1.12;margin:8px 0 6px}
+.top .range{font-size:17px}
+.top .range span{color:var(--artifact-hero-muted)}
+.topmeta{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:16px;font-size:13px;color:var(--artifact-hero-muted)}
+.topmeta b{color:var(--artifact-hero-text);font-weight:600}
+.statusbar{display:inline-block;margin-top:16px;padding:5px 12px;border:1px solid var(--artifact-accent);color:var(--artifact-accent);font-size:11px;letter-spacing:1.8px;text-transform:uppercase;border-radius:3px;font-weight:700}
+.layout{max-width:1240px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:48px}
+aside.side{position:sticky;top:0;align-self:start;padding:32px 0;max-height:100vh;overflow:auto}
+aside.side .lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--artifact-muted);margin:0 0 10px;font-weight:700}
+aside.side a{display:block;padding:7px 12px;margin-left:-12px;font-size:14px;color:var(--artifact-muted);text-decoration:none;border-left:2px solid transparent}
+aside.side a.sub{padding-left:26px;font-size:13px}
+aside.side a:hover{color:var(--artifact-ink)}
+aside.side a.active{color:var(--artifact-ink);border-left-color:var(--artifact-accent);font-weight:600}
+main{min-width:0}
+section{padding:44px 0 48px;border-bottom:1px solid var(--artifact-line)}
+section:last-child{border-bottom:none}
+.kicker{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--artifact-accent-ink);font-weight:700;margin-bottom:8px}
+h2{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--artifact-ink);margin-bottom:12px}
+h3.bh{font-family:Georgia,serif;font-weight:400;font-size:24px;color:var(--artifact-ink);margin-bottom:4px}
+.lede{font-size:17px;max-width:760px}
+.note{font-size:14px;color:var(--artifact-muted);max-width:780px;margin-top:10px}
+.two{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;margin-top:22px;align-items:start}
+.prio{list-style:none;counter-reset:p}
+.prio li{counter-increment:p;display:grid;grid-template-columns:36px 1fr;gap:6px 12px;padding:14px 0;border-bottom:1px solid var(--artifact-line)}
+.prio li::before{content:counter(p);font-family:Georgia,serif;font-size:26px;line-height:1;color:var(--artifact-accent-ink)}
+.prio .pt{font-weight:600;color:var(--artifact-ink)}
+.prio .pd{font-size:15px;margin-top:2px}
+.prio .pw{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--artifact-muted);margin-top:4px}
+.prio a.go{font-size:13px;margin-left:6px;white-space:nowrap}
+.box{background:var(--artifact-surface);border:1px solid var(--artifact-line);border-radius:12px;padding:18px 20px}
+.box h4{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--artifact-muted);margin-bottom:10px}
+.thisweek .d{display:grid;grid-template-columns:62px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--artifact-line);font-size:14px}
+.thisweek .d:last-child{border-bottom:none}
+.thisweek .dd{font-weight:700;color:var(--artifact-ink)}
+.thisweek .quietday{color:var(--artifact-muted)}
+.thisweek .it{margin-bottom:4px}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;display:inline-block;margin-right:7px}
+.d-p{background:var(--lane-p)}.d-r{background:var(--lane-r)}.d-e{background:var(--lane-e)}.d-i{background:var(--lane-i)}.d-c{background:var(--lane-c)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 16px}
+.fbtn{appearance:none;-webkit-appearance:none;border:1px solid var(--artifact-line);background:var(--artifact-surface);color:var(--artifact-text);font:inherit;font-size:13px;height:34px;padding:0 14px;border-radius:17px;cursor:pointer;display:inline-flex;align-items:center}
+.fbtn:hover{border-color:var(--artifact-ink)}
+.fbtn:focus-visible,.search:focus-visible{outline:2px solid var(--artifact-accent);outline-offset:2px}
+.fbtn[aria-pressed='true']{background:var(--artifact-ink);color:var(--artifact-bg);border-color:var(--artifact-ink)}
+.search{appearance:none;-webkit-appearance:none;height:34px;border:1px solid var(--artifact-line);background:var(--artifact-surface);color:var(--artifact-text);font:inherit;font-size:13px;border-radius:17px;padding:0 14px;min-width:200px}
+.sep{width:1px;height:22px;background:var(--artifact-line);margin:0 4px}
+.week{border:1px solid var(--artifact-line);border-radius:12px;background:var(--artifact-surface);margin-bottom:16px;overflow:hidden}
+.week.look{border-style:dashed}.week.hot{border-color:var(--artifact-accent)}
+.weekhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 20px;padding:12px 16px;border-bottom:1px solid var(--artifact-line)}
+.weekhead .wt{font-weight:700;color:var(--artifact-ink)}
+.weekhead .wt span{font-weight:400;color:var(--artifact-muted);margin-left:8px;font-size:13px}
+.load{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--artifact-muted);text-transform:uppercase;letter-spacing:1px}
+.load i{display:inline-block;width:14px;height:6px;border-radius:3px;background:var(--artifact-line);margin-right:2px}
+.load i.on{background:var(--artifact-accent)}
+.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.day{padding:10px 10px 12px;border-right:1px solid var(--artifact-line);min-height:84px}
+.day:last-child{border-right:none}
+.day .dh{font-size:12px;color:var(--artifact-muted);margin-bottom:7px;font-weight:600}
+.day.edge{background:var(--artifact-tint)}
+.edgetag{display:block;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--artifact-accent-ink);font-weight:700;margin:-3px 0 6px}
+.chip{display:block;border:1px solid var(--artifact-line);border-radius:7px;padding:6px 8px 7px;margin-bottom:6px;background:var(--artifact-surface);font-size:12.5px;line-height:1.35;color:var(--artifact-text)}
+.chip a{color:inherit;text-decoration:none}
+.chip.hidden,tr.hidden{display:none}
+.st{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700;padding:1px 7px;border-radius:9px;border:1px solid currentColor;white-space:nowrap}
+.chip .st{margin-top:4px}
+.st-ok{color:var(--artifact-ok);background:var(--artifact-ok-bg)}
+.st-pat{color:var(--artifact-amber);background:var(--artifact-amber-bg);border-style:dashed}
+.st-watch{color:var(--artifact-risk);background:var(--artifact-risk-bg)}
+.st-carry{color:var(--artifact-muted);border-style:dashed}
+.unplaced{padding:10px 16px 12px;border-top:1px dashed var(--artifact-line);font-size:13px;color:var(--artifact-muted);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.unplaced .chip{margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--artifact-muted);margin-top:10px}
+.tablewrap{overflow:auto;margin-top:6px;border:1px solid var(--artifact-line);border-radius:10px;background:var(--artifact-surface);max-height:78vh}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--artifact-line);vertical-align:top}
+th{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--artifact-muted);background:var(--artifact-surface);position:sticky;top:0;white-space:nowrap;z-index:2}
+th.sortable{cursor:pointer}th.sortable:hover{color:var(--artifact-ink)}
+tr:last-child td{border-bottom:none}
+#reg td.dt{white-space:nowrap;font-weight:600;color:var(--artifact-ink)}
+#reg td.ev{min-width:210px;font-weight:600;color:var(--artifact-ink)}
+#reg td.ev small{display:block;font-weight:400;color:var(--artifact-muted);font-size:12px;margin-top:2px}
+#reg td.why,#reg td.prep{min-width:240px}
+#reg tr.outside td.dt{color:var(--artifact-muted)}
+#reg tr.outside{background:transparent}
+#reg input[type=checkbox]{accent-color:var(--artifact-accent);width:16px;height:16px;cursor:pointer}
+.lanecell{white-space:nowrap}
+.brief{margin-top:34px;background:var(--artifact-surface);border:1px solid var(--artifact-line);border-radius:12px;padding:26px 28px}
+.brief .bmeta{font-size:13px;color:var(--artifact-muted);margin-bottom:16px}
+.brief .cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:14px}
+.brief h5{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--artifact-accent-ink);margin:0 0 6px}
+.brief ul{margin:0 0 0 18px;font-size:15px}.brief li{margin-bottom:5px}
+.brief .src{font-size:12px;color:var(--artifact-muted);margin-top:16px;border-top:1px solid var(--artifact-line);padding-top:10px}
+.tl{list-style:none;border-left:2px solid var(--artifact-line);margin:6px 0 0 6px;padding-left:20px}
+.tl li{position:relative;padding:0 0 12px;font-size:15px}
+.tl li::before{content:'';position:absolute;left:-27px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--artifact-surface);border:2px solid var(--artifact-muted)}
+.tl li.now::before{background:var(--artifact-accent);border-color:var(--artifact-accent)}
+.tl li.next::before{border-style:dashed}
+.tl b{color:var(--artifact-ink);margin-right:6px}
+.calls{display:grid;gap:14px;margin-top:16px}
+.call{background:var(--artifact-surface);border:1px solid var(--artifact-line);border-radius:12px;display:grid;grid-template-columns:130px 1fr;overflow:hidden}
+.call .cid{padding:16px;background:var(--artifact-tint);border-right:1px solid var(--artifact-line)}
+.call .cid .id{font-family:Georgia,serif;font-size:20px;color:var(--artifact-ink)}
+.call .cid .pv{font-size:12px;color:var(--artifact-muted);margin-top:4px}
+.call .cid .state{display:inline-block;margin-top:10px;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--artifact-accent-ink);border:1px dashed var(--artifact-accent);border-radius:3px;padding:2px 6px}
+.call .cb{padding:16px 20px}
+.call h4{font-size:16px;color:var(--artifact-ink);font-weight:600;line-height:1.35;margin-bottom:6px}
+.call .basis{font-size:14px;color:var(--artifact-muted);margin-bottom:10px}
+.call dl{display:grid;grid-template-columns:96px 1fr;gap:5px 12px;font-size:14px}
+.call dt{color:var(--artifact-muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding-top:3px}
+.callout{background:var(--artifact-surface);border:1px solid var(--artifact-line);border-radius:10px;padding:14px 18px;margin-top:16px;font-size:15px;max-width:820px}
+.callout b{color:var(--artifact-ink)}
+.good{color:var(--artifact-ok);font-weight:600}.bad{color:var(--artifact-risk);font-weight:600}
+.aug{display:inline-block;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;color:var(--artifact-accent-ink);border:1px solid var(--artifact-accent);border-radius:3px;padding:2px 7px;margin-left:8px;vertical-align:3px}
+ul.plain{margin:10px 0 0 20px;font-size:15px;max-width:800px}ul.plain li{margin-bottom:6px}
+footer.foot{background:var(--artifact-hero-bg);color:var(--artifact-hero-muted);padding:28px 0;font-size:13px;margin-top:20px}
+footer .guard{color:var(--artifact-hero-text);font-weight:600;margin-bottom:10px}
+@media (prefers-reduced-motion:no-preference){header.top .inner>*{animation:rise .5s ease both}header.top .inner>*:nth-child(2){animation-delay:.07s}header.top .inner>*:nth-child(n+3){animation-delay:.14s}}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media screen and (max-width:1000px){
+  .layout{grid-template-columns:1fr;gap:0}
+  aside.side{position:sticky;top:0;z-index:20;background:var(--artifact-bg);padding:0;display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--artifact-line);max-height:none}
+  aside.side .lbl{display:none}
+  aside.side a,aside.side a.sub{margin:0;padding:14px 12px;white-space:nowrap;border-left:none;border-bottom:2px solid transparent;font-size:13px}
+  aside.side a.active{border-bottom-color:var(--artifact-accent)}
+  .two,.brief .cols{grid-template-columns:1fr}
+  .days{grid-template-columns:1fr}.day{border-right:none;border-bottom:1px solid var(--artifact-line);min-height:0}.day.quiet{display:none}
+  .call{grid-template-columns:1fr}.call .cid{border-right:none;border-bottom:1px solid var(--artifact-line)}
+}
+@media print{
+  @page{size:auto !important}
+  body{background:#fff;color:#000;print-color-adjust:exact;-webkit-print-color-adjust:exact;font-size:12px}
+  aside.side,.filters{display:none !important}
+  .layout{display:block;padding:0 .3in}.inner{padding:0 .3in}
+  section{padding:22px 0}
+  .brief,.call,.box,.week,.callout,.prio li{break-inside:avoid}
+  .tablewrap{max-height:none !important;overflow:visible !important}
+  th{position:static}
+  tr.hidden,.chip.hidden{display:table-row}
+  .chip.hidden{display:block}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+<header class="top" data-glean-id="header"><div class="inner">
+ <div class="org">Cision · Rapid Intelligence UK</div>
+ <h1 class="title">Horizon Scan: Lloyds Banking Group</h1>
+ <div class="range">5 – 19 October 2026 <span>· look-ahead to the Bank of England decision on 5 November</span></div>
+ <div class="topmeta"><span>Client <b>Lloyds Banking Group</b></span><span>Audience <b>RI analyst team (working document)</b></span><span>Compiled <b>Monday 5 October 2026</b></span><span>Pattern Watch <b>augur Archive</b></span></div>
+ <span class="statusbar">Draft · dates need primary-source verification before client use</span>
+</div></header>
+
+<div class="layout">
+<aside class="side" aria-label="Contents">
+ <div class="lbl">Contents</div>
+ <a href="#summary">Summary</a><a href="#calendar">Calendar</a><a href="#register">Event register</a>
+ <a href="#briefs">Pressure points</a><a class="sub" href="#motor">Motor finance</a><a class="sub" href="#budget">Budget and results</a><a class="sub" href="#rates">Data, rates, housing</a>
+ <a href="#patterns">augur Pattern Watch</a><a href="#pipeline">Regulatory pipeline</a><a href="#about">About this edition</a>
+</aside>
+<main>
+
+<section id="summary" data-glean-id="sec-summary">
+ <div class="kicker">Summary</div>
+ <h2>A quiet fortnight, then a heavy run from 19 October.</h2>
+ <p class="lede">Inside the horizon there is one firm data release, the tail of conference season, and one live reputational thread: the motor finance Tribunal hearing, which began today. From 19 October the load builds. Labour Market and CPI arrive on 20 and 21 October, then four sets of bank results and the Budget fall between 22 and 30 October, with the MPC decision on 5 November.</p>
+ <div class="two">
+  <div>
+   <ol class="prio">
+    <li data-glean-id="prio-1"><div><div class="pt">Motor finance: Upper Tribunal, 5–6 Oct</div><div class="pd">Four challenges have partially suspended the redress scheme. The hearing should set whether the main case runs in December or February.</div><div class="pw">Watch · check outcome from 6 Oct<a class="go" href="#motor">Brief</a></div></div></li>
+    <li data-glean-id="prio-2"><div><div class="pt">Budget meets results, 27–30 Oct</div><div class="pd">HSBC on 27th, Budget on 28th, Lloyds on 29th, NatWest on 30th, plus the Business Barometer. Treat as one operation.</div><div class="pw">Clash · pre-build templates by 16 Oct<a class="go" href="#budget">Brief</a></div></div></li>
+    <li data-glean-id="prio-3"><div><div class="pt">Data run-up to the MPC, 20–23 Oct</div><div class="pd">Labour Market, CPI, public finances, Barclays and Retail Sales in four days, with inflation already at 3.1%.</div><div class="pw">Clash · allocate cover for 20–22 Oct<a class="go" href="#rates">Brief</a></div></div></li>
+    <li data-glean-id="prio-4"><div><div class="pt">Housing signals, c. 7 Oct onward</div><div class="pd">Halifax shows its first annual fall since 2023. Its September edition is due around 7 October.</div><div class="pw">Pattern · check newsroom on 7 Oct<a class="go" href="#rates">Brief</a></div></div></li>
+    <li data-glean-id="prio-5"><div><div class="pt">Verify before use</div><div class="pd">Every dated item was found on secondary public sources. Tick each in the register once checked at the primary source.</div><div class="pw">Action · by 9 Oct<a class="go" href="#register">Register</a></div></div></li>
+   </ol>
+  </div>
+  <div class="box thisweek" data-glean-id="box-this-week"><h4>This week, 5–9 October</h4><div class="d"><div class="dd">Mon 5</div><div><div class="it"><span class="dot d-p"></span>Conservative conference (4–7 Oct)</div><div class="it"><span class="dot d-r"></span>Upper Tribunal motor finance hearing</div></div></div><div class="d"><div class="dd">Tue 6</div><div><div class="it"><span class="dot d-p"></span>Conservative conference (4–7 Oct)</div><div class="it"><span class="dot d-r"></span>Upper Tribunal motor finance hearing</div></div></div><div class="d"><div class="dd">Wed 7</div><div><div class="it"><span class="dot d-p"></span>Conservative conference (4–7 Oct)</div><div class="it"><span class="dot d-i"></span>Halifax HPI (c. 7 Oct)</div></div></div><div class="d"><div class="dd">Thu 8</div><div class="quietday">Nothing dated</div></div><div class="d"><div class="dd">Fri 9</div><div class="quietday">Nothing dated</div></div></div>
+ </div>
+</section>
+
+<section id="calendar" data-glean-id="sec-calendar">
+ <div class="kicker">Calendar</div>
+ <h2>Five weeks on one page.</h2>
+ <p class="lede">The first two weeks are the client horizon. The next three are shown because that is where the load sits.</p>
+ <div class="filters" role="group" aria-label="Filter calendar by lane"><button type="button" class="fbtn calall" aria-pressed="true">All lanes</button><button type="button" class="fbtn lanebtn" data-filter="p" aria-pressed="false"><span class="dot d-p"></span>Political</button><button type="button" class="fbtn lanebtn" data-filter="r" aria-pressed="false"><span class="dot d-r"></span>Regulatory</button><button type="button" class="fbtn lanebtn" data-filter="e" aria-pressed="false"><span class="dot d-e"></span>Economic data</button><button type="button" class="fbtn lanebtn" data-filter="i" aria-pressed="false"><span class="dot d-i"></span>Lloyds & industry</button><button type="button" class="fbtn lanebtn" data-filter="c" aria-pressed="false"><span class="dot d-c"></span>Competitors</button></div>
+ <div class="week " data-glean-id="week-week-of-5-october"><div class="weekhead"><div class="wt">Week of 5 October<span>Inside the horizon</span></div><div class="load">Analyst load <span><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span> Moderate</div></div><div class="days"><div class="day"><div class="dh">Mon 5 Oct</div><div class="chip" data-lane="p" data-glean-id="chip-con-2026-10-05"><span class="dot d-p"></span>Conservative conference (4–7 Oct)<br><span class="st st-ok">Dated</span></div><div class="chip" data-lane="r" data-glean-id="chip-tribunal-2026-10-05"><span class="dot d-r"></span>Upper Tribunal motor finance hearing<br><span class="st st-watch">Watch</span></div></div><div class="day"><div class="dh">Tue 6 Oct</div><div class="chip" data-lane="p" data-glean-id="chip-con-2026-10-06"><span class="dot d-p"></span>Conservative conference (4–7 Oct)<br><span class="st st-ok">Dated</span></div><div class="chip" data-lane="r" data-glean-id="chip-tribunal-2026-10-06"><span class="dot d-r"></span>Upper Tribunal motor finance hearing<br><span class="st st-watch">Watch</span></div></div><div class="day"><div class="dh">Wed 7 Oct</div><div class="chip" data-lane="p" data-glean-id="chip-con-2026-10-07"><span class="dot d-p"></span>Conservative conference (4–7 Oct)<br><span class="st st-ok">Dated</span></div><div class="chip" data-lane="i" data-glean-id="chip-halifax-2026-10-07"><span class="dot d-i"></span>Halifax HPI (c. 7 Oct)<br><span class="st st-pat">Pattern</span></div></div><div class="day quiet"><div class="dh">Thu 8 Oct</div></div><div class="day quiet"><div class="dh">Fri 9 Oct</div></div></div></div>
+<div class="week " data-glean-id="week-week-of-12-october"><div class="weekhead"><div class="wt">Week of 12 October<span>Inside the horizon</span></div><div class="load">Analyst load <span><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span> Low</div></div><div class="days"><div class="day quiet"><div class="dh">Mon 12 Oct</div></div><div class="day quiet"><div class="dh">Tue 13 Oct</div></div><div class="day quiet"><div class="dh">Wed 14 Oct</div></div><div class="day"><div class="dh">Thu 15 Oct</div><div class="chip" data-lane="e" data-glean-id="chip-gdp-2026-10-15"><span class="dot d-e"></span>ONS GDP (Aug)<br><span class="st st-ok">Dated</span></div></div><div class="day quiet"><div class="dh">Fri 16 Oct</div></div></div><div class="unplaced"><span>Day not confirmed:</span><div class="chip" data-lane="e" data-glean-id="chip-ccs-wk"><span class="dot d-e"></span>BoE Credit Conditions Survey<br><span class="st st-pat">Pattern</span></div><div class="chip" data-lane="r" data-glean-id="chip-fos-wk"><span class="dot d-r"></span>FOS Ombudsman News<br><span class="st st-carry">Carried</span></div></div></div>
+<div class="week " data-glean-id="week-week-of-19-october"><div class="weekhead"><div class="wt">Week of 19 October<span>Horizon ends Mon 19 Oct · run-up to the Budget</span></div><div class="load">Analyst load <span><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span> High</div></div><div class="days"><div class="day edge"><div class="dh">Mon 19 Oct</div><span class="edgetag">Horizon ends</span></div><div class="day"><div class="dh">Tue 20 Oct</div><div class="chip" data-lane="e" data-glean-id="chip-lm-2026-10-20"><span class="dot d-e"></span>ONS Labour Market<br><span class="st st-ok">Dated</span></div></div><div class="day"><div class="dh">Wed 21 Oct</div><div class="chip" data-lane="e" data-glean-id="chip-cpi-2026-10-21"><span class="dot d-e"></span>ONS CPI (Sept)<br><span class="st st-ok">Dated</span></div><div class="chip" data-lane="e" data-glean-id="chip-psf-2026-10-21"><span class="dot d-e"></span>ONS public finances<br><span class="st st-ok">Dated</span></div><div class="chip" data-lane="e" data-glean-id="chip-hpi-2026-10-21"><span class="dot d-e"></span>ONS UK HPI<br><span class="st st-ok">Dated</span></div></div><div class="day"><div class="dh">Thu 22 Oct</div><div class="chip" data-lane="c" data-glean-id="chip-barc-2026-10-22"><span class="dot d-c"></span>Barclays Q3 results<br><span class="st st-ok">Dated</span></div></div><div class="day"><div class="dh">Fri 23 Oct</div><div class="chip" data-lane="e" data-glean-id="chip-retail-2026-10-23"><span class="dot d-e"></span>ONS Retail Sales<br><span class="st st-ok">Dated</span></div></div></div></div>
+<div class="week look hot" data-glean-id="week-week-of-26-october"><div class="weekhead"><div class="wt">Week of 26 October<span>Look-ahead · Budget meets results</span></div><div class="load">Analyst load <span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> Very high</div></div><div class="days"><div class="day quiet"><div class="dh">Mon 26 Oct</div></div><div class="day"><div class="dh">Tue 27 Oct</div><div class="chip" data-lane="c" data-glean-id="chip-hsbc-2026-10-27"><span class="dot d-c"></span>HSBC Q3 results<br><span class="st st-ok">Dated</span></div></div><div class="day"><div class="dh">Wed 28 Oct</div><div class="chip" data-lane="p" data-glean-id="chip-budget-2026-10-28"><span class="dot d-p"></span>Autumn Budget<br><span class="st st-ok">Dated</span></div></div><div class="day"><div class="dh">Thu 29 Oct</div><div class="chip" data-lane="i" data-glean-id="chip-lbgq3-2026-10-29"><span class="dot d-i"></span>Lloyds Q3 statement<br><span class="st st-ok">Dated</span></div><div class="chip" data-lane="e" data-glean-id="chip-mc-2026-10-29"><span class="dot d-e"></span>BoE Money &amp; Credit<br><span class="st st-ok">Dated</span></div></div><div class="day"><div class="dh">Fri 30 Oct</div><div class="chip" data-lane="c" data-glean-id="chip-nwg-2026-10-30"><span class="dot d-c"></span>NatWest Q3 results<br><span class="st st-ok">Dated</span></div><div class="chip" data-lane="i" data-glean-id="chip-bar-2026-10-30"><span class="dot d-i"></span>Business Barometer (c. 30 Oct)<br><span class="st st-pat">Pattern</span></div></div></div></div>
+<div class="week look" data-glean-id="week-week-of-2-november"><div class="weekhead"><div class="wt">Week of 2 November<span>Look-ahead</span></div><div class="load">Analyst load <span><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span> Moderate</div></div><div class="days"><div class="day quiet"><div class="dh">Mon 2 Nov</div></div><div class="day quiet"><div class="dh">Tue 3 Nov</div></div><div class="day quiet"><div class="dh">Wed 4 Nov</div></div><div class="day"><div class="dh">Thu 5 Nov</div><div class="chip" data-lane="e" data-glean-id="chip-mpc-2026-11-05"><span class="dot d-e"></span>BoE MPC decision<br><span class="st st-ok">Dated</span></div></div><div class="day quiet"><div class="dh">Fri 6 Nov</div></div></div></div>
+ <div class="legend"><span><span class="st st-ok">Dated</span> date published by the body or reported</span><span><span class="st st-pat">Pattern</span> expected from recurrence, no calendar</span><span><span class="st st-watch">Watch</span> live, no fixed outcome date</span><span><span class="st st-carry">Carried</span> not re-checked</span></div>
+</section>
+
+<section id="register" data-glean-id="sec-register">
+ <div class="kicker">Event register</div>
+ <h2>Every dated item, with why it matters and what to prepare.</h2>
+ <p class="lede">Sort by clicking a column heading. Filter by lane, search, or restrict to the client horizon. Tick the box once the date is confirmed at the primary source (ticks reset on reload).</p>
+ <div class="filters" role="group" aria-label="Filter register"><button type="button" class="fbtn rall" aria-pressed="true">All lanes</button><button type="button" class="fbtn rbtn" data-filter="p" aria-pressed="false"><span class="dot d-p"></span>Political</button><button type="button" class="fbtn rbtn" data-filter="r" aria-pressed="false"><span class="dot d-r"></span>Regulatory</button><button type="button" class="fbtn rbtn" data-filter="e" aria-pressed="false"><span class="dot d-e"></span>Economic data</button><button type="button" class="fbtn rbtn" data-filter="i" aria-pressed="false"><span class="dot d-i"></span>Lloyds & industry</button><button type="button" class="fbtn rbtn" data-filter="c" aria-pressed="false"><span class="dot d-c"></span>Competitors</button><span class="sep"></span><button type="button" class="fbtn inh" aria-pressed="false">Inside horizon only</button><input class="search" id="q" type="search" placeholder="Search events" aria-label="Search events"></div>
+ <div class="tablewrap"><table id="reg" data-glean-id="tbl-register"><thead><tr><th>✓</th><th class="sortable" data-col="1">Date</th><th class="sortable" data-col="2">Event</th><th class="sortable" data-col="3">Lane</th><th class="sortable" data-col="4">Status</th><th>Why it matters for the Group</th><th>Prepare</th><th>Verify at</th></tr></thead><tbody><tr class="inside" data-lane="p" data-inh="1" data-sort="2026-10-05" data-glean-id="row-con"><td><input type="checkbox" aria-label="Verified at primary source: Conservative conference (4–7 Oct)"></td><td class="dt" data-v="2026-10-05">4–7 Oct</td><td class="ev">Conservative Party conference, Birmingham<small>Political parties</small></td><td class="lanecell" data-v="p"><span class="dot d-p"></span>Political</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Tail of conference season; Labour finished on 30 Sep. Fringe events are where financial-services policy hints surface.</td><td class="prep">Log any banking, mortgage or savings announcements from 5–7 Oct.</td><td><a href="https://www.local.gov.uk/parliament/party-conferences-autumn-2026" target="_blank" rel="noopener">LGA listing</a></td></tr>
+<tr class="inside" data-lane="r" data-inh="1" data-sort="2026-10-05" data-glean-id="row-tribunal"><td><input type="checkbox" aria-label="Verified at primary source: Upper Tribunal motor finance hearing"></td><td class="dt" data-v="2026-10-05">5–6 Oct</td><td class="ev">Upper Tribunal case-management hearing: motor finance redress challenges<small>Upper Tribunal / FCA</small></td><td class="lanecell" data-v="r"><span class="dot d-r"></span>Regulatory</td><td data-v="watch"><span class="st st-watch">Watch</span></td><td class="why">Should indicate whether the main hearing is 14–18 Dec 2026 or 16–26 Feb 2027, and rules on disclosure and expert evidence. Drives the timing of any redress for Black Horse customers.</td><td class="prep">Check outcome from 6 Oct. Update the motor finance brief below and call LBG-F2.</td><td><a href="https://www.am-online.com/news/motor-finance-provisions-surge-as-redress-hearing-begins" target="_blank" rel="noopener">Hearing preview</a></td></tr>
+<tr class="inside" data-lane="i" data-inh="1" data-sort="2026-10-07" data-glean-id="row-halifax"><td><input type="checkbox" aria-label="Verified at primary source: Halifax HPI (c. 7 Oct)"></td><td class="dt" data-v="2026-10-07">c. 7 Oct</td><td class="ev">Halifax House Price Index (September data)<small>Halifax (Lloyds Banking Group)</small></td><td class="lanecell" data-v="i"><span class="dot d-i"></span>Lloyds & industry</td><td data-v="pat"><span class="st st-pat">Pattern</span></td><td class="why">A Group publication. August showed a 0.2% monthly fall and the first annual decline since November 2023 (−0.4%). Another fall would extend that story.</td><td class="prep">Check the Halifax newsroom from 7am on 7 Oct. Note: the Archive&#x27;s &quot;first Friday&quot; pattern looks wrong; see Pattern Watch.</td><td><a href="https://www.halifax.co.uk/mortgages/house-price-index/" target="_blank" rel="noopener">Halifax HPI page</a></td></tr>
+<tr class="inside" data-lane="e" data-inh="1" data-sort="2026-10-15" data-glean-id="row-gdp"><td><input type="checkbox" aria-label="Verified at primary source: ONS GDP (Aug)"></td><td class="dt" data-v="2026-10-15">Thu 15 Oct</td><td class="ev">ONS GDP monthly estimate (August), with Index of Production and trade<small>ONS</small></td><td class="lanecell" data-v="e"><span class="dot d-e"></span>Economic data</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">The only major ONS release inside the horizon, and the last growth read before the Budget.</td><td class="prep">Note the three-month growth figure for economic commentary.</td><td><a href="https://researchbriefings.files.parliament.uk/documents/CBP-9040/CBP-9040.pdf" target="_blank" rel="noopener">Commons Library calendar</a></td></tr>
+<tr class="inside" data-lane="e" data-inh="1" data-sort="2026-10-16" data-glean-id="row-ccs"><td><input type="checkbox" aria-label="Verified at primary source: BoE Credit Conditions Survey"></td><td class="dt" data-v="2026-10-16">October, day tbc</td><td class="ev">Bank of England Credit Conditions Survey (Q3)<small>Bank of England</small></td><td class="lanecell" data-v="e"><span class="dot d-e"></span>Economic data</td><td data-v="pat"><span class="st st-pat">Pattern</span></td><td class="why">Lender-reported availability of mortgage, card and corporate credit. Last year&#x27;s Q3 edition came out on 16 Oct.</td><td class="prep">Confirm the date on the BoE site and check the lending-availability headline.</td><td><a href="https://www.bankofengland.co.uk/sitemap/credit-conditions-survey" target="_blank" rel="noopener">BoE CCS pages</a></td></tr>
+<tr class="inside" data-lane="r" data-inh="1" data-sort="2026-10-16" data-glean-id="row-fos"><td><input type="checkbox" aria-label="Verified at primary source: FOS Ombudsman News"></td><td class="dt" data-v="2026-10-16">October, day tbc</td><td class="ev">FOS Ombudsman News (October cycle)<small>Financial Ombudsman Service</small></td><td class="lanecell" data-v="r"><span class="dot d-r"></span>Regulatory</td><td data-v="carry"><span class="st st-carry">Carried</span></td><td class="why">Carried from the earlier draft: quarterly publication, with motor finance complaints rising.</td><td class="prep">Low priority. Confirm the date if capacity allows.</td><td>No source found</td></tr>
+<tr class="outside" data-lane="e" data-inh="0" data-sort="2026-10-20" data-glean-id="row-lm"><td><input type="checkbox" aria-label="Verified at primary source: ONS Labour Market"></td><td class="dt" data-v="2026-10-20">Tue 20 Oct</td><td class="ev">ONS Labour Market statistics<small>ONS</small></td><td class="lanecell" data-v="e"><span class="dot d-e"></span>Economic data</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Pay growth feeds the MPC&#x27;s 5 Nov decision, where three members voted to raise rates in September.</td><td class="prep">Pre-draft rate and wage commentary. Note regular pay growth.</td><td><a href="https://researchbriefings.files.parliament.uk/documents/CBP-9040/CBP-9040.pdf" target="_blank" rel="noopener">Commons Library calendar</a></td></tr>
+<tr class="outside" data-lane="e" data-inh="0" data-sort="2026-10-21" data-glean-id="row-cpi"><td><input type="checkbox" aria-label="Verified at primary source: ONS CPI (Sept)"></td><td class="dt" data-v="2026-10-21">Wed 21 Oct</td><td class="ev">ONS CPI and CPIH (September)<small>ONS</small></td><td class="lanecell" data-v="e"><span class="dot d-e"></span>Economic data</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">August CPI was 3.1%, the highest since December 2025. The September figure also sets the April 2027 state pension uprating, which widens the audience. Last inflation print before the MPC.</td><td class="prep">Pre-position consumer comment. Front-page story across national titles.</td><td><a href="https://www.ons.gov.uk/economy/inflationandpriceindices" target="_blank" rel="noopener">ONS inflation page</a></td></tr>
+<tr class="outside" data-lane="e" data-inh="0" data-sort="2026-10-21" data-glean-id="row-hpi"><td><input type="checkbox" aria-label="Verified at primary source: ONS UK HPI"></td><td class="dt" data-v="2026-10-21">Wed 21 Oct</td><td class="ev">ONS house prices and private rents (UK HPI)<small>ONS / HM Land Registry</small></td><td class="lanecell" data-v="e"><span class="dot d-e"></span>Economic data</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Official house-price read to set against Halifax&#x27;s weaker numbers.</td><td class="prep">Compare with Halifax September when writing the housing lane.</td><td><a href="https://www.ons.gov.uk/economy/inflationandpriceindices/datasets/ukhousepriceindexmonthlypricestatistics" target="_blank" rel="noopener">ONS dataset page</a></td></tr>
+<tr class="outside" data-lane="e" data-inh="0" data-sort="2026-10-21" data-glean-id="row-psf"><td><input type="checkbox" aria-label="Verified at primary source: ONS public finances"></td><td class="dt" data-v="2026-10-21">Wed 21 Oct</td><td class="ev">ONS public sector finances<small>ONS</small></td><td class="lanecell" data-v="e"><span class="dot d-e"></span>Economic data</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Final borrowing read before the Budget. Borrowing was reported as £8.1bn over forecast in the first five months of the year.</td><td class="prep">Note for Budget framing: tighter headroom raises the chance of revenue-raising measures.</td><td><a href="https://researchbriefings.files.parliament.uk/documents/CBP-9040/CBP-9040.pdf" target="_blank" rel="noopener">Commons Library calendar</a></td></tr>
+<tr class="outside" data-lane="c" data-inh="0" data-sort="2026-10-22" data-glean-id="row-barc"><td><input type="checkbox" aria-label="Verified at primary source: Barclays Q3 results"></td><td class="dt" data-v="2026-10-22">Thu 22 Oct</td><td class="ev">Barclays Q3 2026 results<small>Barclays</small></td><td class="lanecell" data-v="c"><span class="dot d-c"></span>Competitors</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">First peer to report. Barclays held a £430m motor finance provision, so expect the first read-across to Lloyds.</td><td class="prep">Separate analyst cover. Capture any motor finance provision change and NIM guidance.</td><td><a href="https://home.barclays/investor-relations/" target="_blank" rel="noopener">Barclays IR</a></td></tr>
+<tr class="outside" data-lane="e" data-inh="0" data-sort="2026-10-23" data-glean-id="row-retail"><td><input type="checkbox" aria-label="Verified at primary source: ONS Retail Sales"></td><td class="dt" data-v="2026-10-23">Fri 23 Oct</td><td class="ev">ONS Retail Sales<small>ONS</small></td><td class="lanecell" data-v="e"><span class="dot d-e"></span>Economic data</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Consumer-spending read for the retail banking lane.</td><td class="prep">Routine.</td><td><a href="https://researchbriefings.files.parliament.uk/documents/CBP-9040/CBP-9040.pdf" target="_blank" rel="noopener">Commons Library calendar</a></td></tr>
+<tr class="outside" data-lane="c" data-inh="0" data-sort="2026-10-27" data-glean-id="row-hsbc"><td><input type="checkbox" aria-label="Verified at primary source: HSBC Q3 results"></td><td class="dt" data-v="2026-10-27">Tue 27 Oct</td><td class="ev">HSBC Q3 2026 results<small>HSBC</small></td><td class="lanecell" data-v="c"><span class="dot d-c"></span>Competitors</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Lands the day before the Budget. UK ring-fenced commentary is the relevant read for the Group.</td><td class="prep">Capture UK net interest income and any Budget remarks.</td><td><a href="https://www.hsbc.com/investors/investing-in-hsbc/financial-calendar" target="_blank" rel="noopener">HSBC calendar</a></td></tr>
+<tr class="outside" data-lane="p" data-inh="0" data-sort="2026-10-28" data-glean-id="row-budget"><td><input type="checkbox" aria-label="Verified at primary source: Autumn Budget"></td><td class="dt" data-v="2026-10-28">Wed 28 Oct</td><td class="ev">Autumn Budget and OBR Economic and Fiscal Outlook<small>HM Treasury / OBR</small></td><td class="lanecell" data-v="p"><span class="dot d-p"></span>Political</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Chancellor John Healey&#x27;s first Budget. The Treasury confirmed the date on 31 July. It dominates the day and frames Lloyds&#x27; own results the next morning.</td><td class="prep">Reactive templates for Group economic, savings and mortgage commentary. Statement expected around 12:30 after PMQs.</td><td><a href="https://uktax.tools/autumn-budget-2026/" target="_blank" rel="noopener">Budget date summary</a></td></tr>
+<tr class="outside" data-lane="i" data-inh="0" data-sort="2026-10-29" data-glean-id="row-lbgq3"><td><input type="checkbox" aria-label="Verified at primary source: Lloyds Q3 statement"></td><td class="dt" data-v="2026-10-29">Thu 29 Oct</td><td class="ev">Lloyds Banking Group Q3 interim management statement<small>Lloyds Banking Group</small></td><td class="lanecell" data-v="i"><span class="dot d-i"></span>Lloyds & industry</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">The core client event. Watchpoints: net interest margin (3.19% in H1), mortgage volumes, capital returns, and the £1.95bn motor finance provision.</td><td class="prep">Pre-position the briefing template. Draft Budget cross-references.</td><td><a href="https://www.lloydsbankinggroup.com/investors/shareholder-information/financial-calendar.html" target="_blank" rel="noopener">Lloyds financial calendar</a></td></tr>
+<tr class="outside" data-lane="e" data-inh="0" data-sort="2026-10-29" data-glean-id="row-mc"><td><input type="checkbox" aria-label="Verified at primary source: BoE Money &amp; Credit"></td><td class="dt" data-v="2026-10-29">Thu 29 Oct</td><td class="ev">Bank of England Money and Credit (mortgage approvals)<small>Bank of England</small></td><td class="lanecell" data-v="e"><span class="dot d-e"></span>Economic data</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Mortgage approvals data, published the same day as Lloyds&#x27; statement.</td><td class="prep">Check approvals against Lloyds&#x27; mortgage commentary.</td><td><a href="https://commonslibrary.parliament.uk/research-briefings/sn02820/" target="_blank" rel="noopener">Commons Library calendar</a></td></tr>
+<tr class="outside" data-lane="i" data-inh="0" data-sort="2026-10-30" data-glean-id="row-bar"><td><input type="checkbox" aria-label="Verified at primary source: Business Barometer (c. 30 Oct)"></td><td class="dt" data-v="2026-10-30">c. Fri 30 Oct</td><td class="ev">Lloyds Business Barometer (October data)<small>Lloyds Banking Group</small></td><td class="lanecell" data-v="i"><span class="dot d-i"></span>Lloyds & industry</td><td data-v="pat"><span class="st st-pat">Pattern</span></td><td class="why">The September edition, published on 30 Sep, showed confidence down 12 points to 41%, the lowest since April 2025, on energy prices. Another fall would build the narrative.</td><td class="prep">Check the Lloyds newsroom around the last working day of the month.</td><td><a href="https://www.lloydsbankinggroup.com/media/press-releases/2026/lloyds/business-confidence-at-17-month-low-but-remains-above-average.html" target="_blank" rel="noopener">September release</a></td></tr>
+<tr class="outside" data-lane="c" data-inh="0" data-sort="2026-10-30" data-glean-id="row-nwg"><td><input type="checkbox" aria-label="Verified at primary source: NatWest Q3 results"></td><td class="dt" data-v="2026-10-30">Fri 30 Oct</td><td class="ev">NatWest Group Q3 results<small>NatWest Group</small></td><td class="lanecell" data-v="c"><span class="dot d-c"></span>Competitors</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Second UK domestic peer, the day after Lloyds. Expect direct comparisons on NIM and motor finance.</td><td class="prep">Add to the peer comparison grid.</td><td><a href="https://investors.natwestgroup.com/" target="_blank" rel="noopener">NatWest investors</a></td></tr>
+<tr class="outside" data-lane="e" data-inh="0" data-sort="2026-11-05" data-glean-id="row-mpc"><td><input type="checkbox" aria-label="Verified at primary source: BoE MPC decision"></td><td class="dt" data-v="2026-11-05">Thu 5 Nov</td><td class="ev">Bank of England MPC decision with Monetary Policy Report<small>Bank of England</small></td><td class="lanecell" data-v="e"><span class="dot d-e"></span>Economic data</td><td data-v="ok"><span class="st st-ok">Dated</span></td><td class="why">Bank Rate is 3.75%. September&#x27;s hold was reportedly 6–3, with three members voting to raise. The data on 20–21 Oct frames this decision.</td><td class="prep">Prepare rate scenarios (hold or rise) for the Group lines.</td><td><a href="https://www.bankofengland.co.uk/explainers/current-interest-rate" target="_blank" rel="noopener">BoE rate page</a></td></tr></tbody></table></div>
+</section>
+
+<section id="briefs" data-glean-id="sec-briefs">
+ <div class="kicker">Pressure points</div>
+ <h2>Three situations that need more than a date.</h2>
+
+ <div class="brief" id="motor" data-glean-id="brief-motor">
+  <h3 class="bh">Motor finance redress</h3>
+  <div class="bmeta">Regulatory · Watch · Black Horse is the Group's motor finance brand</div>
+  <p class="lede">The FCA's final rules are out. The live question is whether the scheme survives legal challenge, and when. Earlier guidance to "monitor the FCA site for the Policy Statement" no longer applies.</p>
+  <ul class="tl">
+   <li><b>30 Mar</b>FCA publishes PS26/3, the final rules: two schemes covering agreements from April 2007 to November 2024, with estimated redress of £7.5bn and a total bill of £9.1bn.</li>
+   <li><b>1 and 8 May</b>Four legal challenges confirmed (CA Auto Finance, Consumer Voice, Mercedes-Benz and Volkswagen financial services).</li>
+   <li><b>July</b>Upper Tribunal partially suspends the schemes. Lenders need not calculate or pay under the suspended parts but must prepare.</li>
+   <li><b>19 Aug</b>FCA feedback on lenders' implementation plans flags gaps in population identification, calculators and quality assurance.</li>
+   <li><b>1 Sep</b>County-court appeal judgment (<i>Berry v Black Horse</i>) reportedly rejects a limitation defence (claimant-side report).</li>
+   <li class="now"><b>5–6 Oct</b>Case-management hearing on disclosure, expert evidence and timetable.</li>
+   <li class="next"><b>14–18 Dec or 16–26 Feb</b>Main hearing, five days or nine days respectively.</li>
+   <li class="next"><b>Mid-2027</b>Earliest redress payments on one claimant-side estimate, and only if the scheme is upheld.</li>
+  </ul>
+  <div class="cols">
+   <div><h5>Group position</h5><ul><li>Provision of £1.95bn at 30 June, with no extra charge in H1.</li><li>Reported to have chosen to join the scheme rather than challenge it.</li><li>FCA average redress estimate is about £829 per eligible agreement.</li><li>A claim of about £66m against Black Horse was reported in March.</li></ul></div>
+   <div><h5>Peers</h5><ul><li>Barclays holds £430m. Other captive lenders have provisioned heavily (BMW Financial Services £611.6m).</li><li>Barclays reports on 22 Oct and will give the first provision read-across before Lloyds on 29 Oct.</li></ul></div>
+  </div>
+  <div class="cols">
+   <div><h5>Watch for</h5><ul><li>Tribunal directions naming the main-hearing window.</li><li>Any FCA statement following the hearing.</li><li>Changes to peers' provisions on 22 and 27 Oct.</li><li>Movement in the Group's provision on 29 Oct (call LBG-F1).</li></ul></div>
+   <div><h5>Prepare</h5><ul><li>Update this brief on 6–7 Oct.</li><li>Hold a reactive line for a Tribunal outcome or an FCA statement.</li><li>Track claims-firm and law-firm activity against Black Horse.</li></ul></div>
+  </div>
+  <div class="src">Sources: <a href="https://www.regulationtomorrow.com/2026/03/fca-ps26-3-motor-finance-consumer-redress-scheme/" target="_blank" rel="noopener">PS26/3 summary</a> · <a href="https://www.fca.org.uk/publications/good-and-poor-practice/feedback-motor-finance-redress-scheme-implementation-plans" target="_blank" rel="noopener">FCA implementation feedback</a> · <a href="https://www.am-online.com/news/motor-finance-provisions-surge-as-redress-hearing-begins" target="_blank" rel="noopener">Hearing preview</a> · <a href="https://www.dailyrecord.co.uk/lifestyle/money/new-car-finance-compensation-update-37734460" target="_blank" rel="noopener">Daily Record</a>. Berry and £66m claim from claimant-side and press reports; verify.</div>
+ </div>
+
+ <div class="brief" id="budget" data-glean-id="brief-budget">
+  <h3 class="bh">Budget meets results, 27–30 October</h3>
+  <div class="bmeta">Political and results · Clash · outside the client horizon, inside the planning horizon</div>
+  <p class="lede">The Budget is Wednesday 28 October, and the Group reports the next morning. Lloyds' own results will be read through whatever the Chancellor announces.</p>
+  <ul class="tl">
+   <li><b>Tue 27</b>HSBC Q3 results.</li>
+   <li class="now"><b>Wed 28</b>Budget, expected around 12:30 after PMQs, with the OBR forecast on the same day.</li>
+   <li><b>Thu 29</b>Lloyds Q3 statement, plus Bank of England Money and Credit.</li>
+   <li><b>Fri 30</b>NatWest Q3 results; Lloyds Business Barometer likely around the last working day.</li>
+  </ul>
+  <div class="cols">
+   <div><h5>Context</h5><ul><li>John Healey became Chancellor on 20 July under Prime Minister Andy Burnham; this is his first Budget.</li><li>Reported commitments: no rises in income tax, employee National Insurance or VAT.</li><li>Borrowing was reported £8.1bn over forecast in the first five months, which narrows room for manoeuvre.</li><li>The £12,000 Cash ISA limit from April 2027 is already part of the baseline, with final regulations due this autumn (single source).</li></ul></div>
+   <div><h5>Group context</h5><ul><li>H1 net interest margin was 3.19%; 2026 guidance of underlying NII above £14.9bn was reiterated.</li><li>The "Accelerate 2030" strategy was launched with the half-year results on 30 July.</li><li>Full-year results are on 28 January 2027.</li></ul></div>
+  </div>
+  <div class="cols">
+   <div><h5>Watch for</h5><ul><li>Savings and ISA changes, property taxation, and any banking-specific measures (no source; speculative).</li><li>Overnight briefings on 26–27 Oct that pre-empt the statement.</li></ul></div>
+   <div><h5>Prepare</h5><ul><li>Reactive templates for Group economic, savings and mortgage commentary.</li><li>A single analyst rota covering 27–30 Oct, with a named lead for 28–29 Oct.</li><li>Draft cross-references so the Lloyds briefing can cite Budget measures the same morning.</li></ul></div>
+  </div>
+  <div class="src">Sources: <a href="https://uktax.tools/autumn-budget-2026/" target="_blank" rel="noopener">Budget date summary</a> · <a href="https://www.ukpolitical.info/autumn-budget-what-to-expect" target="_blank" rel="noopener">second source</a> · <a href="https://www.lloydsbankinggroup.com/investors/shareholder-information/financial-calendar.html" target="_blank" rel="noopener">Lloyds financial calendar</a>. Budget date to be confirmed at gov.uk.</div>
+ </div>
+
+ <div class="brief" id="rates" data-glean-id="brief-rates">
+  <h3 class="bh">Data, rates and housing</h3>
+  <div class="bmeta">Economic · Clash · 5 Oct to 5 Nov</div>
+  <p class="lede">Inflation is rising, the Bank of England is split, business confidence has dropped, and Halifax is showing falling house prices. The 20–21 October releases are the last major data before the Budget and the MPC.</p>
+  <div class="cols">
+   <div><h5>Where things stand</h5><ul><li>CPI was 3.1% in August, the highest since December 2025.</li><li>Bank Rate is 3.75%. The 17 September hold was reportedly 6–3, with three members voting to raise it. One secondary source put a quarter-point rise on 5 November as the favourite; treat with caution.</li><li>Lloyds Business Barometer (Sept): confidence 41%, down 12 points, the lowest since April 2025, on energy prices and Middle East tensions. Economic optimism fell 18 points to 31%.</li><li>Halifax (Aug): prices down 0.2% on the month and 0.4% on the year, the first annual fall since November 2023.</li></ul></div>
+   <div><h5>What to do</h5><ul><li>Pre-draft consumer and rate commentary for 20 and 21 Oct.</li><li>Set Halifax September (c. 7 Oct) against the ONS house-price release on 21 Oct.</li><li>Prepare hold and rise scenarios for 5 Nov.</li><li>Track the October Barometer for a second weak reading.</li></ul></div>
+  </div>
+  <div class="src">Sources: <a href="https://www.ons.gov.uk/economy/inflationandpriceindices" target="_blank" rel="noopener">ONS inflation</a> · <a href="https://www.bankofengland.co.uk/explainers/current-interest-rate" target="_blank" rel="noopener">Bank of England</a> · <a href="https://www.lloydsbankinggroup.com/media/press-releases/2026/lloyds/business-confidence-at-17-month-low-but-remains-above-average.html" target="_blank" rel="noopener">Business Barometer, Sept</a> · <a href="https://researchbriefings.files.parliament.uk/documents/CBP-9040/CBP-9040.pdf" target="_blank" rel="noopener">Commons Library calendar</a>. Halifax and MPC-vote details from press and secondary sites; verify.</div>
+ </div>
+</section>
+
+<section id="patterns" data-glean-id="sec-patterns">
+ <div class="kicker">augur Pattern Watch<span class="aug">augur Archive</span></div>
+ <h2>What the Archive says, and where this cycle corrects it.</h2>
+ <p class="lede">The Archive records recurring events that no public calendar lists. Where a public date exists, it outranks a recurrence. Checking this cycle's dates against the pattern library surfaced four corrections to feed back.</p>
+ <div class="tablewrap" style="max-height:none"><table data-glean-id="tbl-patterns"><thead><tr><th>Pattern</th><th>Archive says</th><th>This cycle</th><th>Verdict and action</th></tr></thead><tbody><tr><td>Halifax House Price Index</td><td>First Friday</td><td>Aug edition reported by 7–8 Sep. Sept edition expected c. 7 Oct</td><td class="bad">Revise to &quot;around the 7th&quot;; the earlier draft&#x27;s &quot;published 2 Oct&quot; is unsupported</td></tr><tr><td>Lloyds Business Barometer</td><td>First Tuesday</td><td>Sept edition published Wed 30 Sep; Oct edition likely c. 30 Oct</td><td class="bad">Revise to &quot;last working day&quot; (one data point; confirm with two more)</td></tr><tr><td>ONS CPI</td><td>Wed, week 2–3</td><td>Wed 21 Oct, in the stated range</td><td class="good">Held. The draft collapsed the range to week 2</td></tr><tr><td>ONS Labour Market</td><td>Tue, week 2–3</td><td>Tue 20 Oct, in the stated range</td><td class="good">Held. Same error in the draft</td></tr><tr><td>ONS GDP monthly</td><td>Wed, week 2</td><td>Thu 15 Oct</td><td class="bad">Week right, day off: widen day to Wed–Thu</td></tr><tr><td>ONS Retail Sales</td><td>Fri, week 3</td><td>Fri 23 Oct, the fourth Friday</td><td class="bad">Off by one week: widen to weeks 3–4</td></tr><tr><td>Lloyds quarterly results</td><td>Week 4</td><td>Thu 29 Oct</td><td class="good">Held</td></tr><tr><td>Barclays / HSBC results</td><td>Weeks 3–4</td><td>22 Oct and 27 Oct</td><td class="good">Held</td></tr><tr><td>BoE Credit Conditions Survey</td><td>Week 2</td><td>Unconfirmed; Q3 2025 was 16 Oct</td><td class="">Open: verify on the BoE site</td></tr><tr><td>Budget / Autumn Statement</td><td>Variable</td><td>Wed 28 Oct, announced 31 Jul</td><td class="good">Held as a seasonal clash; the date was public three months ahead</td></tr></tbody></table></div>
+ <p class="note">Confidence and precedent counts from the Archive (for example 60 precedents for the ONS series) were not recounted for this edition. Treat each correction as a hypothesis until two or three more precedents confirm it.</p>
+
+ <h3 class="bh" style="margin-top:36px">Forward calls for the ledger<span class="aug">draft</span></h3>
+ <p class="lede">A call is committed before the fact, with a window and a test, and is allowed to fail. These are drafted for you to commit, change or reject. None is yet on the record.</p>
+ <div class="calls"><div class="call" data-glean-id="call-lbg-f1"><div class="cid"><div class="id">LBG-F1</div><div class="pv">Almanac anchor + ledger</div><span class="state">Uncommitted</span></div><div class="cb"><h4>Lloyds&#x27; Q3 statement on 29 October will show no additional motor finance charge; the £1.95bn provision stands.</h4><div class="basis">Lloyds booked no extra charge in the first half and the redress scheme is partially suspended, which argues against a change before the Tribunal rules.</div><dl><dt>Window</dt><dd>29 Oct 2026</dd><dt>Confidence</dt><dd>Medium-high</dd><dt>Scored as</dt><dd>The 29 Oct statement reports no incremental motor finance provision. A top-up is a miss. A release is also a miss.</dd></dl></div></div><div class="call" data-glean-id="call-lbg-f2"><div class="cid"><div class="id">LBG-F2</div><div class="pv">Hunch</div><span class="state">Uncommitted</span></div><div class="cb"><h4>The Tribunal will favour the later window: the main hearing is listed for February 2027, not December 2026.</h4><div class="basis">Trade reporting suggests the nine-day February slot is likely if extra expert evidence or disclosure is allowed.</div><dl><dt>Window</dt><dd>By 20 Oct 2026</dd><dt>Confidence</dt><dd>Low-medium</dd><dt>Scored as</dt><dd>Tribunal directions name 16–26 Feb 2027. This may be moot after 6 Oct. If the outcome is public before you commit it, log it as unscoreable.</dd></dl></div></div><div class="call" data-glean-id="call-lbg-f3"><div class="cid"><div class="id">LBG-F3</div><div class="pv">Clash pattern</div><span class="state">Uncommitted</span></div><div class="cb"><h4>Coverage of Lloyds&#x27; Q3 statement will be framed by the Budget the day before.</h4><div class="basis">Budget on 28 Oct and Lloyds on 29 Oct is a hard collision. Treasury measures will set the questions journalists put to the Group.</div><dl><dt>Window</dt><dd>29–31 Oct 2026</dd><dt>Confidence</dt><dd>Medium-high</dd><dt>Scored as</dt><dd>At least two national titles tie the Lloyds statement to Budget measures or reaction within 48 hours.</dd></dl></div></div><div class="call" data-glean-id="call-lbg-f4"><div class="cid"><div class="id">LBG-F4</div><div class="pv">Competitor-narrative convergence</div><span class="state">Uncommitted</span></div><div class="cb"><h4>Barclays&#x27; Q3 results on 22 October will put motor finance on the agenda before Lloyds reports.</h4><div class="basis">The pattern behind the first scored hit (20 June): when peers take a public position, the silent player becomes the story. A dense rhyme is a short fuse.</div><dl><dt>Window</dt><dd>22–23 Oct 2026</dd><dt>Confidence</dt><dd>Medium</dd><dt>Scored as</dt><dd>Barclays&#x27; release or same-day coverage references motor finance provisions or the redress scheme, and at least one title links it to Lloyds by 23 Oct.</dd></dl></div></div></div>
+</section>
+
+<section id="pipeline" data-glean-id="sec-pipeline">
+ <div class="kicker">Regulatory pipeline</div>
+ <h2>Background items carried forward, not re-checked.</h2>
+ <p class="lede">These eight items came from the earlier draft. Several are phrased in the future tense for dates that may have passed. Resolve each to "published" or "not published" before it goes to the client.</p>
+ <div class="tablewrap" style="max-height:none"><table data-glean-id="tbl-pipeline"><thead><tr><th>Initiative</th><th>Lead</th><th>Status in earlier draft</th><th>Check</th></tr></thead><tbody><tr><td>SM&amp;CR reform, Phase 1</td><td>FCA / PRA / HMT</td><td>Mid-2026 implementation; draft said &quot;should be in effect&quot;</td><td><span class="st st-carry">Carried</span></td></tr><tr><td>Consumer Duty: updates and distribution-chain consultation</td><td>FCA</td><td>Mid-2026 and H1 2026 consultations; check whether closed</td><td><span class="st st-carry">Carried</span></td></tr><tr><td>Basel 3.1</td><td>PRA</td><td>Implementation 1 Jan 2027; draft said final rules &quot;due Q1 2026&quot;</td><td><span class="st st-carry">Carried</span></td></tr><tr><td>Buy Now Pay Later regulation</td><td>FCA / HMT</td><td>Draft says live since 15 July 2026</td><td><span class="st st-carry">Carried</span></td></tr><tr><td>Advice Guidance Boundary Review</td><td>FCA / HMT</td><td>Draft says regime live from April 2026</td><td><span class="st st-carry">Carried</span></td></tr><tr><td>ESG ratings regulation</td><td>FCA / HMT</td><td>Policy Statement expected H2 2026</td><td><span class="st st-carry">Carried</span></td></tr><tr><td>PSR APP fraud evaluation</td><td>PSR</td><td>Expected Q3 2026</td><td><span class="st st-carry">Carried</span></td></tr><tr><td>LTI flow limit amendment</td><td>FCA / PRA</td><td>Expected H2 2026; relevant to mortgage lending</td><td><span class="st st-carry">Carried</span></td></tr></tbody></table></div>
+</section>
+
+<section id="about" data-glean-id="sec-about">
+ <div class="kicker">About this edition</div>
+ <h2>Method, limits and changes.</h2>
+ <ul class="plain">
+  <li><b>Method.</b> Dates come from company and institutional calendars, official statistics schedules, and press reporting, combined with recurrence patterns from the augur Archive. Where a public date existed it replaced the pattern.</li>
+  <li><b>Limits.</b> Nearly every source is secondary. Treat "Dated" as "reported", and use the register's tick box to record primary-source checks. No client intelligence was supplied for this cycle.</li>
+  <li><b>Changes from the earlier agent draft.</b> The Budget is on 28 October, outside the window. ONS Labour Market and CPI are on 20 and 21 October, not 13–15 October. The FCA's motor finance rules are already published; the live item is the Tribunal. Lloyds, Barclays, HSBC and NatWest results dates are confirmed. Halifax and the Business Barometer timings are corrected. Conference season is a note, not a clash. The change of Prime Minister and Chancellor is added.</li>
+  <li><b>Not independently verified.</b> Government names and titles; the Berry judgment and the £66m claim; the MPC vote split and market pricing; the Cash ISA position.</li>
+ </ul>
+</section>
+
+</main>
+</div>
+
+<footer class="foot"><div class="inner"><div class="guard">Do not distribute to Lloyds Banking Group client contacts until every flagged item has been verified.</div>Prepared by Rapid Intelligence UK, Cision · Horizon Scan, Lloyds Banking Group · 5–19 October 2026 · Confidential</div></footer>
+
+<script>
+(function(){
+  var chips=document.querySelectorAll('.chip');
+  var cal=document.querySelectorAll('#calendar .lanebtn'), calAll=document.querySelector('.calall');
+  function setCal(f){calAll.setAttribute('aria-pressed',f==='all'?'true':'false');cal.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.filter===f?'true':'false')});chips.forEach(function(c){c.classList.toggle('hidden',f!=='all'&&c.dataset.lane!==f)})}
+  calAll.addEventListener('click',function(){setCal('all')});
+  cal.forEach(function(b){b.addEventListener('click',function(){setCal(b.dataset.filter)})});
+
+  var tbl=document.getElementById('reg'), rows=Array.prototype.slice.call(tbl.tBodies[0].rows);
+  var rb=document.querySelectorAll('#register .rbtn'), rAll=document.querySelector('.rall'), inh=document.querySelector('.inh'), q=document.getElementById('q');
+  var lane='all', onlyIn=false;
+  function apply(){
+    var t=q.value.trim().toLowerCase();
+    rows.forEach(function(r){
+      var ok=(lane==='all'||r.dataset.lane===lane)&&(!onlyIn||r.dataset.inh==='1')&&(!t||r.textContent.toLowerCase().indexOf(t)>-1);
+      r.classList.toggle('hidden',!ok);
+    });
+  }
+  rAll.addEventListener('click',function(){lane='all';rAll.setAttribute('aria-pressed','true');rb.forEach(function(b){b.setAttribute('aria-pressed','false')});apply()});
+  rb.forEach(function(b){b.addEventListener('click',function(){lane=b.dataset.filter;rAll.setAttribute('aria-pressed','false');rb.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});apply()})});
+  inh.addEventListener('click',function(){onlyIn=!onlyIn;inh.setAttribute('aria-pressed',onlyIn?'true':'false');apply()});
+  q.addEventListener('input',apply);
+
+  var dir={};
+  tbl.querySelectorAll('th.sortable').forEach(function(th){th.addEventListener('click',function(){
+    var c=+th.dataset.col; dir[c]=!dir[c];
+    rows.sort(function(a,b){
+      var x=a.cells[c].dataset.v||a.cells[c].textContent.trim(), y=b.cells[c].dataset.v||b.cells[c].textContent.trim();
+      var r=x>y?1:(x<y?-1:0); if(r===0) r=a.dataset.sort>b.dataset.sort?1:-1; return dir[c]?r:-r;});
+    rows.forEach(function(r){tbl.tBodies[0].appendChild(r)});
+  })});
+
+  var links=document.querySelectorAll('aside.side a');
+  var map=Array.prototype.map.call(links,function(a){return document.querySelector(a.getAttribute('href'))});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-20% 0px -70% 0px'});
+  map.forEach(function(s){if(s)io.observe(s)});
+})();
+if(window.GleanBridge){window.GleanBridge.postMessage({actionId:'export-pdf',type:'glean-add-menu',metadata:{label:'Export as PDF',icon:'export'}});
+window.GleanBridge.onMessage('action',function(data){if(data.actionId==='export-pdf')window.print();});}
+</script>
+</body>
+</html>
