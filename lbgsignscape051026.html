@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lloyds Banking Group — Forward Intelligence Signscape</title>
+<style>
+:root{
+--navy:#0b2545;
+--teal:#13797a;
+--grey:#f4f6f8;
+--mid:#6b7a8f;
+--line:#e1e6ec;
+--amber:#b8860b;
+--red:#b23a3a;
+--green:#2e7d4f;
+--blue:#1b5fa8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Helvetica,Arial,sans-serif;color:var(--navy);background:var(--grey);line-height:1.55;}
+.wrap{max-width:960px;margin:0 auto;background:#fff;}
+header{background:var(--navy);color:#fff;padding:36px 40px;}
+header .eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9fb3cc;}
+header h1{font-size:30px;margin:6px 0 4px;font-weight:600;}
+header .range{font-size:15px;color:#cfe0f0;}
+header .confid{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7f98b5;margin-top:14px;}
+.meta{display:flex;flex-wrap:wrap;background:var(--teal);color:#fff;}
+.meta div{flex:1;min-width:150px;padding:16px 20px;border-right:1px solid rgba(255,255,255,.2);}
+.meta div:last-child{border-right:none;}
+.meta .label{font-size:11px;letter-spacing:1px;text-transform:uppercase;opacity:.8;}
+.meta .val{font-size:16px;font-weight:600;margin-top:3px;}
+.section{padding:28px 40px;border-bottom:1px solid var(--line);}
+.section h2{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+.overview{font-size:16px;color:#2b3b52;}
+.pattern-head{display:flex;justify-content:space-between;align-items:center;}
+.pill{background:var(--navy);color:#fff;border-radius:14px;padding:3px 12px;font-size:12px;font-weight:600;}
+.pcats{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 20px;}
+.pcats span{font-size:11px;padding:4px 10px;border-radius:12px;background:var(--grey);border:1px solid var(--line);color:var(--mid);}
+.pattern{border:1px solid var(--line);border-left:4px solid var(--mid);border-radius:6px;padding:16px 18px;margin-bottom:14px;}
+.pattern.clash{border-left-color:var(--red);background:#fdf4f4;}
+.pattern.economic{border-left-color:var(--amber);}
+.pattern.industry{border-left-color:var(--green);}
+.pattern.regulatory{border-left-color:var(--blue);}
+.pattern.political{border-left-color:var(--navy);}
+.pattern .pname{font-size:16px;font-weight:600;}
+.pattern .pmeta{font-size:12px;color:var(--mid);margin:4px 0 10px;}
+.pattern .pwhy{font-size:14px;color:#2b3b52;}
+.pattern .paction{font-size:13px;margin-top:10px;color:var(--navy);font-weight:600;}
+.lane{margin-bottom:26px;}
+.lane-title{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--navy);padding-bottom:6px;margin-bottom:14px;}
+.lane-title h3{font-size:16px;font-weight:600;}
+.lane-count{background:var(--teal);color:#fff;border-radius:12px;padding:2px 11px;font-size:12px;font-weight:600;}
+.lane-count.empty{background:var(--mid);}
+.event{border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin-bottom:12px;background:#fff;}
+.event .ename{font-size:15px;font-weight:600;}
+.event .einst{font-size:12px;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin:3px 0;}
+.event .edate{font-size:13px;color:var(--mid);margin-bottom:6px;}
+.event .edesc{font-size:14px;color:#2b3b52;}
+.status{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:6px;vertical-align:middle;}
+.status.confirmed{background:#e4f3ea;color:var(--green);}
+.status.expected{background:#fdf3e0;color:var(--amber);}
+.status.watch{background:#fbeaea;color:var(--red);}
+.warn{color:var(--red);font-weight:700;}
+.note{border-left:3px solid var(--teal);background:var(--grey);padding:12px 16px;margin-bottom:10px;font-size:14px;}
+footer{background:var(--navy);color:#cfe0f0;padding:26px 40px;font-size:12px;}
+footer .guard{color:#ffd9d9;font-weight:600;margin-bottom:12px;}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px;}
+th,td{text-align:left;padding:8px 10px;border:1px solid var(--line);}
+th{background:var(--grey);color:var(--navy);font-size:11px;text-transform:uppercase;letter-spacing:1px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="eyebrow">Lloyds Banking Group — Forward Intelligence</div>
+<h1>Signscape</h1>
+<div class="range">5 October – 19 October 2026</div>
+<div class="confid">Prepared for Group Corporate Affairs, Lloyds Banking Group — Confidential</div>
+</header>
+
+<div class="meta">
+<div><div class="label">Client</div><div class="val">Lloyds Banking Group</div></div>
+<div><div class="label">Week</div><div class="val">5 – 19 October 2026</div></div>
+<div><div class="label">Active Patterns</div><div class="val">10 flagged</div></div>
+<div><div class="label">Clash Alerts</div><div class="val">2 this week</div></div>
+<div><div class="label">Read the signs</div><div class="val">Forward Intelligence — By Cision</div></div>
+</div>
+
+<div class="section">
+<h2>Executive Overview</h2>
+<p class="overview">This window is dominated by two live Clash Patterns: the tail end of party conference season and an imminent Autumn Budget whose exact date must be verified immediately, as a date falling within these two weeks would override all other planning. A dense cluster of ONS releases — CPI, Labour Market and GDP — is expected in the week of 13–17 October, while the overdue FCA motor finance redress Policy Statement remains the single most significant live reputational risk for the Group and could land without notice. The Lloyds Business Barometer and continuing Halifax House Price Index coverage anchor the standing-publication calendar as preparation begins for Q3 results later in the month.</p>
+</div>
+
+<div class="section">
+<h2>Augur Pattern Watch</h2>
+<div class="pattern-head">
+<span style="font-size:13px;color:var(--mid);">Active signals from the Augur Archive Pattern Library — 48 patterns, 5 categories</span>
+<span class="pill">10 active</span>
+</div>
+<div class="pcats">
+<span>Regulatory</span><span>Economic</span><span>Industry / Results</span><span>Political</span><span>Clash Pattern</span>
+</div>
+
+<div class="pattern clash">
+<div class="pname">⚠️ Clash Pattern — Budget Week (approaching)</div>
+<div class="pmeta">Clash Pattern · Confidence: Very High · 4 precedents</div>
+<div class="pwhy">The UK Budget / Autumn Statement falls in October/November annually, always on a Wednesday, always accompanied by the OBR Economic and Fiscal Outlook. As of 5 October 2026 a Budget announcement is imminent; if confirmed within this window it dominates the full week and defers other regulatory and results announcements.</div>
+<div class="paction">Analyst action: Verify the Budget date immediately at HM Treasury. If confirmed within window, plan as a dedicated high-demand week and pre-position Lloyds Banking Group economic commentary.</div>
+</div>
+
+<div class="pattern clash">
+<div class="pname">Clash Pattern — Party Conference Season</div>
+<div class="pmeta">Clash Pattern · Confidence: High · 4 precedents</div>
+<div class="pwhy">Conservative Party conference typically falls in early October. This window covers the tail end of conference season and the immediate post-conference period, when regulatory announcements are often delayed and political commentary demand is elevated.</div>
+<div class="paction">Analyst action: Flag the 3–4 week period on the team calendar; expect sustained elevated demand and note any financial services policy announcements from conference fringe.</div>
+</div>
+
+<div class="pattern economic">
+<div class="pname">ONS CPI Inflation</div>
+<div class="pmeta">Economic · Confidence: Very High · 60 precedents</div>
+<div class="pwhy">September 2026 CPI data is expected in Week 2 of October (c. 14–15 October) — front page across all national titles, with Lloyds Banking Group consumer comment typically sought.</div>
+<div class="paction">Analyst action: Verify exact date on the ONS release calendar and pre-position consumer comment.</div>
+</div>
+
+<div class="pattern economic">
+<div class="pname">ONS Labour Market Statistics</div>
+<div class="pmeta">Economic · Confidence: Very High · 60 precedents</div>
+<div class="pwhy">Labour market data is expected the same week as CPI (c. 13–14 October), with wage growth data particularly significant for MPC rate commentary.</div>
+<div class="paction">Analyst action: Verify date on the ONS release calendar and note the wage growth figure for rate commentary.</div>
+</div>
+
+<div class="pattern economic">
+<div class="pname">ONS GDP Monthly Estimate</div>
+<div class="pmeta">Economic · Confidence: Very High · 60 precedents</div>
+<div class="pwhy">August 2026 GDP monthly estimate is expected in Week 2 of October.</div>
+<div class="paction">Analyst action: Verify date on the ONS release calendar.</div>
+</div>
+
+<div class="pattern economic">
+<div class="pname">Bank of England Credit Conditions Survey</div>
+<div class="pmeta">Economic · Confidence: Medium · 16 precedents</div>
+<div class="pwhy">Quarterly publication on the October cycle — a key indicator for mortgage availability and consumer lending trends.</div>
+<div class="paction">Analyst action: Monitor the Bank of England website.</div>
+</div>
+
+<div class="pattern industry">
+<div class="pname">Halifax House Price Index</div>
+<div class="pmeta">Industry / Results · Confidence: Very High · 60 precedents</div>
+<div class="pwhy">Published Friday 2 October 2026 (just before the window), with national coverage continuing into 5–7 October.</div>
+<div class="paction">Analyst action: Check national titles on 5–6 October for ongoing coverage and include under the Group section.</div>
+</div>
+
+<div class="pattern industry">
+<div class="pname">Lloyds Business Barometer</div>
+<div class="pmeta">Industry / Results · Confidence: Very High · 60 precedents</div>
+<div class="pwhy">First Tuesday of October — expected 6 October 2026, within this window.</div>
+<div class="paction">Analyst action: Check the Lloyds newsroom from Monday 5 October.</div>
+</div>
+
+<div class="pattern industry">
+<div class="pname">Lloyds Banking Group Quarterly Results (approaching)</div>
+<div class="pmeta">Industry / Results · Confidence: Very High · 16 precedents</div>
+<div class="pwhy">Q3 results are expected in Week 4 of October (c. 26–30 October); preparation begins now, with motor finance provisions the key watchpoint for 2026.</div>
+<div class="paction">Analyst action: Pre-position the briefing template and verify the exact date at the investor relations page.</div>
+</div>
+
+<div class="pattern regulatory">
+<div class="pname">FOS Ombudsman News</div>
+<div class="pmeta">Regulatory · Confidence: Medium · 8 precedents</div>
+<div class="pwhy">Quarterly publication on the October cycle, with motor finance complaints rising.</div>
+<div class="paction">Analyst action: Monitor the FOS website.</div>
+</div>
+</div>
+
+<div class="section">
+<h2>Intelligence Lanes</h2>
+
+<div class="lane">
+<div class="lane-title"><h3>Political &amp; Governmental</h3><span class="lane-count">3</span></div>
+
+<div class="event">
+<div class="ename">Party Conference Season <span class="status confirmed">Confirmed</span></div>
+<div class="einst">Political Parties / Parliament</div>
+<div class="edate">Late September – mid-October 2026</div>
+<div class="edesc"><span class="warn">Active Clash Pattern.</span> Conference season runs across late September into early October, with Conservative conference typically in early October and Labour in late September. This creates sustained elevated political commentary demand, with financial services policy frequently announced at fringe events and regulatory announcement pace often suppressed. The political lane is elevated — monitor Treasury and shadow spokespeople, and note intensifying pre-Budget speculation.</div>
+</div>
+
+<div class="event">
+<div class="ename">Parliament Returns — Autumn <span class="status confirmed">Confirmed</span></div>
+<div class="einst">Parliament</div>
+<div class="edate">In full session from early September 2026</div>
+<div class="edesc">By the week of 5 October the House of Commons is in full session, with political and regulatory announcement pace picking up significantly and pre-Budget speculation intensifying. Treasury Select Committee activity resumes at pace — monitor for hearings on motor finance, Consumer Duty or banking regulation and verify the TSC forward schedule at the Treasury Committee page.</div>
+</div>
+
+<div class="event">
+<div class="ename">UK Budget / Autumn Statement <span class="status watch">Watch</span></div>
+<div class="einst">HM Treasury / OBR</div>
+<div class="edate">Expected within or immediately following this window — verify at HM Treasury</div>
+<div class="edesc"><span class="warn">Clash Alert — highest priority.</span> The Budget is a recurring annual October/November event, always on a Wednesday, always accompanied by the OBR Economic and Fiscal Outlook. If a date falls within 5–19 October 2026 it will dominate the full week and other announcements are typically deferred. Bank levy, stamp duty, ISA changes and mortgage market measures will all be scrutinised. Verify the date immediately and pre-position the Group's economic commentary and reactive templates.</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-title"><h3>Regulatory</h3><span class="lane-count">4</span></div>
+
+<div class="event">
+<div class="ename">SM&amp;CR Reform — Phase 1 <span class="status expected">Expected</span></div>
+<div class="einst">FCA / PRA / HMT</div>
+<div class="edate">Mid-2026 implementation — should be in effect or imminent</div>
+<div class="edesc">The SM&amp;CR reform consultation closed 7 October 2025, with Phase 1 Policy Statements and final rules expected mid-2026. By October 2026 implementation should be in effect — monitor for any FCA/PRA supervisory communications or enforcement actions referencing the senior management accountability framework.</div>
+</div>
+
+<div class="event">
+<div class="ename">Consumer Duty — Ongoing Supervision &amp; Consultation Pipeline <span class="status confirmed">Confirmed</span></div>
+<div class="einst">FCA</div>
+<div class="edate">Mid-2026 consultation on updates; H1 2026 distribution-chain consultation</div>
+<div class="edesc">The FCA committed to a mid-2026 consultation on updates to the Consumer Duty alongside a plan for retiring non-Handbook materials, plus a planned H1 2026 consultation on the Duty through distribution chains. These may have closed or be in progress. Any enforcement action or thematic review published this window will generate national coverage and may reference the Group by name.</div>
+</div>
+
+<div class="event">
+<div class="ename">Basel 3.1 Implementation <span class="status expected">Expected</span></div>
+<div class="einst">PRA / BoE / HMT</div>
+<div class="edate">Final Policy Statement expected Q1 2026 — implementation 1 January 2027</div>
+<div class="edesc">With final rules due Q1 2026 and implementation on 1 January 2027, by October 2026 firms including the Group will be in implementation preparation. Monitor for any PRA supervisory communications on Basel 3.1 readiness.</div>
+</div>
+
+<div class="event">
+<div class="ename">Buy Now Pay Later (BNPL) Regulation — Live Regime <span class="status confirmed">Confirmed</span></div>
+<div class="einst">FCA / HMT</div>
+<div class="edate">Regulated activity since 15 July 2026</div>
+<div class="edesc">BNPL regulation came into force on 15 July 2026 and the regime is now live. Monitor for FCA supervisory communications, enforcement actions or consumer complaints data referencing BNPL providers — relevant to the Group's consumer credit and retail banking positioning.</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-title"><h3>Economic Data Releases</h3><span class="lane-count">5</span></div>
+
+<div class="event">
+<div class="ename">ONS CPI / CPIH (September 2026 data) <span class="status expected">Expected</span></div>
+<div class="einst">ONS</div>
+<div class="edate">Expected: week of 13–17 October — verify at ONS calendar</div>
+<div class="edesc">Headline inflation data expected mid-window, typically a front-page national story. Pre-position Group consumer comment.</div>
+</div>
+
+<div class="event">
+<div class="ename">ONS Labour Market Statistics <span class="status expected">Expected</span></div>
+<div class="einst">ONS</div>
+<div class="edate">Expected: week of 13–17 October — verify at ONS calendar</div>
+<div class="edesc">Expected the same week as CPI; wage growth data is particularly significant for rate commentary ahead of the November MPC decision.</div>
+</div>
+
+<div class="event">
+<div class="ename">ONS GDP Monthly Estimate (August 2026 data) <span class="status expected">Expected</span></div>
+<div class="einst">ONS</div>
+<div class="edate">Expected: week of 13–17 October — verify at ONS calendar</div>
+<div class="edesc">Monthly GDP estimate expected in Week 2 of October, contributing to the mid-window data cluster.</div>
+</div>
+
+<div class="event">
+<div class="ename">ONS Retail Sales <span class="status expected">Expected</span></div>
+<div class="einst">ONS</div>
+<div class="edate">Expected: week of 17 October — verify at ONS calendar</div>
+<div class="edesc">Retail sales data typically published on the third Friday of the month.</div>
+</div>
+
+<div class="event">
+<div class="ename">BoE Credit Conditions Survey <span class="status expected">Expected</span></div>
+<div class="einst">Bank of England</div>
+<div class="edate">Expected: October (quarterly) — verify at BoE website</div>
+<div class="edesc"><span class="warn">Potential Clash Pattern — ONS data cluster.</span> Although the next MPC decision is 5 November (outside this window, Bank Rate currently 3.75%), the CPI and Labour Market cluster in Week 2 is itself a high-demand period. The Credit Conditions Survey is a key indicator for mortgage availability and consumer lending — pre-position analyst resource for the full week of 13–17 October.</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-title"><h3>Industry &amp; Market Events</h3><span class="lane-count">4</span></div>
+
+<div class="event">
+<div class="ename">Halifax House Price Index <span class="status confirmed">Confirmed</span></div>
+<div class="einst">Halifax (Lloyds Banking Group)</div>
+<div class="edate">Published Friday 2 October 2026 — coverage continuing into 5–7 October</div>
+<div class="edesc">The October edition (September 2026 data) was published just before this window; national coverage typically continues for 2–3 days. Check national titles on 5–6 October and include under the Group section.</div>
+</div>
+
+<div class="event">
+<div class="ename">Lloyds Business Barometer <span class="status expected">Expected</span></div>
+<div class="einst">Lloyds Banking Group</div>
+<div class="edate">Expected Tuesday 6 October 2026 — first Tuesday of month</div>
+<div class="edesc">A standing Group publication expected within this window. Check the Lloyds newsroom from Monday 5 October and prepare a business confidence briefing note; business media and the FT will cover confidence trends.</div>
+</div>
+
+<div class="event">
+<div class="ename">FCA Motor Finance Commission Review — Policy Statement <span class="status watch">Watch</span></div>
+<div class="einst">FCA</div>
+<div class="edate">Overdue — originally expected February/March 2026; monitor daily</div>
+<div class="edesc"><span class="warn">High priority — reputational.</span> The industry-wide consumer redress consultation closed 12 December 2025, with a Policy Statement and final rules originally expected early 2026 and now significantly overdue. Any announcement during this window would be a Tier 1 reputational event given Black Horse's (the Group's motor finance brand) direct exposure. Per client instructions this item sits in the Industry section. Monitor the FCA website daily.</div>
+</div>
+
+<div class="event">
+<div class="ename">Lloyds Banking Group Q3 2026 Results (approaching) <span class="status expected">Expected</span></div>
+<div class="einst">Lloyds Banking Group</div>
+<div class="edate">Expected Week 4 October (c. 26–30 October) — outside window, prepare now</div>
+<div class="edesc">The Group's Q3 trading update is a Very High confidence recurring October event. Key watchpoints are Net Interest Margin, mortgage volumes and — the dominant 2026 narrative — motor finance provisions. Pre-position the briefing template and verify the exact date at the investor relations page.</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-title"><h3>Competitor Watch</h3><span class="lane-count">1</span></div>
+
+<div class="event">
+<div class="ename">Major Bank Q3 Results (approaching) <span class="status expected">Expected</span></div>
+<div class="einst">Barclays · HSBC · NatWest · Standard Chartered</div>
+<div class="edate">Expected Week 3–4 October — may begin in final days of window</div>
+<div class="edesc">Major competitor Q3 results typically fall in October Weeks 3–4, largely outside this window but possibly appearing from the week of 19 October. They will generate comparative coverage on NIM, mortgage volumes and motor finance provisions. Check individual investor relations pages for confirmed dates and flag any within 5–19 October. No confirmed announcements from Revolut, Monzo, Starling or Metro Bank have been identified for this window.</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-title"><h3>Policy Pipeline</h3><span class="lane-count">8</span></div>
+<div class="event">
+<div class="edesc">
+<table>
+<tr><th>Initiative</th><th>Lead</th><th>Status</th><th>Group Relevance</th></tr>
+<tr><td>Motor Finance Commission Review — Policy Statement</td><td>FCA</td><td>Overdue (was Feb/Mar 2026) — monitor daily</td><td>High — Black Horse exposure</td></tr>
+<tr><td>Consumer Duty scope &amp; distribution chain consultation</td><td>FCA</td><td>H1 2026 consultation — may be in response period</td><td>High — retail banking</td></tr>
+<tr><td>Advice Guidance Boundary Review — regime live</td><td>FCA/HMT</td><td>April 2026 regime went live</td><td>Medium — Scottish Widows / wealth</td></tr>
+<tr><td>BNPL regulation — live since 15 July 2026</td><td>FCA/HMT</td><td>Live</td><td>Medium — consumer credit</td></tr>
+<tr><td>SM&amp;CR Reform Phase 1 — mid-2026 implementation</td><td>FCA/PRA/HMT</td><td>Should be in effect</td><td>High — senior management</td></tr>
+<tr><td>ESG Ratings Regulation — H2 2026 Policy Statement</td><td>FCA/HMT</td><td>Expected H2 2026</td><td>Medium — sustainability</td></tr>
+<tr><td>PSR APP Fraud independent evaluation</td><td>PSR</td><td>Expected Q3 2026</td><td>Medium — fraud / payments</td></tr>
+<tr><td>LTI Flow Limit amendment — H2 2026 implementation</td><td>FCA/PRA</td><td>Expected H2 2026</td><td>High — mortgage market</td></tr>
+</table>
+<br>Verify the status of each item at the FCA and PRA publications pages.
+</div>
+</div>
+</div>
+
+<div class="lane">
+<div class="lane-title"><h3>Lloyds Banking Group Standing Publications</h3><span class="lane-count">5</span></div>
+<div class="event">
+<div class="edesc">
+<table>
+<tr><th>Publication</th><th>Brand</th><th>Expected Date</th><th>Status</th></tr>
+<tr><td>Halifax House Price Index (October)</td><td>Halifax</td><td>Friday 2 October 2026</td><td>Confirmed — published just before window; monitor coverage</td></tr>
+<tr><td>Lloyds Business Barometer (October)</td><td>Lloyds</td><td>Tuesday 6 October 2026</td><td>Expected — first Tuesday of month</td></tr>
+<tr><td>Lloyds Banking Group Q3 Results</td><td>Group</td><td>Expected Week 4 October (c. 26–30 Oct)</td><td>Expected — outside window but prepare now</td></tr>
+<tr><td>FOS Ombudsman News (Q4)</td><td>FOS</td><td>Expected October</td><td>Expected — quarterly cycle</td></tr>
+<tr><td>BoE Credit Conditions Survey (Q4)</td><td>Bank of England</td><td>Expected October</td><td>Expected — quarterly cycle</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="section">
+<h2>Analyst Notes</h2>
+<div class="note"><strong>Budget date is the critical unknown.</strong> If the Autumn Budget falls within 5–19 October 2026 it overrides all other planning. Verify immediately at HM Treasury — this is the highest-priority action for this cycle.</div>
+<div class="note"><strong>Motor finance redress scheme is significantly overdue.</strong> The FCA Policy Statement was expected February/March 2026; any announcement could come at any time. Daily FCA monitoring is essential — this is the single most significant live regulatory risk for the Group.</div>
+<div class="note"><strong>ONS data cluster in Week 2 (c. 13–17 October)</strong> creates a high-demand briefing period even without an MPC decision, with CPI, Labour Market and GDP potentially in the same week. Pre-position analyst resource.</div>
+<div class="note"><strong>Group Q3 results</strong> are expected in Week 4 of October (c. 26–30 October) — just outside this window. Preparation should begin now, with motor finance provisions the dominant media narrative.</div>
+<div class="note"><strong>Competitor results season</strong> begins in earnest in Week 3–4 of October. Barclays, HSBC and NatWest results will generate comparative coverage — monitor investor relations pages for confirmed dates.</div>
+<div class="note"><strong>No client intelligence was provided</strong> for this cycle; all lanes are populated from external forward calendar research only. If client intelligence becomes available, re-run clash analysis against the Budget date and the ONS data cluster week.</div>
+<div class="note"><strong>Conference season tail-end:</strong> Conservative Party conference typically concludes in the first week of October. Monitor for financial services policy announcements from the fringe that may generate media follow-up in the 5–7 October period.</div>
+<div class="note"><strong>Lloyds Business Barometer</strong> expected Tuesday 6 October — verify at the Lloyds newsroom. This standing Group publication should be included in the briefing.</div>
+<div class="note"><strong>Halifax HPI coverage</strong> from the 2 October publication may continue into 5–6 October. Check national titles on Monday morning.</div>
+<div class="note"><strong>All EXPECTED dates must be verified</strong> at primary sources before briefing stakeholders. Do not carry forward dates from previous years as confirmed for the current year.</div>
+<div class="note"><strong>Clash alerts active:</strong> Budget Week (Very High confidence) and Party Conference Season (High confidence) are both live Clash Patterns this cycle.</div>
+</div>
+
+<footer>
+<div class="guard">This briefing must not be distributed to Lloyds Banking Group client contacts (Emma Fairhurst, Matt Smith) until all flagged items have been verified.</div>
+Prepared by Rapid Intelligence UK — Cision<br>
+For Group Corporate Affairs, Lloyds Banking Group<br>
+5 October – 19 October 2026<br>
+Confidential — Not for distribution
+</footer>
+</div>
+</body>
+</html>
