@@ -1,0 +1,427 @@
+<!DOCTYPE html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Design Digest · 12 November 2026</title><style>
+:root{--artifact-bg:#0d0d0d;--artifact-text:#f0ede8;--artifact-muted:#a09890;--artifact-accent:#c8956a;--artifact-rule:rgba(200,149,106,.22);--artifact-veil:rgba(13,13,13,.62);--artifact-veil-strong:rgba(13,13,13,.92);--artifact-ku-bg:rgba(200,149,106,.16);--artifact-mat:#191512}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--artifact-bg);color:var(--artifact-text);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--artifact-accent)}
+.mast{position:sticky;top:0;z-index:20;background:var(--artifact-veil-strong);backdrop-filter:blur(8px);border-bottom:1px solid var(--artifact-rule)}
+.mi{max-width:1240px;margin:0 auto;padding:12px 28px;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.brand{font-family:Georgia,serif;font-style:italic;font-size:22px}
+.brand span{font-family:"Helvetica Neue",Helvetica,sans-serif;font-style:normal;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--artifact-muted);margin-left:10px}
+.date{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--artifact-accent)}
+.nav{max-width:1240px;margin:0 auto;padding:0 28px 10px;display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);white-space:nowrap}
+.nav::-webkit-scrollbar{display:none}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+/* opening */
+.open{display:grid;grid-template-columns:minmax(300px,1.05fr) 1fr;gap:56px;align-items:center;padding:56px 0 72px}
+.open figure{margin:0}
+.open img{display:block;width:100%;height:auto;-webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent);mask-image:linear-gradient(to bottom,#000 72%,transparent)}
+.open figcaption,figcaption{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);margin-top:10px}
+.k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--artifact-accent);margin:0 0 14px}
+.open h1{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(46px,6vw,84px);line-height:.98;margin:0 0 6px;letter-spacing:-.015em}
+.open .sub{font-family:Georgia,serif;font-size:22px;color:var(--artifact-accent);margin:0 0 30px}
+.note{font-family:Georgia,serif;font-size:19px;line-height:1.62;max-width:620px;margin:0}
+.note::first-letter{float:left;font-size:64px;line-height:.9;padding:6px 10px 0 0;color:var(--artifact-accent)}
+.sig{margin-top:22px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--artifact-muted)}
+/* hero */
+.hero{padding:24px 0 30px;border-top:1px solid var(--artifact-rule)}
+.hero figure{margin:0 auto;max-width:1154px}
+.hero img{display:block;width:100%;height:auto;-webkit-mask-image:radial-gradient(ellipse 85% 90% at 50% 45%,#000 60%,transparent 100%);mask-image:radial-gradient(ellipse 85% 90% at 50% 45%,#000 60%,transparent 100%)}
+.hero .ht{max-width:820px;margin:-40px auto 0;position:relative;text-align:center}
+.hero h2{font-family:Georgia,serif;font-weight:400;font-size:clamp(32px,4.2vw,54px);line-height:1.08;margin:0 0 12px}
+.hero .m{color:var(--artifact-muted);font-size:12px;letter-spacing:.06em;margin:0 0 18px}
+.hero .ab{font-family:Georgia,serif;font-size:20px;margin:0 auto 18px;max-width:700px}
+.hero .why{font-size:15.5px;color:var(--artifact-text);max-width:680px;margin:0 auto;opacity:.88}
+.qq{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1040px;margin:44px auto 10px}
+.qq blockquote{margin:0;font-family:Georgia,serif;font-style:italic;font-size:23px;line-height:1.38;border-top:1px solid var(--artifact-accent);padding-top:18px}
+.conv{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:34px auto 0;font-size:12.5px;color:var(--artifact-muted)}
+.conv a{color:var(--artifact-text);border-bottom:1px solid var(--artifact-rule)}
+.conv a:hover{color:var(--artifact-accent)}
+.tag{display:inline-block;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--artifact-accent);border:1px solid var(--artifact-rule);border-radius:2px;padding:2px 6px;margin-right:8px;vertical-align:1px}
+/* thread */
+.thread{display:grid;grid-template-columns:260px 1fr;gap:40px;padding:56px 0;border-top:1px solid var(--artifact-rule);border-bottom:1px solid var(--artifact-rule);margin-top:60px}
+.thread h2{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:34px;margin:0 0 8px}
+.thread p{color:var(--artifact-muted);margin:0}
+.thread ol{margin:0;padding:0;list-style:none;counter-reset:t;columns:2;column-gap:40px}
+.thread li{counter-increment:t;break-inside:avoid;padding:0 0 14px 34px;position:relative;font-family:Georgia,serif;font-size:17px;line-height:1.35}
+.thread li::before{content:counter(t,decimal-leading-zero);position:absolute;left:0;top:3px;font-family:"Helvetica Neue",sans-serif;font-size:11px;color:var(--artifact-accent);letter-spacing:.1em}
+/* sections */
+.sec{padding:56px 0 8px}
+.sh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--artifact-rule);padding-bottom:10px;margin-bottom:6px}
+.sh h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;margin:0;color:var(--artifact-accent)}
+.sh span{font-family:Georgia,serif;font-style:italic;color:var(--artifact-muted)}
+.list{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+.item{padding:18px 0;border-bottom:1px solid var(--artifact-rule)}
+.item.solo{border:0;padding-top:0}
+.item .m,.lt .m,.card2 .m{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--artifact-muted);margin:0 0 6px}
+.item h4,.card2 h4{font-family:Georgia,serif;font-weight:400;font-size:19px;line-height:1.28;margin:0 0 6px}
+.item p:last-child,.card2 p:last-child{margin:0;color:var(--artifact-text);opacity:.82;font-size:14.5px}
+.ku{font-family:"Helvetica Neue",sans-serif;font-size:9px;letter-spacing:.16em;color:var(--artifact-accent);background:var(--artifact-ku-bg);padding:2px 5px;border-radius:2px;margin-left:8px;vertical-align:3px}
+.lead{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center;padding:30px 0}
+.lead.rev figure{order:2}
+.lead figure{margin:0}
+.lead img{display:block;width:100%;height:auto}
+.lt h3{font-family:Georgia,serif;font-weight:400;font-size:clamp(26px,2.8vw,36px);line-height:1.12;margin:0 0 10px}
+.lt .ab{font-family:Georgia,serif;font-size:18px;margin:0;opacity:.9}
+.strip{position:relative;height:220px;margin:26px 0 8px;overflow:hidden}
+.sbg{position:absolute;inset:-12px;background-size:cover;background-position:center;filter:blur(2px) saturate(1.1)}
+.strip::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--artifact-veil-strong) 0%,var(--artifact-veil) 55%,transparent 100%)}
+.stx{position:absolute;z-index:2;left:32px;bottom:26px;max-width:520px}
+.stx p{font-family:Georgia,serif;font-style:italic;font-size:22px;line-height:1.3;margin:0 0 8px}
+.stx span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--artifact-muted)}
+.card2{display:grid;grid-template-columns:minmax(200px,300px) 1fr;gap:28px;align-items:center;padding:22px 0;border-bottom:1px solid var(--artifact-rule)}
+.card2 figure{margin:0} .card2 img{display:block;width:100%;height:auto}
+.feat{padding:30px 0 34px;border-bottom:1px solid var(--artifact-rule)}
+.dip{display:flex;gap:10px;align-items:flex-start}
+.dip figure{margin:0;min-width:0}
+.dip img{display:block;width:100%;height:auto}
+.fcap{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);margin:10px 0 22px}
+.ft{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.ft h3{font-family:Georgia,serif;font-weight:400;font-size:clamp(28px,3.2vw,42px);line-height:1.1;margin:0 0 10px}
+.ft .m{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--artifact-muted);margin:0}
+.ft .ab{font-family:Georgia,serif;font-size:18.5px;margin:0;opacity:.9}
+.card2 figure img{max-width:100%}
+.lead.framed figure img{padding:16px;background:var(--artifact-mat);border:1px solid var(--artifact-rule)}
+.pq{margin:70px auto 20px;max-width:860px;text-align:center}
+.pq p{font-family:Georgia,serif;font-style:italic;font-size:clamp(30px,3.6vw,46px);line-height:1.18;margin:0 0 14px}
+.pq cite{font-style:normal;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--artifact-muted)}
+footer{border-top:1px solid var(--artifact-rule);margin-top:70px;padding:30px 0 50px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--artifact-muted)}
+footer b{font-family:Georgia,serif;font-style:italic;text-transform:none;letter-spacing:0;font-size:18px;color:var(--artifact-text);font-weight:400}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none} html{scroll-behavior:auto}}
+@media screen and (max-width:860px){.open,.lead,.thread,.qq{grid-template-columns:1fr} .open{gap:30px} .open figure{max-width:640px} .list{grid-template-columns:1fr} .lead.rev figure{order:0} .thread ol{columns:1} .card2{grid-template-columns:1fr} .ft{grid-template-columns:1fr;gap:14px} .hero .ht{margin-top:0}}
+@media print{
+ @page{size:auto !important}
+ body{background:#fff;color:#111;padding:.4in .6in;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ .mast{position:static;background:#fff} .nav{display:none}
+ .rv{opacity:1 !important;transform:none !important}
+ .item p:last-child,.card2 p:last-child,.hero .why,.lt .ab{color:#222;opacity:1}
+ .strip{break-inside:avoid} .lead,.item,.card2,.qq{break-inside:avoid}
+ *,*::before,*::after{animation:none !important;transition:none !important}
+}
+
+
+.ku{cursor:help;position:relative}
+.ku[data-tip]:hover::after,.ku[data-tip]:focus::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 6px);z-index:30;width:240px;font-size:11.5px;letter-spacing:0;line-height:1.4;text-transform:none;color:var(--artifact-text);background:var(--artifact-veil-strong);border:1px solid var(--artifact-rule);padding:8px 10px;border-radius:3px}
+.three{padding:12px 0 64px}
+.three ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;counter-reset:r}
+.three li{counter-increment:r;border-top:1px solid var(--artifact-accent);padding-top:18px}
+.three li::before{content:counter(r);display:block;font-family:Georgia,serif;font-style:italic;font-size:38px;line-height:1;color:var(--artifact-accent);margin-bottom:12px}
+.three .m{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--artifact-muted);margin:0 0 6px}
+.three h3{font-family:Georgia,serif;font-weight:400;font-size:21px;line-height:1.25;margin:0 0 10px}
+.three li>p:last-child{margin:0;font-size:14.5px;opacity:.85}
+.hdr{display:flex;align-items:baseline;gap:16px;margin:0 0 22px}
+.hdr h2{font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;margin:0;color:var(--artifact-accent)}
+.hdr span{font-family:Georgia,serif;font-style:italic;color:var(--artifact-muted)}
+.thread ol li span{display:block;font-family:"Helvetica Neue",sans-serif;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);margin-top:3px}
+.pat{margin:64px 0 0;padding:40px 44px;border:1px solid var(--artifact-rule);border-radius:4px;display:grid;grid-template-columns:260px 1fr;gap:40px}
+.pat .k{margin-bottom:10px}
+.pat h2{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:34px;margin:0 0 12px}
+.pat .meta{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);margin:0}
+.pat .line{font-family:Georgia,serif;font-size:20px;line-height:1.45;margin:0 0 22px}
+.pat ul{list-style:none;margin:0 0 24px;padding:0}
+.pat li{display:grid;grid-template-columns:62px 1fr auto;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--artifact-rule);font-family:Georgia,serif;font-size:16.5px}
+.pd,.ps{font-family:"Helvetica Neue",sans-serif;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted)}
+.pd{color:var(--artifact-accent)}
+.expect{margin:0;font-size:14.5px;line-height:1.55}
+.expect b{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--artifact-accent);font-weight:500;margin-right:8px}
+.home{position:relative;margin:64px 0 0;min-height:340px;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;border-radius:4px}
+.home .hbg{position:absolute;inset:0;background-size:cover;background-position:center 40%;filter:brightness(.42) saturate(1.05)}
+.home .hx,.home ul{position:relative;z-index:2}
+.home .hx{padding:44px 40px;align-self:end}
+.home h2{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:40px;line-height:1.05;margin:0 0 12px}
+.home .hx p{font-family:Georgia,serif;font-size:18px;line-height:1.45;margin:0 0 14px;max-width:440px}
+.home .hx .cr{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--artifact-muted);font-family:"Helvetica Neue",sans-serif;margin:0}
+.home ul{list-style:none;margin:0;padding:44px 40px 44px 0;align-self:end}
+.home li{padding:12px 0;border-bottom:1px solid var(--artifact-rule);font-family:Georgia,serif;font-size:18px;line-height:1.3}
+.home li span,.netc li span{display:block;font-family:"Helvetica Neue",sans-serif;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);margin-top:4px}
+.duo{display:grid;grid-template-columns:1fr 1.6fr;gap:48px;padding:64px 0 10px;border-bottom:1px solid var(--artifact-rule)}
+.netc ul,.cal ul{list-style:none;margin:0;padding:0}
+.netc li{padding:12px 0;border-bottom:1px solid var(--artifact-rule);font-family:Georgia,serif;font-size:18px}
+.netc .nn{font-size:13px;color:var(--artifact-muted);margin:14px 0 0}
+.cal li{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid var(--artifact-rule);font-size:14.5px;align-items:baseline}
+.cd{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--artifact-accent)}
+.hero .ht h2 .ku{font-size:10px;vertical-align:8px}
+@media screen and (max-width:860px){.three ol{grid-template-columns:1fr;gap:28px}.pat{grid-template-columns:1fr;gap:18px;padding:28px 22px}.pat li{grid-template-columns:54px 1fr}.pat .ps{grid-column:2}.home{grid-template-columns:1fr}.home ul{padding:0 24px 30px}.home .hx{padding:30px 24px 10px}.duo{grid-template-columns:1fr;gap:34px}.cal li{grid-template-columns:96px 1fr}}
+@media print{.home .hbg{filter:none;opacity:.18}.home h2,.home li,.home .hx p,.pat,.three,.cal,.netc{color:#111}.pat,.home,.three li,.cal li{break-inside:avoid}.ku[data-tip]::after{display:none}}
+
+
+/* navigation aids (from 3 Nov 2026) */
+[id]{scroll-margin-top:110px}
+.totop{position:fixed;right:22px;bottom:22px;z-index:25;font:500 10.5px/1 "Helvetica Neue",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--artifact-accent);background:var(--artifact-veil-strong);border:1px solid var(--artifact-rule);border-radius:2px;padding:10px 12px;opacity:0;pointer-events:none;transition:opacity .25s}
+.totop.on{opacity:1;pointer-events:auto}
+.back{margin-left:10px;font:500 10px/1.4 "Helvetica Neue",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--artifact-accent);background:none;border:0;border-bottom:1px solid var(--artifact-rule);padding:0;cursor:pointer;vertical-align:1px}
+footer .ft{color:var(--artifact-accent)}
+.kunone{font-family:Georgia,serif;font-style:italic;font-size:18px;color:var(--artifact-muted);margin:22px 0 4px}
+.pat .score{font-size:13.5px;margin:14px 0 0;color:var(--artifact-muted)}
+.pat .score b{display:inline-block;font-weight:500;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--artifact-accent);margin-right:8px}
+@media (prefers-reduced-motion:reduce){.totop{transition:none}}
+@media print{.totop,.back{display:none}}
+
+/* 2 Nov additions */
+.kus{padding:48px 0 40px;border-bottom:1px solid var(--artifact-rule)}
+.kul{display:grid;grid-template-columns:300px 1fr;gap:44px;padding:26px 0 24px;border-bottom:1px solid var(--artifact-rule)}
+.kul h3{font-family:Georgia,serif;font-weight:400;font-size:36px;line-height:1.05;margin:0 0 8px}
+.kul .k .ku{margin-left:6px}
+.kul .role{font-size:12px;letter-spacing:.06em;color:var(--artifact-muted);margin:0 0 16px}
+.dlinks{display:flex;gap:18px;margin:0;font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.dlinks a{color:var(--artifact-accent);border-bottom:1px solid var(--artifact-rule)}
+.kul .ctx{font-size:14.5px;color:var(--artifact-muted);margin:0 0 14px}
+.kul .ctx a{color:var(--artifact-text);border-bottom:1px solid var(--artifact-rule)}
+.kul blockquote{margin:0;font-family:Georgia,serif;font-style:italic;font-size:21px;line-height:1.4;border-left:2px solid var(--artifact-accent);padding-left:20px}
+.kul blockquote .ps{display:block;font-family:"Helvetica Neue",sans-serif;font-style:normal;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--artifact-muted);margin-top:10px}
+.kuw{padding-top:20px}
+.kuw .k{color:var(--artifact-muted)}
+.kuw ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+.kuw li{font-family:Georgia,serif;font-size:17px;padding:8px 0}
+.kuw li span{display:block;font-family:"Helvetica Neue",sans-serif;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);margin-top:3px}
+mark.kum{background:var(--artifact-ku-bg);color:inherit;padding:0 3px;border-radius:2px;box-shadow:inset 0 -1px 0 var(--artifact-accent)}
+.dil{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;margin-left:6px;white-space:nowrap}
+.dil a{color:var(--artifact-accent)}
+.calw{padding:64px 0 10px;border-bottom:1px solid var(--artifact-rule)}
+.calw .cal ul{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+.figs{display:grid;gap:14px;margin:18px 0 0}
+.figs.pair{grid-template-columns:1fr 1fr}
+.figs figure{margin:0;background:var(--artifact-mat)}
+.figs img{display:block;width:100%;height:auto;max-height:520px;object-fit:cover}
+.tlead .figs.one{max-width:640px}
+.item.hasfig .figs{margin:0 0 14px}
+.item.hasfig .figs img{max-height:440px}
+@media screen and (max-width:860px){.kul{grid-template-columns:1fr;gap:18px}.kuw ul,.calw .cal ul,.figs.pair{grid-template-columns:1fr}}
+@media print{.kus,.kul,.figs figure{break-inside:avoid}.kus,.kul blockquote{color:#111}}
+.sixty{padding:40px 0 34px;border-bottom:1px solid var(--artifact-rule)}
+.sixty .k{margin-bottom:18px}
+.sixty ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+.sixty li{display:grid;grid-template-columns:118px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--artifact-rule);align-items:baseline}
+.sixty li b{font-weight:500;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--artifact-accent)}
+.sixty li span{font-family:Georgia,serif;font-size:17px;line-height:1.35}
+.sixty li span a{border-bottom:1px solid var(--artifact-rule)}
+.sixty .full{margin:18px 0 0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--artifact-muted)}
+.sixty .full a{color:var(--artifact-accent)}
+.open.solo{grid-template-columns:1fr;max-width:860px;padding:64px 0 60px}
+.hero.type{padding:64px 0 34px}
+.hero.type .ht{margin:0 auto}
+.hero.type h2{font-size:clamp(36px,5vw,64px);font-style:italic}
+.pat.upd{margin-top:22px;padding:28px 44px}
+.pat.upd h2{font-size:26px}
+.sig2{display:grid;grid-template-columns:1fr 1.15fr;gap:48px;padding:64px 0 10px}
+.bw ul{list-style:none;margin:0;padding:0}
+.bw li{padding:12px 0;border-bottom:1px solid var(--artifact-rule);font-family:Georgia,serif;font-size:17px;line-height:1.35}
+.bw li span{display:block;font-family:"Helvetica Neue",sans-serif;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);margin-top:4px}
+.trial{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--artifact-muted);border:1px solid var(--artifact-rule);border-radius:2px;padding:2px 6px;margin-left:6px}
+.btl table{width:100%;border-collapse:collapse;font-size:13.5px}
+.btl th{font-weight:500;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--artifact-muted);text-align:right;padding:0 0 8px 10px;border-bottom:1px solid var(--artifact-rule)}
+.btl th:first-child{text-align:left;padding-left:0}
+.btl td{padding:9px 0 9px 10px;border-bottom:1px solid var(--artifact-rule);text-align:right;font-variant-numeric:tabular-nums}
+.btl td:first-child{text-align:left;padding-left:0;font-family:Georgia,serif;font-size:16px}
+.btl td.now{color:var(--artifact-accent)}
+.btl .bar{display:inline-block;height:6px;background:var(--artifact-accent);opacity:.75;border-radius:1px;vertical-align:1px;margin-right:6px}
+.btl tr.grp td{font-family:"Helvetica Neue",sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--artifact-accent);padding-top:16px;border-bottom:0;text-align:left}
+.btl .fn{font-size:12.5px;color:var(--artifact-muted);margin:14px 0 0;line-height:1.5}
+.next{margin:64px 0 0;padding:36px 44px;border:1px solid var(--artifact-accent);border-radius:4px;display:grid;grid-template-columns:260px 1fr;gap:40px}
+.next h2{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:34px;margin:0 0 10px}
+.next .meta{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);margin:0}
+.next h5{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--artifact-accent);font-weight:500;margin:0 0 8px}
+.next ul{list-style:none;margin:0 0 22px;padding:0}
+.next li{padding:9px 0;border-bottom:1px solid var(--artifact-rule);font-family:Georgia,serif;font-size:16.5px;line-height:1.4}
+.next li span{display:block;font-family:"Helvetica Neue",sans-serif;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--artifact-muted);margin-top:3px}
+.next .gap{font-size:13.5px;color:var(--artifact-muted);margin:0}
+.tlead{padding:22px 0 20px;border-bottom:1px solid var(--artifact-rule)}
+.tlead h3{font-family:Georgia,serif;font-weight:400;font-size:clamp(24px,2.6vw,32px);line-height:1.15;margin:0 0 10px;max-width:900px}
+.tlead .m{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--artifact-muted);margin:0 0 8px}
+.tlead .ab{font-family:Georgia,serif;font-size:18px;margin:0;opacity:.9;max-width:860px}
+@media screen and (max-width:860px){.sixty ol{grid-template-columns:1fr}.sixty li{grid-template-columns:96px 1fr}.sig2{grid-template-columns:1fr;gap:40px}.next{grid-template-columns:1fr;gap:18px;padding:28px 22px}.pat.upd{padding:24px 22px}}
+@media print{.next,.sixty li,.btl tr{break-inside:avoid}.next,.btl,.bw{color:#111}}
+</style><style>@media print{.mast,.totop{position:static}} @page { size: auto !important; }</style></head>
+<body>
+<span id="top"></span><header class="mast"><div class="mi"><div class="brand">Design Digest<span>Cision × KnownUnknown</span></div><div class="date">12 Nov 2026 · 38 stories</div></div><nav class="nav"><a href="#sixty">60 seconds</a><a href="#opening">Opening</a><a href="#ku">KU</a><a href="#three">Three to read</a><a href="#lead">Lead</a><a href="#working">Show your working</a><a href="#patterns">Patterns</a><a href="#signals">Signals</a><a href="#next-session">Next session</a><a href="#calendar">Coming up</a><a href="#designers">Designers</a><a href="#insights">Insights</a><a href="#industry">Design Industry</a><a href="#rebrands">Rebrands</a><a href="#campaigns">Brand Campaigns</a><a href="#studio">Studios & Agencies</a><a href="#awards">Awards</a><a href="#events">Events</a><a href="#product">Product</a><a href="#digital">Digital</a><a href="#spatial">Spatial</a><a href="#fashion">Fashion</a><a href="#photo">Photography</a></nav></header><main class="wrap">
+<section class="sixty" id="sixty" data-glean-id="p-sixty"><p class="k">In 60 seconds</p><ol>
+<li><b>KU</b><span><a href="#ku">Mark Bloom (KU network) and CoType Foundry soften Aeonik – today’s lead</a></span></li>
+<li><b>Theme</b><span><a href="#working">Show your working: process, pay and price made visible</a></span></li>
+<li><b>Patterns</b><span><a href="#patterns">Forward note scored: Strathberry’s stop-motion films make it 2 of 2 for handmade holiday campaigns</a></span></li>
+<li><b>Campaigns</b><span><a href="#p-t-11">BoF: Prada’s hand-drawn ad drew 59.8% positive sentiment; Dior’s 62% negative</a></span></li>
+<li><b>Rebrands</b><span><a href="#p-t-39">Tomy becomes Takara Tomy – and its most radical identity change yet</a></span></li>
+<li><b>Industry</b><span><a href="#p-t-47">The Design Week Awards are coming back</a></span></li>
+</ol><p class="full"><a href="#opening">Full edition ↓</a> · <a href="#ku">KU: Mark Bloom, CoType Foundry</a> · Tracked: Adobe · Next session: Malika Favre</p></section>
+<section class="open solo rv" id="opening" data-glean-id="p-opening"><div><p class="k">Edition theme</p><h1>Show your working</h1><p class="sub">Type drawing, holiday films, salaries and AI pricing – the process on display</p><p class="note">Today’s stories put the process on show. CoType Foundry, led by Mark Bloom, explains how it softened its neo-grotesque Aeonik – full pill-shaped rounding broke the Black weight almost immediately, so the team stepped the corners through four stages to a restrained radius. BoF finds fashion’s holiday campaigns turning to illustration, claymation and stop-motion, and argues that brands now need to show the artistry: Prada’s behind-the-scenes film helped its ad to 59.8% positive sentiment, while Dior’s drew 62% negative. SEGD publishes its first salary benchmark for experiential design, and UX Collective asks how AI’s per-click costs should appear on screen. At York Minster, Tonkin Liu gives the cathedral’s stonemasons a centre for heritage craft skills. Elsewhere, Tomy becomes Takara Tomy with its most radical identity yet, and Design Week revives its awards.</p><p class="sig">Design Digest · Cision × KnownUnknown · 12 November 2026</p></div></section>
+<section class="kus rv" id="ku" data-glean-id="p-ku"><div class="sh"><h2>KU in the news</h2><span>explicit KU mentions</span></div>
+<div class="kul"><div><p class="k">KU network · Typography <span class="ku" title="[KU] Mark Bloom (KU network) – founder of CoType Foundry; leads the Aeonik Soft project">KU</span></p><h3>Mark Bloom</h3><p class="role">Founder, CoType Foundry, London (as stated)</p></div><div><p class="ctx">Today’s lead: <a href="#lead">Abduzeedo on Aeonik Soft</a> · 12 Nov. The piece is about the typeface, CoType’s rounded companion to its neo-grotesque Aeonik. Bloom is named as the founder who saw fully rounded terminals turn letters into “worm-like shapes”; his team built the variable prototype that stepped the rounding through four stages. No direct quote, and the roster holds no website or Instagram for him yet.</p></div></div>
+<div class="kuw"><p class="k">Studios and partners we track · not KU</p><ul><li><a href="#p-t-79">Adobe</a><span>KU partner brand · research lead Hailin Jin interviewed on Project Link Up, an Adobe MAX Sneak</span></li></ul></div></section>
+<section class="three rv" id="three" data-glean-id="p-three"><div class="hdr"><h2>Three to read</h2><span>if you read nothing else</span></div><ol>
+<li><p class="m">Brand Campaigns · The Business of Fashion</p><h3><a href="https://www.businessoffashion.com/articles/marketing-pr/fashion-holiday-campaigns-medium-is-the-message/" target="_blank" rel="noopener">In fashion’s holiday campaigns, the medium is the message</a></h3><p>The clearest read yet on this season’s handmade holiday ads – and hard numbers on why showing the process now matters.</p></li>
+<li><p class="m">Design Industry · SEGD</p><h3><a href="https://segd.org/resources/better-data-better-decisions-inside-the-2026-segd-salary-employment-report/" target="_blank" rel="noopener">Better Data, Better Decisions: Inside the 2026 SEGD Salary &amp; Employment Report</a></h3><p>A first: pay, hiring and career-growth data built for experiential design, rather than borrowed from graphic design or architecture.</p></li>
+<li><p class="m">Spatial · Dezeen</p><h3><a href="https://www.dezeen.com/2026/11/11/york-minster-centre-excellence-tonkin-liu/" target="_blank" rel="noopener">Tonkin Liu reveals glulam buildings for masons restoring York Minster</a></h3><p>Architecture in service of craft – buildings designed around the stonemasons keeping a Gothic cathedral standing.</p></li>
+</ol></section>
+<section class="hero type rv" id="lead" data-glean-id="p-lead"><div class="ht"><p class="k">The lead · Typography</p><h2><a href="https://abduzeedo.com/aeonik-soft-rounded-neo-grotesque-typography-cotype" target="_blank" rel="noopener">Aeonik Soft: rounded neo-grotesque typography by CoType</a></h2><p class="m">Abduzeedo · 12 Nov · Foundry: CoType · </p><p class="ab"><mark class="kum">Mark Bloom</mark> <span class="ku" title="[KU] Mark Bloom (KU network) – founder of CoType Foundry">KU</span> and CoType Foundry calibrate subtle corner radii in Aeonik Soft, warming neo-grotesque typography across eight weights. Full pill-shaped rounding broke the Black weight almost immediately.</p><p class="why">A study in restraint: the team stepped the rounding through four visible stages to a radius that “reads warm without looking cartoonish” – keeping interior junctions crisp at ninety degrees, and nudging the upper leg of ‘K’ outwards so it holds steady across weights. Eight weights from Air to Black, with italics and 17 stylistic sets.</p></div>
+<div class="qq"><blockquote>“With claymation, you see the imperfections, which is just as much something to celebrate.”<br><span class="ps">Brian Vaughan, e.l.f.’s agency, in BoF – <a href="#p-t-11">read</a></span></blockquote><blockquote>“One source of truth for how the brand moves, wherever you encounter it.”<br><span class="ps">Andrew Vucko on Etsy’s motion identity – <a href="#p-t-3">read</a></span></blockquote></div></section>
+<section class="thread rv" id="working" data-glean-id="p-working"><div><p class="k">Theme</p><h2>Show your working</h2><p>CoType explains how far a corner can round before a letter breaks. Fashion brands film the hands behind their holiday ads, and BoF has the sentiment numbers to show why. SEGD publishes its first salary benchmark, built around pay transparency; UX Collective asks how AI’s per-click costs should appear on screen, and why anyone would clone Photoshop rather than give creatives more control. At two cathedrals, the work is about the craft around the building: York Minster’s stonemasons, and lights fixed to Cologne without a single hole drilled.</p></div><ol>
+<li><a href="#lead">Aeonik Soft: rounded neo-grotesque typography by CoType</a><span>Abduzeedo · Typography</span></li>
+<li><a href="#p-t-11">In fashion’s holiday campaigns, the medium is the message</a><span>The Business of Fashion · Brand Campaigns</span></li>
+<li><a href="#p-t-7">Better Data, Better Decisions: Inside the 2026 SEGD Salary &amp; Employment Report</a><span>SEGD · Design Industry</span></li>
+<li><a href="#p-t-71">Every click has a price now. Who designs how that “feels”?</a><span>UX Collective · Digital &amp; UX</span></li>
+<li><a href="#p-t-70">Why are we cloning Photoshop?</a><span>UX Collective · Insights</span></li>
+<li><a href="#p-t-91">Tonkin Liu reveals glulam buildings for masons restoring York Minster</a><span>Dezeen · Spatial</span></li>
+<li><a href="#p-t-42">Licht Kunst Licht illuminates Cologne Cathedral’s historic facade</a><span>Dezeen · Spatial</span></li>
+</ol></section>
+<section class="pat upd rv" id="patterns" data-glean-id="p-patterns-hand"><div><p class="k">Pattern scored</p><h2>By hand, on purpose</h2><p class="meta">26 stories · 9 editions</p></div><div><ul>
+<li><span class="pd">12 Nov</span><a href="#p-t-11">In fashion’s holiday campaigns, the medium is the message</a><span class="ps">The Business of Fashion</span></li>
+<li><span class="pd">11 Nov</span><a href="#p-t-91">Tonkin Liu reveals glulam buildings for masons restoring York Minster</a><span class="ps">Dezeen</span></li>
+</ul><p class="score"><b>Scored · correct</b>Forward note: at least two more major holiday campaigns, beyond e.l.f. and Levi’s, launching with stop-motion, claymation or puppetry by 1 December. Now 2 of 2: BoF names Strathberry’s three-part stop-motion series with Alina Golovlova – 2,880 frames, handmade in felt – after Barbour’s Wallace &amp; Gromit on 9 November. Alex Mill’s “stop-motion-style” film is not counted. Editor’s call: whether Strathberry is “major”.</p></div></section>
+<section class="pat upd rv" data-glean-id="p-patterns-rf"><div><p class="k">Pattern update</p><h2>Refresh, not reset</h2><p class="meta">10 stories · 5 editions</p></div><div><ul>
+<li><span class="pd">12 Nov</span><a href="#p-t-38">What 50 years in business has taught Springetts about brands</a><span class="ps">Creative Boom</span></li>
+<li><span class="pd">12 Nov</span><a href="#p-t-3">Vucko’s motion identity for Etsy is built on joy, simplicity and craft</a><span class="ps">It’s Nice That</span></li>
+<li><span class="pd">12 Nov</span><a href="#p-t-39">The toy company Tomy has a new logo, and people are baffled</a><span class="ps">Creative Bloq</span></li>
+</ul><p class="expect"><b>Open</b>At least two more refreshes by 1 December whose coverage explicitly says they keep a recognised element of the previous identity. Still 0 of 2. Tomy is the counter-case – a reset, its “most radical identity change yet”. Etsy’s motion system builds on a brand It’s Nice That calls recognisable, but the coverage doesn’t name what it keeps, so it isn’t counted.</p></div></section>
+<section class="pat upd rv" data-glean-id="p-patterns-cb"><div><p class="k">Pattern update</p><h2>Comebacks</h2><p class="meta">33 stories · 10 editions</p></div><div><ul>
+<li><span class="pd">12 Nov</span><a href="#p-t-14">SunnyD and Juicy Juice hand their comeback to Goodby Silverstein &amp; Partners</a><span class="ps">Adweek</span></li>
+<li><span class="pd">12 Nov</span><a href="#p-t-47">Design review: How the eufyMake E1 UV printer inspired the return of the Design Week Awards</a><span class="ps">Design Week</span></li>
+<li><span class="pd">12 Nov</span><a href="#p-t-11">In fashion’s holiday campaigns, the medium is the message</a><span class="ps">The Business of Fashion</span></li>
+</ul><p class="expect"><b>No open note</b>SunnyD hands its comeback to the agency behind ‘Got Milk?’, the Design Week Awards return, and Levi’s holiday ad harks back to its 1995 claymation campaign.</p></div></section>
+<section class="pat upd rv" data-glean-id="p-patterns-work"><div><p class="k">Pattern update</p><h2>Work, rewired</h2><p class="meta">24 stories · 8 editions</p></div><div><ul>
+<li><span class="pd">12 Nov</span><a href="#p-t-7">Better Data, Better Decisions: Inside the 2026 SEGD Salary &amp; Employment Report</a><span class="ps">SEGD</span></li>
+</ul><p class="expect"><b>Expect</b>At least one more design software company or large studio network to announce job cuts or a restructure linked to AI by 1 December 2026. Still 0 of 1 – the only layoffs in this export are at Nike, which doesn’t qualify.</p></div></section>
+<section class="pat upd rv" data-glean-id="p-patterns-ai"><div><p class="k">Pattern update</p><h2>AI as a mirror</h2><p class="meta">32 stories · 11 editions</p></div><div><ul>
+<li><span class="pd">11 Nov</span><a href="#p-t-70">Why are we cloning Photoshop?</a><span class="ps">UX Collective</span></li>
+</ul><p class="expect"><b>Open</b>The 29 October Maxon note is still unscored. The only Maxon in this export is the motor maker, not the company behind Cinema 4D.</p></div></section>
+<section class="sig2 rv" id="signals" data-glean-id="p-signals"><div class="bw"><div class="hdr"><h2>Business weather</h2><span class="trial">Trial</span></div><ul>
+<li><a href="#p-t-11">Prada’s hand-drawn holiday ad: 59.8% positive sentiment; Dior’s: 62% negative</a><span>The Business of Fashion · Brand Campaigns</span></li>
+<li><a href="#p-t-28">Nike’s annual sales down nearly $5bn since 2024, ahead of its first investor day in a decade</a><span>The Business of Fashion · Fashion</span></li>
+<li><a href="#p-t-24">Palace of Westminster maintenance heading from £1.5m to £2m a week</a><span>Dezeen · Spatial</span></li>
+<li><a href="#p-t-51">Future Observatory awards £280,000 to four low-carbon studios</a><span>Wallpaper · Design Industry</span></li>
+<li><a href="#p-t-39">Tomy consolidates global branding as Takara Tomy</a><span>Creative Bloq · Rebrands</span></li>
+</ul></div><div class="btl"><div class="hdr"><h2>Between the lines</h2><span class="trial">Trial · 11 editions</span></div><table><thead><tr><th>Term · share of stories</th><th>28 Oct</th><th>29 Oct</th><th>2 Nov</th><th>3 Nov</th><th>4 Nov</th><th>5 Nov</th><th>6 Nov</th><th>7–9 Nov</th><th>9–10 Nov</th><th>11 Nov</th><th>12 Nov</th></tr></thead><tbody>
+<tr class="grp"><td colspan="12">New high</td></tr>
+<tr><td>nostalgia</td><td>3%</td><td>7%</td><td>9%</td><td>6%</td><td>4%</td><td>2%</td><td>4%</td><td>4%</td><td>2%</td><td>10%</td><td class="now"><span class="bar" style="width:15px"></span>11%</td></tr>
+<tr class="grp"><td colspan="12">Up this edition</td></tr>
+<tr><td>AI</td><td>19%</td><td>27%</td><td>25%</td><td>25%</td><td>24%</td><td>27%</td><td>28%</td><td>25%</td><td>40%</td><td>19%</td><td class="now"><span class="bar" style="width:33px"></span>24%</td></tr>
+<tr class="grp"><td colspan="12">Holding steady</td></tr>
+<tr><td>warmth</td><td>10%</td><td>7%</td><td>9%</td><td>16%</td><td>24%</td><td>18%</td><td>8%</td><td>8%</td><td>12%</td><td>12%</td><td class="now"><span class="bar" style="width:18px"></span>13%</td></tr>
+<tr><td>joy</td><td>4%</td><td>11%</td><td>12%</td><td>16%</td><td>9%</td><td>12%</td><td>8%</td><td>10%</td><td>7%</td><td>7%</td><td class="now"><span class="bar" style="width:11px"></span>8%</td></tr>
+<tr><td>modernism</td><td>8%</td><td>7%</td><td>8%</td><td>2%</td><td>2%</td><td>10%</td><td>4%</td><td>8%</td><td>2%</td><td>10%</td><td class="now"><span class="bar" style="width:11px"></span>8%</td></tr>
+<tr><td>minimalism</td><td>10%</td><td>11%</td><td>9%</td><td>2%</td><td>4%</td><td>6%</td><td>0%</td><td>8%</td><td>5%</td><td>7%</td><td class="now"><span class="bar" style="width:7px"></span>5%</td></tr>
+<tr class="grp"><td colspan="12">Down this edition</td></tr>
+<tr><td>identity</td><td>26%</td><td>16%</td><td>16%</td><td>29%</td><td>22%</td><td>25%</td><td>17%</td><td>27%</td><td>28%</td><td>38%</td><td class="now"><span class="bar" style="width:44px"></span>32%</td></tr>
+<tr><td>craft / handmade</td><td>26%</td><td>33%</td><td>34%</td><td>37%</td><td>29%</td><td>25%</td><td>36%</td><td>39%</td><td>35%</td><td>40%</td><td class="now"><span class="bar" style="width:36px"></span>26%</td></tr>
+<tr><td>typography</td><td>14%</td><td>9%</td><td>8%</td><td>14%</td><td>11%</td><td>10%</td><td>11%</td><td>12%</td><td>9%</td><td>12%</td><td class="now"><span class="bar" style="width:11px"></span>8%</td></tr>
+<tr><td>tactile</td><td>10%</td><td>13%</td><td>14%</td><td>14%</td><td>13%</td><td>6%</td><td>4%</td><td>8%</td><td>2%</td><td>12%</td><td class="now"><span class="bar" style="width:11px"></span>8%</td></tr>
+<tr class="grp"><td colspan="12">Not appearing</td></tr>
+<tr><td>skeuomorphism</td><td>0%</td><td>0%</td><td>0%</td><td>0%</td><td>0%</td><td>0%</td><td>0%</td><td>0%</td><td>0%</td><td>0%</td><td class="now"><span class="bar" style="width:2px"></span>0%</td></tr>
+</tbody></table><p class="fn">Share of included stories whose text mentions each term (91, 45, 64, 51, 45, 51, 53, 51, 43, 42 and 38 stories). A text count, not a reading – a mention is not a trend.</p></div></section>
+<section class="next rv" id="next-session" data-glean-id="p-next"><div><p class="k">Next KU session</p><h2>Malika Favre</h2><p class="meta">Illustrator · Barcelona · date to confirm</p></div><div>
+<h5>In this edition</h5><p class="gap" style="margin-bottom:18px">No mentions of Malika Favre in this export – the fifth edition running without her. Last seen: the 5 November lead, her 2027 Montreux Jazz Festival poster with Kumkum Fernando.</p><h5>Background · outside this export</h5><ul>
+<li><a href="https://www.creativeboom.com/work/the-top-15-illustrators-of-2026-as-chosen-by-the-creative-community/" target="_blank" rel="noopener">Third in Creative Boom’s community vote for the top illustrators of 2026</a><span>Creative Boom</span></li>
+<li><a href="https://www.creativeboom.com/insight/malika-favre-on-the-trap-every-illustrator-falls-into-and-how-to-escape-it/" target="_blank" rel="noopener">Her Instagram curation account with George Wu – over 320,000 followers – is now an online bazaar of design objects</a><span>Creative Boom · 30 Apr 2026</span></li>
+</ul></div></section>
+<section class="calw rv" data-glean-id="p-cal"><div class="cal" id="calendar"><div class="hdr"><h2>Coming up</h2><span>as stated in the stories</span></div><ul>
+<li><span class="cd">12–22 Nov</span><a href="#p-t-44">Pavilion-Labyrinth by Ciro Najle and Josep Ferrando, Barcelona Pavilion</a></li>
+<li><span class="cd">Now</span><a href="#p-t-88">Avedon, Ron Howard’s documentary, streaming on Netflix</a></li>
+</ul><p class="fn">Only dates stated in today’s stories.</p></div></section>
+<section class="sec rv" id="designers" data-glean-id="p-sec-designers"><div class="sh"><h2>Designers</h2><span>4 stories</span></div>
+<article class="tlead" id="p-t-87"><p class="m">Interior Design · 11 Nov</p><h3><a href="https://interiordesign.net/designwire/10-questions-with-joel-brodovsky-adams/" target="_blank" rel="noopener">Joël Brodovsky-Adams channels club culture into ceramic forms</a></h3><p class="ab">Inspired by the energy of queer club culture – and the Robyn that often blasts from his Brooklyn studio – Joël Brodovsky-Adams’s exhibition ‘Like a Rumor’ at Superhouse brings sculptural ceramics and lighting in explosive shades of orange.</p></article>
+<div class="list">
+<article class="item" id="p-t-31"><p class="m">It’s Nice That · 12 Nov</p><h4><a href="https://www.itsnicethat.com/articles/dum-dum-studio-graphic-design-discover-121126" target="_blank" rel="noopener">Dum Dum Studio’s inventive design emerges from an open mind and a love of play</a></h4><p>Whether it’s an identity, a custom typeface or art direction, Dum Dum Studio draws on the history of its home city, Monterrey – the industrial capital of Mexico. “Each project is a new canvas,” says co-founder Mario Julián Gutiérrez.</p></article>
+<article class="item" id="p-t-92"><p class="m">Design Insider · 11 Nov</p><h4><a href="https://www.designinsiderlive.com/jasper-sanders-the-making-of-a-designer-40-key-moments-from-40-years-in-practice-part-three/" target="_blank" rel="noopener">Jasper Sanders, The Making of a Designer: 40 key moments from 40 years in practice, part three</a></h4><p>For Jasper Sanders, a design career began at the age of seven, on a building site in Bedfordshire. In the final part of his series, the founder of Jasper Sanders + Partners looks back on the years since he set up his studio.</p></article>
+<article class="item" id="p-t-21"><p class="m">Print · 12 Nov</p><h4><a href="https://www.printmag.com/daily-heller/the-daily-heller-john-massey-a-mid-century-modern-dies/" target="_blank" rel="noopener">The Daily Heller: John Massey, a Midcentury Modernist, Dies</a></h4><p>Steven Heller marks the death, at 95 this September, of the Chicago Modernist graphic designer John Massey – and the risk that significant figures slip into obscurity.</p></article>
+</div>
+</section>
+<section class="sec rv" id="insights" data-glean-id="p-sec-insights"><div class="sh"><h2>Insights</h2><span>2 stories</span></div>
+<div class="list">
+<article class="item" id="p-t-70"><p class="m">UX Collective · 11 Nov</p><h4><a href="https://uxdesign.cc/why-are-we-cloning-photoshop-52e6e165eef7?source=publication_content_feed----138adf9c44c-----1-------------------------------------" target="_blank" rel="noopener">Why are we cloning Photoshop?</a></h4><p>AI has made it cheap enough for a lone developer to clone Photoshop. Heenesh Patel suspects a bigger opportunity is being overlooked: tools that let creatives keep tight control of their vision.</p></article>
+<article class="item" id="p-t-59"><p class="m">UX Collective · 12 Nov</p><h4><a href="https://uxdesign.cc/the-bathroom-flaws-that-infuriate-every-designer-a26d50145d47?source=publication_content_feed----138adf9c44c-----3-------------------------------------" target="_blank" rel="noopener">The bathroom flaws that infuriate every designer</a></h4><p>A woman in a wheelchair, reaching for something just beyond her at a washbasin: Sophie Shrimpton on the everyday bathroom flaws most of us have stopped noticing.</p></article>
+</div>
+</section>
+<section class="sec rv" id="industry" data-glean-id="p-sec-industry"><div class="sh"><h2>Design Industry</h2><span>4 stories</span></div>
+<article class="tlead" id="p-t-7"><p class="m">SEGD · 12 Nov</p><h3><a href="https://segd.org/resources/better-data-better-decisions-inside-the-2026-segd-salary-employment-report/" target="_blank" rel="noopener">Better Data, Better Decisions: Inside the 2026 SEGD Salary &amp; Employment Report</a></h3><p class="ab">Drawing on 424 practitioner survey responses and 633 job postings from 2020 to 2026, SEGD’s first salary and employment benchmark for experiential design covers pay, hiring, pay transparency, flexibility and career growth.</p></article>
+<div class="list">
+<article class="item" id="p-t-8"><p class="m">SEGD · 12 Nov</p><h4><a href="https://segd.org/news/uniting-european-design-excellence-segd-launches-official-european-chapter/" target="_blank" rel="noopener">Uniting European Design Excellence: SEGD Launches Official European Chapter</a></h4><p>SEGD has launched an official European chapter – for the first time, an overarching, multidisciplinary network for Europe’s design, architecture and exhibition industries – at the ICoD Platform Meeting in Madrid.</p></article>
+<article class="item" id="p-t-51"><p class="m">Wallpaper · 12 Nov</p><h4><a href="https://www.wallpaper.com/architecture/the-design-museum-first-prototype-grants-revealed-uk" target="_blank" rel="noopener">From biomass insulation to seaweed earplugs, Design Museum grants enable eco-innovation</a></h4><p>The Design Museum’s Future Observatory and the AHRC have awarded £280,000 to four studios – Searo Labs, Local Works Studio, WeCanMake and South Yorkshire Ecofit – chosen from nearly 140 applicants, to develop low-carbon construction innovations.</p></article>
+<article class="item" id="p-t-47"><p class="m">Design Week · 12 Nov</p><h4><a href="https://www.designweek.co.uk/design-review-how-the-eufymake-e1-uv-printer-inspired-the-return-of-the-design-week-awards/" target="_blank" rel="noopener">Design review: How the eufyMake E1 UV printer inspired the return of the Design Week Awards</a></h4><p>A desktop UV printer that makes textured, “2.5D” prints impressed Design Week enough to restart its long-stalled awards. The sticking point had been £15k upfront on trophies – so why not print them instead?</p></article>
+</div>
+</section>
+<section class="sec rv" id="rebrands" data-glean-id="p-sec-rebrands"><div class="sh"><h2>Rebrands &amp; New Identity</h2><span>2 stories</span></div>
+<div class="list">
+<article class="item" id="p-t-3"><p class="m">It’s Nice That · 12 Nov</p><h4><a href="https://www.itsnicethat.com/articles/vucko-etsy-motion-graphic-design-sponsored-content-121126" target="_blank" rel="noopener">Vucko’s motion identity for Etsy is built on joy, simplicity and craft</a></h4><p>Etsy’s brand is recognisable, perhaps even iconic – but doesn’t necessarily behave in a way that speaks to its output. Toronto studio Vucko built “one source of truth for how the brand moves”, a shared motion language across product and marketing.</p></article>
+<article class="item" id="p-t-39"><p class="m">Creative Bloq · 12 Nov</p><h4><a href="https://www.creativebloq.com/news/the-toy-company-tomy-has-a-new-logo-and-people-are-baffled" target="_blank" rel="noopener">The toy company Tomy has a new logo, and people are baffled</a></h4><p>Tomy’s first rebrand in 20 years is its most radical yet. It becomes Takara Tomy everywhere, and the familiar white and blue wordmarks give way to a symbol based on the katakana for ‘asobi’, or play, in a teal-to-magenta gradient.</p></article>
+</div>
+</section>
+<section class="sec rv" id="campaigns" data-glean-id="p-sec-campaigns"><div class="sh"><h2>Brand Campaigns</h2><span>1 story</span></div>
+<div class="list">
+<article class="item" id="p-t-11"><p class="m">The Business of Fashion · 12 Nov</p><h4><a href="https://www.businessoffashion.com/articles/marketing-pr/fashion-holiday-campaigns-medium-is-the-message/" target="_blank" rel="noopener">In fashion’s holiday campaigns, the medium is the message</a></h4><p>From Prada to Rimowa, brands are embracing handcrafted holiday campaigns – illustration, claymation, stop-motion. BoF argues that transparency about the artistic process is now needed, both to highlight the artistry and to avoid customer disappointment.</p></article>
+</div>
+</section>
+<section class="sec rv" id="studio" data-glean-id="p-sec-studio"><div class="sh"><h2>Studio, Agency &amp; Network News</h2><span>2 stories</span></div>
+<div class="list">
+<article class="item" id="p-t-38"><p class="m">Creative Boom · 12 Nov</p><h4><a href="https://www.creativeboom.com/insight/what-50-years-in-business-has-taught-springetts-about-building-brands-that-thrive/" target="_blank" rel="noopener">What 50 years in business has taught Springetts about brands</a></h4><p>Springetts, the agency behind Frubes, Frijj and The Happy Egg Co., marks its half-century with a new field guide on designing brands for longevity rather than novelty.</p></article>
+<article class="item" id="p-t-14"><p class="m">Adweek · 12 Nov</p><h4><a href="https://www.adweek.com/agencies/sunnyd-and-juicy-juice-hand-their-comeback-to-goodby-silverstein-partners/" target="_blank" rel="noopener">SunnyD and Juicy Juice hand their comeback to Goodby Silverstein &amp; Partners</a></h4><p>Harvest Hill Beverage Company, owner of SunnyD and Juicy Juice, has appointed Goodby Silverstein &amp; Partners – the agency behind ‘Got Milk?’ – as its first-ever creative agency of record, in a bid to regain relevance.</p></article>
+</div>
+</section>
+<section class="sec rv" id="awards" data-glean-id="p-sec-awards"><div class="sh"><h2>Awards &amp; Recognition</h2><span>1 story</span></div>
+<div class="list">
+<article class="item" id="p-t-85"><p class="m">Live Design · 11 Nov</p><h4><a href="https://www.livedesignonline.com/news/springboard-design-honored-winner-6th-annual-anthem-awards" target="_blank" rel="noopener">Springboard to Design honoured as a winner at the 6th Annual Anthem Awards</a></h4><p>Springboard to Design has won Gold in Community Engagement and Silver in LGBTQ+ Advocacy &amp; Support at the 6th Annual Anthem Awards.</p></article>
+</div>
+</section>
+<section class="sec rv" id="events" data-glean-id="p-sec-events"><div class="sh"><h2>Events &amp; Calendar</h2><span>2 stories</span></div>
+<div class="list">
+<article class="item" id="p-t-44"><p class="m">ArchDaily · 12 Nov</p><h4><a href="https://www.archdaily.com/1188518/a-glass-labyrinth-by-ciro-najle-and-josep-ferrando-opens-at-the-barcelona-pavilion" target="_blank" rel="noopener">A Glass Labyrinth by Ciro Najle and Josep Ferrando Opens at the Barcelona Pavilion</a></h4><p>A glass ‘Pavilion-Labyrinth’ by Ciro Najle and Josep Ferrando leads visitors through Mies van der Rohe and Lilly Reich’s Barcelona Pavilion, originally built as a temporary building for the 1929 International Exposition. 12–22 November.</p></article>
+<article class="item" id="p-t-83"><p class="m">Interior Design · 11 Nov</p><h4><a href="https://interiordesign.net/designwire/salon-art-design-2026-celebrates-15-years-strong/" target="_blank" rel="noopener">Salon Art + Design celebrates 15 years strong</a></h4><p>The 15th Salon Art + Design, held on 4–8 November at New York’s Park Avenue Armory, brought together 40 booths of collectible design and fine art – with newcomers including Vitra, ABASK and Pierre Augustin Rose.</p></article>
+</div>
+</section>
+<section class="sec rv" id="product" data-glean-id="p-sec-product"><div class="sh"><h2>Discipline — Product &amp; Industrial</h2><span>3 stories</span></div>
+<article class="tlead" id="p-t-2"><p class="m">Hypebeast · 12 Nov</p><h3><a href="https://hypebeast.com/2026/11/apparatus-act-v-new-collection-afsaneh" target="_blank" rel="noopener">Apparatus celebrates life’s cycles in its ‘Afsaneh’ collection</a></h3><p class="ab">Apparatus’s first collection in five years, artistic director Gabriel Hendifar’s ‘Afsaneh’ – named after his mother, and the Persian word for “fable” – spans 27 pieces of lighting, furniture and objects about the stages of life.</p></article>
+<div class="list">
+<article class="item" id="p-t-32"><p class="m">Dezeen · 12 Nov</p><h4><a href="https://www.dezeen.com/2026/11/12/minimal-pedal-4-delivery-vehicle/" target="_blank" rel="noopener">Minimal merges small van and electric bike in Pedal 4 delivery vehicle</a></h4><p>British start-up Minimal’s Pedal 4 is an electric cargo bike with the carrying capacity of a small van, now operating in London with Royal Mail and Evri. It is shortlisted at the Dezeen Awards 2026.</p></article>
+<article class="item" id="p-t-43"><p class="m">Design Week · 12 Nov</p><h4><a href="https://www.designweek.co.uk/priestmangoodes-private-jet-concept-caters-to-changing-tastes-of-chinas-mega-rich/" target="_blank" rel="noopener">PriestmanGoode’s private jet concept caters to changing tastes of China’s mega-rich</a></h4><p>Moving away from overt displays of wealth, PriestmanGoode’s Ways of Seeing concept adapts narrow-body aircraft for multi-generational living, Chinese heritage and understated luxury.</p></article>
+</div>
+</section>
+<section class="sec rv" id="digital" data-glean-id="p-sec-digital"><div class="sh"><h2>Discipline — Digital &amp; UX</h2><span>3 stories</span></div>
+<article class="tlead" id="p-t-79"><p class="m">Creative Bloq · 11 Nov</p><h3><a href="https://www.creativebloq.com/features/adobe-max-2026-sneaks-project-link-up-is-making-design-playful-again" target="_blank" rel="noopener">Project Link Up is making design playful again</a></h3><p class="ab">Adobe research lead Hailin Jin on Project Link Up, an Adobe MAX Sneak that turns simple dragging into context-aware fusion matching a scene’s perspective – so objects need not be redrawn for every new viewing angle.</p></article>
+<div class="list">
+<article class="item" id="p-t-71"><p class="m">UX Collective · 11 Nov</p><h4><a href="https://uxdesign.cc/every-click-has-a-price-now-who-designs-how-that-feels-e3f00b6cabb8?source=collection_home_page----138adf9c44c-----1-------------------------------------" target="_blank" rel="noopener">Every click has a price now. Who designs how that “feels”?</a></h4><p>As the all-you-can-eat AI era ends and products move to credit- and usage-based pricing, every action carries a cost. Arin Bhowmick asks how that price should show up on screen.</p></article>
+<article class="item" id="p-t-72"><p class="m">UX Collective · 11 Nov</p><h4><a href="https://uxdesign.cc/in-system-design-from-code-to-figma-and-back-prototyping-in-your-real-design-system-7372b128de9a?source=publication_content_feed----138adf9c44c-----3-------------------------------------" target="_blank" rel="noopener">In-system design: from code to Figma and back</a></h4><p>The final part of Christine Vallaure’s series: why she stopped choosing between canvas and code, and how one prototype travels between Figma and her real design system components – in both directions.</p></article>
+</div>
+</section>
+<section class="sec rv" id="spatial" data-glean-id="p-sec-spatial"><div class="sh"><h2>Discipline — Spatial, Retail &amp; Architecture</h2><span>9 stories</span></div>
+<article class="tlead" id="p-t-91"><p class="m">Dezeen · 11 Nov</p><h3><a href="https://www.dezeen.com/2026/11/11/york-minster-centre-excellence-tonkin-liu/" target="_blank" rel="noopener">Tonkin Liu reveals glulam buildings for masons restoring York Minster</a></h3><p class="ab">Tonkin Liu has added two glulam buildings either side of York Minster. Together they form the Centre of Excellence for Heritage Craft Skills, giving working stonemasons views of the Gothic cathedral they are restoring.</p></article>
+<div class="list">
+<article class="item" id="p-t-42"><p class="m">Dezeen · 12 Nov</p><h4><a href="https://www.dezeen.com/2026/11/12/licht-kunst-licht-cologne-cathedral/" target="_blank" rel="noopener">Licht Kunst Licht illuminates Cologne Cathedral’s historic facade</a></h4><p>Licht Kunst Licht has used more than 700 surface-mounted LED luminaires to transform night-time views of Cologne Cathedral – without drilling a single hole in its delicate stonework.</p></article>
+<article class="item" id="p-t-22"><p class="m">Dezeen · 12 Nov</p><h4><a href="https://www.dezeen.com/2026/11/12/embt-naples-underground-central-station/" target="_blank" rel="noopener">EMBT shelters Naples metro station beneath vaulted timber roof</a></h4><p>EMBT has completed Naples Underground Central Station in Kenzo Tange’s Centro Direzionale, contrasting its modernist surroundings with a wavy timber roof. It is shortlisted at the Dezeen Awards 2026.</p></article>
+<article class="item" id="p-t-29"><p class="m">Designboom · 12 Nov</p><h4><a href="https://www.designboom.com/architecture/big-bjarke-ingels-group-future-temporary-shelter-uganda-bidi-bidi-refugees-to-org/" target="_blank" rel="noopener">BIG imagines a future beyond temporary shelter for Uganda’s Bidi Bidi refugees</a></h4><p>BIG and to.org’s Refugee Future Cities masterplan treats Bidi Bidi in northern Uganda – home to about 230,000 refugees – as a city rather than a temporary camp, with room for 155,000 more residents.</p></article>
+<article class="item" id="p-t-24"><p class="m">Dezeen · 12 Nov</p><h4><a href="https://www.dezeen.com/2026/11/12/fire-risk-palace-westminster-renovation-delay/" target="_blank" rel="noopener">Renovation delays increase fire risk at Houses of Parliament</a></h4><p>A Public Accounts Committee report finds fire risk rising at the Palace of Westminster amid renovation delays, with maintenance costs expected to rise from £1.5m to £2m a week if no action is taken.</p></article>
+<article class="item" id="p-t-94"><p class="m">Dezeen · 11 Nov</p><h4><a href="https://www.dezeen.com/2026/11/11/public-toilets-chartier-corbasson-paris/" target="_blank" rel="noopener">Public toilets in Paris by Chartier-Corbasson “elevate the ordinary”</a></h4><p>Chartier-Corbasson Architectes has turned a neglected underground passage beneath the Trocadéro Gardens into a public restroom in stainless and weathered steel – part of the OnE masterplan around the Eiffel Tower.</p></article>
+<article class="item" id="p-t-95"><p class="m">Dezeen · 11 Nov</p><h4><a href="https://www.dezeen.com/2026/11/11/not-a-hotel-architects-brutalist-tokyo-warehouse-office/" target="_blank" rel="noopener">Not a Hotel Architects converts brutalist Tokyo warehouse into own office and headquarters</a></h4><p>Not a Hotel’s in-house architects have turned a 1967 brutalist Tokyo warehouse into their workspace, divided by glass partitions and filled with design classics – including an entire Jean Prouvé house.</p></article>
+<article class="item" id="p-t-40"><p class="m">Hypebeast · 12 Nov</p><h4><a href="https://hypebeast.com/2026/11/cake-kumori-handroll-bar-london" target="_blank" rel="noopener">Handroll bar Kumori brings the misty glow of Tokyo to London</a></h4><p>Design studio CAKE’s Kumori – Japanese for “cloudiness” – is a London handroll bar inspired by misty Tokyo Bay sunsets: a mahogany counter by day, vivid light panels by night.</p></article>
+<article class="item" id="p-t-10"><p class="m">Greenbuilding &amp; Design · 12 Nov</p><h4><a href="https://gbdmagazine.com/conext-design/" target="_blank" rel="noopener">CoNEXT is a conscious, urban neighbourhood development in Muttenz, Switzerland</a></h4><p>Oppenheim Architecture’s CoNEXT in Muttenz retains and repurposes elements of the site’s existing structures, and includes Switzerland’s first Urban Living Lab.</p></article>
+</div>
+</section>
+<section class="sec rv" id="fashion" data-glean-id="p-sec-fashion"><div class="sh"><h2>Discipline — Fashion &amp; Streetwear</h2><span>3 stories</span></div>
+<article class="tlead" id="p-t-53"><p class="m">Hypebeast · 12 Nov</p><h3><a href="https://hypebeast.com/2026/11/balenciaga-damien-hirst-limited-edition-collaborative-damienciaga-collection-release-info" target="_blank" rel="noopener">Balenciaga and Damien Hirst unveil limited-edition ‘Damienciaga’ collection</a></h3><p class="ab">Balenciaga and Damien Hirst’s limited-edition ‘Damienciaga’ capsule marks 25 years of the Le City handbag with Hirst’s signature spots, butterflies and sticker motifs.</p></article>
+<div class="list">
+<article class="item" id="p-t-28"><p class="m">The Business of Fashion · 12 Nov</p><h4><a href="https://www.businessoffashion.com/articles/sports/nike-investor-day-preview-expectations/" target="_blank" rel="noopener">The questions Nike needs to answer at investor day</a></h4><p>At Nike’s first investor day in nearly a decade, chief executive Elliott Hill must show a plan to regain its footing after annual sales fell by nearly $5bn since 2024.</p></article>
+<article class="item" id="p-t-46"><p class="m">Financial Times · 12 Nov</p><h4><a href="https://www.ft.com/content/75f1f34c-a514-4085-abb8-fad25a92db29" target="_blank" rel="noopener">In praise of the parure</a></h4><p>Matching your jewellery is hardly new: parures – from the Old French parer, “to adorn” – were a mainstay of European royal courts in the 17th and 18th centuries, and the trend reigns on.</p></article>
+</div>
+</section>
+<section class="sec rv" id="photo" data-glean-id="p-sec-photo"><div class="sh"><h2>Discipline — Photography</h2><span>1 story</span></div>
+<div class="list">
+<article class="item" id="p-t-88"><p class="m">ARTnews · 11 Nov</p><h4><a href="https://www.artnews.com/art-news/reviews/avedon-netflix-review-ron-howard-fashion-style-substance-1234805443/" target="_blank" rel="noopener">New Richard Avedon documentary shows that fashion isn’t all style – it’s substance</a></h4><p>Ron Howard’s documentary Avedon, now on Netflix, is full of style and substance – a former fashion-magazine insider on the Richard Avedon photographs that shaped the dream of working in fashion publishing.</p></article>
+</div>
+</section>
+<footer><span><b>Design Digest</b> &nbsp;Cision × KnownUnknown</span><span>12 November 2026 · 38 stories from 97 search hits · <a class="ft" href="#top">Back to top ↑</a></span></footer></main>
+<a class="totop" href="#top" aria-label="Back to top">↑ Top</a>
+<script>(function(){var els=document.querySelectorAll('.rv');if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(function(e){e.classList.add('in')});return;}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px'});els.forEach(function(e){io.observe(e)});setTimeout(function(){els.forEach(function(e){e.classList.add('in')})},2500);})();
+(function(){
+  var t=document.querySelector('.totop'),back=null,calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  addEventListener('scroll',function(){t.classList.toggle('on',scrollY>innerHeight*1.5)},{passive:true});
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="#"]');
+    if(!a||a.classList.contains('totop'))return;
+    var id=a.getAttribute('href').slice(1),el=document.getElementById(id);
+    if(!el||id==='top')return;
+    var y=scrollY; if(back)back.remove();
+    back=document.createElement('button'); back.type='button'; back.className='back'; back.textContent='↩ Return to menu';
+    back.onclick=function(){scrollTo({top:y,behavior:calm?'auto':'smooth'});back.remove();back=null;a.focus({preventScroll:true});};
+    var slot=(el.tagName==='SECTION'&&el.querySelector('.sh'))||el.querySelector('.m')||el.querySelector('.sh')||el.querySelector('h2')||el;
+    slot.appendChild(back);
+  });
+})();</script></body></html>
