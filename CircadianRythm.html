@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="glean-artifact-type" content="visual_content">
+<title>The Circadian Archive — How augur Remembers</title>
+<style>
+:root {
+  --artifact-background: #05070e;
+  --artifact-background-light: #0b101d;
+  --artifact-background-mid: #11182b;
+  --artifact-surface-glass: rgba(13, 20, 36, 0.78);
+  --artifact-border-light: rgba(120, 180, 255, 0.14);
+  --artifact-border-cyan: rgba(56, 224, 255, 0.34);
+  --artifact-border-orange: rgba(255, 110, 41, 0.34);
+  --artifact-primary-brand: #FF6E29;
+  --artifact-primary-highlight: #38e0ff;
+  --artifact-primary-hover: #7cf0ff;
+  --artifact-selected: #13223e;
+  --artifact-text-primary: #eef4fc;
+  --artifact-text-secondary: #98abc4;
+  --artifact-text-muted: #5c708c;
+  --artifact-text-highlight: #0e1e38;
+  --artifact-navy: #16215B;
+  --artifact-blue-mid: #1F299C;
+  --artifact-blue-bright: #016CFF;
+  --artifact-dawn: #38e0ff;
+  --artifact-midday: #FF6E29;
+  --artifact-dusk: #a855f7;
+  --artifact-night: #3b82f6;
+  --artifact-positive: #34d399;
+}
+html[data-theme='dark'] {
+  --artifact-background: #05070e;
+  --artifact-background-light: #0b101d;
+  --artifact-background-mid: #11182b;
+  --artifact-surface-glass: rgba(13, 20, 36, 0.78);
+  --artifact-border-light: rgba(120, 180, 255, 0.14);
+  --artifact-border-cyan: rgba(56, 224, 255, 0.34);
+  --artifact-border-orange: rgba(255, 110, 41, 0.34);
+  --artifact-primary-brand: #FF6E29;
+  --artifact-primary-highlight: #38e0ff;
+  --artifact-primary-hover: #7cf0ff;
+  --artifact-selected: #13223e;
+  --artifact-text-primary: #eef4fc;
+  --artifact-text-secondary: #98abc4;
+  --artifact-text-muted: #5c708c;
+  --artifact-text-highlight: #0e1e38;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background-color: var(--artifact-background);
+  color: var(--artifact-text-primary);
+  font-size: 15.5px;
+  line-height: 1.68;
+  overflow-x: hidden;
+}
+.wrap {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 28px 96px;
+}
+.header {
+  background: linear-gradient(115deg, var(--artifact-navy) 0%, var(--artifact-blue-mid) 48%, var(--artifact-text-highlight) 100%);
+  border-bottom: 1px solid var(--artifact-border-cyan);
+  padding: 44px 48px 38px;
+  margin: 0 -28px;
+  position: relative;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.wm-svg {
+  width: 210px;
+  height: auto;
+  display: block;
+}
+.canon-pill {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: var(--artifact-background-light);
+  color: var(--artifact-primary-highlight);
+  border: 1px solid var(--artifact-border-cyan);
+}
+.eyebrow {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--artifact-primary-highlight);
+  margin-bottom: 12px;
+}
+h1.doc-title {
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  color: var(--artifact-text-primary);
+  margin-bottom: 14px;
+}
+h1.doc-title strong {
+  font-weight: 700;
+  color: var(--artifact-primary-brand);
+}
+.doc-sub {
+  font-size: 16.5px;
+  color: var(--artifact-text-secondary);
+  max-width: 720px;
+  line-height: 1.62;
+}
+.epigraph-bar {
+  margin-top: 32px;
+  padding: 16px 22px;
+  background-color: var(--artifact-background-light);
+  border-left: 3px solid var(--artifact-primary-brand);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.epigraph-quote {
+  font-size: 17px;
+  font-style: italic;
+  color: var(--artifact-text-primary);
+}
+.epigraph-attr {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--artifact-primary-brand);
+}
+
+/* 3D HOLOGRAPHIC CHAMBER */
+.chamber-section {
+  margin-top: 36px;
+  background-color: var(--artifact-background-light);
+  border: 1px solid var(--artifact-border-cyan);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.chamber-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 16px 22px;
+  background-color: var(--artifact-background-mid);
+  border-bottom: 1px solid var(--artifact-border-light);
+}
+.chamber-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.chamber-kicker {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--artifact-primary-highlight);
+}
+.chamber-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--artifact-text-primary);
+}
+.phase-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.phase-btn {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--artifact-border-light);
+  background-color: var(--artifact-background);
+  color: var(--artifact-text-secondary);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.phase-btn:hover {
+  border-color: var(--artifact-border-cyan);
+  color: var(--artifact-text-primary);
+}
+.phase-btn.active {
+  background-color: var(--artifact-selected);
+  color: var(--artifact-primary-highlight);
+  border-color: var(--artifact-primary-highlight);
+}
+.chamber-stage {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  background-color: var(--artifact-background);
+  cursor: grab;
+}
+.chamber-stage:active {
+  cursor: grabbing;
+}
+#holoCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hud-overlay-tl {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  max-width: 340px;
+  background-color: var(--artifact-surface-glass);
+  border: 1px solid var(--artifact-border-cyan);
+  border-radius: 8px;
+  padding: 14px 16px;
+  pointer-events: none;
+}
+.hud-phase-tag {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--artifact-primary-highlight);
+  margin-bottom: 4px;
+}
+.hud-phase-name {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--artifact-text-primary);
+  margin-bottom: 6px;
+}
+.hud-phase-desc {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--artifact-text-secondary);
+}
+.hud-overlay-br {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  background-color: var(--artifact-surface-glass);
+  border: 1px solid var(--artifact-border-light);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  color: var(--artifact-text-secondary);
+  pointer-events: none;
+}
+.hud-metric strong {
+  color: var(--artifact-primary-highlight);
+}
+.hud-hint {
+  position: absolute;
+  bottom: 16px;
+  left: 22px;
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--artifact-text-muted);
+  background-color: var(--artifact-surface-glass);
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--artifact-border-light);
+  pointer-events: none;
+}
+.chamber-sliders {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 14px 22px;
+  background-color: var(--artifact-background-mid);
+  border-top: 1px solid var(--artifact-border-light);
+}
+.slider-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11.5px;
+  color: var(--artifact-text-secondary);
+}
+.slider-group input[type="range"] {
+  accent-color: var(--artifact-primary-highlight);
+  cursor: pointer;
+}
+.legend-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--artifact-text-secondary);
+}
+.legend-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+.dot-cyan { background-color: var(--artifact-dawn); }
+.dot-orange { background-color: var(--artifact-midday); }
+.dot-purple { background-color: var(--artifact-dusk); }
+
+/* SECTIONS */
+.section {
+  margin-top: 64px;
+}
+.section-header {
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--artifact-border-light);
+  padding-bottom: 14px;
+}
+.section-num {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--artifact-primary-brand);
+  margin-bottom: 6px;
+}
+h2.section-title {
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  font-weight: 400;
+  color: var(--artifact-text-primary);
+  letter-spacing: -0.015em;
+}
+.section-lead {
+  margin-top: 8px;
+  font-size: 15.5px;
+  color: var(--artifact-text-secondary);
+  max-width: 780px;
+}
+
+/* 4 CIRCADIAN MOVEMENTS GRID */
+.circadian-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+@media screen and (max-width: 760px) {
+  .circadian-grid { grid-template-columns: 1fr; }
+}
+.phase-card {
+  background-color: var(--artifact-background-light);
+  color: var(--artifact-text-primary);
+  border: 1px solid var(--artifact-border-light);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.phase-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.phase-time {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--artifact-primary-highlight);
+}
+.phase-pill {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 10.5px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background-color: var(--artifact-selected);
+  color: var(--artifact-primary-brand);
+  border: 1px solid var(--artifact-border-orange);
+}
+.phase-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--artifact-text-primary);
+}
+.phase-card p {
+  font-size: 14.5px;
+  color: var(--artifact-text-secondary);
+  line-height: 1.62;
+}
+.phase-card p strong {
+  color: var(--artifact-text-primary);
+}
+.voice-list {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--artifact-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--artifact-text-secondary);
+}
+.voice-item strong {
+  color: var(--artifact-primary-highlight);
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 12px;
+}
+
+/* FREQUENCY SCALES & METABOLIC TABLE */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--artifact-border-light);
+  border-radius: 8px;
+  background-color: var(--artifact-background-light);
+}
+table.canon-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+table.canon-table th {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--artifact-primary-highlight);
+  background-color: var(--artifact-background-mid);
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--artifact-border-light);
+}
+table.canon-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--artifact-border-light);
+  color: var(--artifact-text-secondary);
+  vertical-align: top;
+}
+table.canon-table td strong {
+  color: var(--artifact-text-primary);
+}
+table.canon-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* STATE LIFECYCLE BAR */
+.lifecycle-box {
+  margin-top: 24px;
+  padding: 24px;
+  background-color: var(--artifact-background-light);
+  border: 1px solid var(--artifact-border-cyan);
+  border-radius: 8px;
+}
+.lifecycle-label {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--artifact-primary-highlight);
+  margin-bottom: 14px;
+}
+.state-chain {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.state-pill {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 6px;
+  background-color: var(--artifact-selected);
+  color: var(--artifact-text-primary);
+  border: 1px solid var(--artifact-border-cyan);
+}
+.state-pill.highlight-orange {
+  border-color: var(--artifact-primary-brand);
+  color: var(--artifact-primary-brand);
+}
+.state-pill.muted {
+  opacity: 0.65;
+  border-style: dashed;
+}
+.state-arrow {
+  color: var(--artifact-primary-highlight);
+  font-weight: 700;
+}
+
+/* FIREBREAK CREED BOX */
+.creed-box {
+  margin-top: 56px;
+  padding: 32px 36px;
+  background-color: var(--artifact-background-mid);
+  border: 1px solid var(--artifact-border-orange);
+  border-radius: 10px;
+}
+.creed-kicker {
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--artifact-primary-brand);
+  margin-bottom: 8px;
+}
+.creed-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--artifact-text-primary);
+  margin-bottom: 12px;
+}
+.creed-lines {
+  margin-top: 16px;
+  padding-left: 18px;
+  border-left: 2px solid var(--artifact-primary-highlight);
+  font-size: 16px;
+  font-style: italic;
+  color: var(--artifact-text-primary);
+  line-height: 1.8;
+}
+.creed-lines b {
+  color: var(--artifact-primary-brand);
+  font-style: normal;
+}
+
+.footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--artifact-border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-family: "SF Mono", "IBM Plex Mono", "Consolas", monospace;
+  font-size: 11px;
+  color: var(--artifact-text-muted);
+}
+
+@media print {
+  @page { size: auto !important; }
+  body {
+    margin: 0;
+    padding: 0.4in 0.6in;
+    background: #fff !important;
+    color: #000 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .wrap { max-width: 100% !important; width: 100% !important; padding: 0 !important; }
+  .header { margin: 0 0 20px 0 !important; padding: 24px !important; background: #16215B !important; color: #fff !important; }
+  .phase-card, .chamber-section, .table-wrap, .lifecycle-box, .creed-box, .epigraph-bar {
+    break-inside: avoid;
+    background: #fff !important;
+    color: #000 !important;
+    border: 1px solid rgba(0,0,0,0.18) !important;
+  }
+  h1.doc-title, h2.section-title, .phase-card h3, .creed-title, .chamber-heading, table.canon-table td strong {
+    color: #000 !important;
+  }
+  .header h1.doc-title, .header .doc-sub { color: #fff !important; }
+  .phase-card p, .section-lead, table.canon-table td, .voice-list, .creed-lines {
+    color: #222 !important;
+  }
+  .chamber-stage { height: 320px !important; background: #05070e !important; }
+  button, .phase-controls, .chamber-sliders { display: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="header" data-glean-id="header-banner">
+    <div class="header-top">
+      <svg class="wm-svg" viewBox="160 115 725 240" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#FF6E29" d="M745.359375,168.578857 C757.772278,173.985168 769.664734,179.499390 780.694336,186.838257 C797.224487,197.837051 806.486450,212.478897 805.194702,233.150299 C807.993774,227.940857 808.383057,221.238708 805.659912,212.387131 C804.399414,208.289688 805.175903,205.886887 808.733826,203.685242 C812.271729,201.495987 815.876343,198.984558 813.515442,193.854050 C831.113525,187.614929 844.220703,189.710449 852.758423,200.019745 C852.809875,201.078247 851.968567,201.562103 851.225952,201.681900 C837.328003,203.923370 831.773193,214.310074 827.288879,225.890198 C822.891296,237.246582 818.341980,248.575974 809.332825,257.288483 C798.264221,267.992767 784.837219,274.348724 770.092407,278.162628 C760.588989,280.620758 751.008057,282.794739 741.559326,285.443878 C730.181335,288.634003 719.996704,294.197632 711.032776,301.944672 C710.445618,302.452087 709.890259,303.196259 708.793213,302.843872 C708.207336,300.673645 710.094910,299.663940 711.080261,298.285675 C719.789612,286.104187 731.842407,278.856079 745.973206,274.635254 C753.652893,272.341309 761.082336,269.404388 768.024902,265.342377 C772.847229,262.520874 776.966858,258.964600 779.746216,254.020325 C785.158142,244.392456 781.987122,234.133667 772.073792,229.203674 C765.679382,226.023727 758.650513,225.433533 751.765747,224.406677 C742.697144,223.054108 734.435791,219.748978 726.787231,214.838959 C724.770874,213.544540 722.377991,212.416367 721.450073,208.432770 C737.527344,214.972931 754.387390,211.745422 770.286621,216.054413 C763.751221,211.315826 756.159424,209.092499 748.450867,207.238388 C735.163391,204.042435 721.880920,200.999924 710.296143,193.091537 C700.693909,186.536575 694.522949,177.461304 690.085205,167.020554 C689.438416,165.498734 688.289734,163.742844 689.340149,161.883118 C690.379700,161.660461 691.021912,162.201675 691.570007,162.836304 C703.156006,176.250443 718.621277,182.960327 735.035706,188.063873 C745.496704,191.316376 756.145142,194.014038 766.321655,198.345688 C761.948914,193.586349 756.114441,191.119766 750.464233,188.496918 C738.990906,183.170975 727.252380,178.447891 716.335022,171.928482 C699.012939,161.584518 691.218079,145.522491 688.226257,126.419846 C688.075806,125.459084 687.915344,124.410728 689.844482,123.023483 C701.389832,146.413513 722.684875,158.070007 745.359375,168.578857 z"/>
+        <path fill="#FFFFFF" d="M300.435364,329.115417 C301.519836,329.519867 302.274658,329.809326 303.029449,330.098816 C303.002441,330.422028 302.975433,330.745209 302.948395,331.068420 C290.331421,331.068420 277.714417,331.068420 264.122925,331.068420 C269.279480,326.082397 267.046478,321.400726 265.150543,316.809784 C262.292358,309.888855 259.162628,303.078186 256.395844,296.122192 C255.053223,292.746674 253.163651,291.208221 249.337036,291.287506 C238.519135,291.511627 227.690811,291.490295 216.872238,291.277527 C213.250305,291.206329 211.424515,292.657837 210.179245,295.861084 C207.587555,302.527802 204.790390,309.115753 202.013580,315.709106 C198.566879,323.893097 199.636749,326.474030 207.915024,329.623077 C208.498474,329.845032 209.225082,329.898834 209.213791,331.775635 C197.590179,330.610687 185.966309,332.679047 174.446503,331.118561 C173.980896,330.005768 174.557388,329.551239 175.174423,329.453003 C183.092941,328.192200 186.937943,322.551697 189.829468,315.890381 C203.543655,284.296509 217.214478,252.683731 231.010284,221.125580 C232.336411,218.092041 232.658371,213.398209 236.937439,213.308456 C241.366211,213.215591 241.472244,218.013260 242.815781,221.001328 C255.779343,249.832367 268.581024,278.736237 281.564697,307.558167 C283.538635,311.940063 286.158478,316.037170 288.567261,320.215424 C291.173431,324.735992 294.827606,327.953339 300.435364,329.115417 M222.614059,266.042664 C220.415955,271.516357 218.217834,276.990051 215.713760,283.225647 C227.752136,283.225647 238.725815,283.225647 250.483932,283.225647 C244.718430,269.048187 239.200836,255.480347 233.157013,240.618515 C229.378235,249.789825 226.170059,257.576263 222.614059,266.042664 z"/>
+        <path fill="#FFFFFF" d="M381.301147,324.430695 C394.345062,319.331085 399.263275,308.822144 401.634552,296.455536 C402.390106,292.515289 402.706360,288.568420 402.690002,284.552307 C402.619965,267.387451 402.733032,250.221619 402.605865,233.057419 C402.564056,227.413300 401.426788,222.118118 395.720123,219.067566 C393.618073,217.943909 391.010620,219.110397 388.207886,216.548218 C401.478485,216.548218 413.804810,216.548218 426.253143,216.548218 C426.102966,217.144989 426.087494,217.415176 426.024628,217.426697 C415.476746,219.358154 413.910370,226.513046 414.178986,235.864105 C414.662048,252.680222 414.499054,269.530518 414.059631,286.352234 C413.742737,298.482971 411.228241,310.105774 403.132202,319.886200 C394.797058,329.955536 383.377167,332.915039 371.206818,334.137817 C362.303253,335.032379 353.575836,333.693115 345.109039,330.921143 C329.825714,325.917572 319.061829,310.827759 317.600952,293.803589 C315.886871,273.829071 317.086792,253.846542 316.717896,233.872223 C316.501953,222.182144 315.895050,221.182556 304.856598,217.946716 C304.491486,217.839691 304.250519,217.309021 303.399567,216.360275 C319.054504,216.360275 334.034760,216.360275 349.100769,216.360275 C348.857361,218.369461 347.663452,218.129745 346.757935,218.296448 C339.251648,219.678299 336.515533,222.700256 336.300018,230.429306 C335.733215,250.754410 335.169769,271.111755 336.475494,291.399323 C337.715485,310.666168 348.547882,324.502808 367.150024,326.203217 C371.819000,326.630035 376.442017,325.978729 381.301147,324.430695 z"/>
+        <path fill="#FFFFFF" d="M499.445618,221.262878 C478.053467,225.266769 464.593658,240.212051 462.438843,262.386414 C460.913818,278.079956 463.622589,292.950714 472.720001,306.182159 C483.600098,322.006378 507.604584,330.569733 525.968872,325.437500 C529.848328,324.353302 532.104553,321.887390 532.317688,318.055206 C532.881165,307.922577 533.368347,297.734833 532.106506,287.652191 C531.253052,280.831940 529.154480,279.404327 521.963623,278.179443 C521.195129,278.048523 520.474365,277.637329 519.801575,276.400269 C533.827393,276.400269 547.853210,276.400269 561.936646,276.400269 C561.861267,276.816101 561.861572,277.092804 561.801453,277.106628 C551.692566,279.430054 550.691711,286.905487 551.041443,295.487152 C551.359985,303.303650 550.763123,311.165466 551.254028,318.964264 C551.602173,324.496216 549.259766,327.289612 544.421509,328.970215 C529.852905,334.030914 514.904785,335.432434 499.642059,333.717377 C490.495789,332.689636 481.578857,330.580048 473.342560,326.382965 C453.413239,316.227325 443.549469,299.782593 442.609436,277.490417 C441.562744,252.667847 451.125549,233.784805 472.982178,221.648331 C484.153564,215.445099 496.460144,213.595612 509.109375,213.474106 C521.325928,213.356781 533.294373,214.989365 545.170227,217.782440 C549.460510,218.791473 551.418823,220.358612 550.555786,225.245255 C549.753296,229.788879 550.176575,234.544937 549.999329,239.205154 C549.932007,240.975662 550.210571,242.859802 549.053223,244.338608 C547.779907,244.370621 547.375977,243.571365 547.128601,242.828537 C542.120789,227.786621 529.966736,222.927368 515.862549,221.284210 C510.609375,220.672211 505.221802,221.213867 499.445618,221.262878 z"/>
+        <path fill="#FFFFFF" d="M680.024658,310.792511 C672.653442,326.723755 659.115967,332.467316 643.278809,334.129333 C634.290405,335.072693 625.324829,334.240997 616.670898,331.216888 C600.068054,325.415070 589.302795,309.845276 588.887878,290.083466 C588.538269,273.431458 588.723083,256.768250 588.669006,240.110016 C588.661987,237.944534 588.704346,235.776520 588.616089,233.614075 C588.307068,226.041245 588.053284,218.403137 577.052673,217.832565 C577.331604,217.390732 577.610535,216.948914 577.889465,216.507080 C592.207092,216.507080 606.524719,216.507080 620.921570,216.507080 C620.694397,218.037811 619.795593,218.068817 619.005127,218.215622 C611.203247,219.664215 608.312439,222.745850 608.278381,230.557892 C608.188354,251.213211 608.027710,271.873840 608.388367,292.523773 C608.701965,310.476349 619.387573,323.229523 635.500610,325.921204 C654.745605,329.136108 671.006165,316.489594 672.703186,296.943848 C674.565369,275.494354 673.603882,253.997742 673.591675,232.522049 C673.587341,224.811935 671.301514,218.178894 660.999573,217.917847 C661.335510,217.440109 661.671387,216.962357 662.007263,216.484619 C673.607422,216.484619 685.207581,216.484619 696.988647,216.484619 C696.719238,217.202118 696.653992,217.721390 696.493958,217.752487 C688.549744,219.296127 685.502380,221.393234 685.376404,233.137848 C685.194092,250.127853 685.319214,267.121124 685.145569,284.111298 C685.053162,293.153351 683.702576,302.019989 680.024658,310.792511 z"/>
+        <path fill="#FFFFFF" d="M725.900269,226.315918 C724.320618,219.618790 718.827576,218.706497 713.699524,216.907745 C717.698120,215.341095 721.621704,214.880890 725.154785,217.410721 C730.210388,221.030838 735.566589,223.948059 741.504517,225.776428 C744.343018,226.650436 745.251770,228.580231 745.232300,231.448563 C745.151978,243.258240 745.159546,255.069336 745.257812,266.878876 C745.283203,269.934052 744.280273,271.867554 741.259766,272.907349 C736.756104,274.457581 732.349548,276.289795 727.959229,277.979858 C726.154846,276.044617 726.737671,273.957977 726.728699,272.058044 C726.668091,259.249878 726.722534,246.441177 726.651001,233.633148 C726.638123,231.326294 726.214661,229.021729 725.900269,226.315918 z"/>
+        <path fill="#FFFFFF" d="M718.097839,331.436951 C716.945801,331.321838 716.152405,331.218689 715.446289,331.126892 C715.119507,329.675293 716.082275,329.383575 716.779236,329.259949 C724.799133,327.838013 726.305969,321.829010 726.609497,315.145782 C726.828430,310.323486 726.928650,305.466309 726.599976,300.657623 C726.318542,296.540375 727.934204,294.139557 731.530640,292.418915 C735.572327,290.485321 739.616211,288.731750 743.991394,288.063629 C745.782593,290.171173 745.152344,292.422943 745.183533,294.504608 C745.281128,301.001312 745.173767,307.501282 745.288269,313.997467 C745.462158,323.862030 747.660522,326.734772 757.027466,329.794922 C757.413879,329.921173 757.715515,330.306732 759.089722,331.373352 C744.797791,331.512451 731.644043,332.384491 718.097839,331.436951 z"/>
+        <path fill="#FFFFFF" d="M802.783691,303.216278 C815.352966,316.186310 829.555847,325.841675 847.101807,330.326752 C838.807922,332.244446 830.627136,332.192810 822.419800,331.845337 C810.916016,331.358307 801.826294,325.770416 793.840088,318.116272 C784.446960,309.113678 776.099731,299.162170 768.315430,288.745239 C767.235291,287.299805 766.184570,285.757568 766.086060,283.182251 C770.174561,281.134338 774.744385,279.844238 779.374695,278.829102 C781.478882,278.367767 782.537842,280.182617 783.754578,281.580597 C789.982422,288.736603 796.269775,295.840851 802.783691,303.216278 z"/>
+      </svg>
+      <span class="canon-pill">augur Canon · Cognitive Memory Architecture</span>
+    </div>
+    <div class="eyebrow">The Circadian Archive · How augur Remembers</div>
+    <h1 class="doc-title" data-glean-id="doc-main-title">The Metabolic Lifecycle of <strong>Foresight</strong></h1>
+    <p class="doc-sub">
+      A pile of documents gives you search; augury needs a living memory. Inspired by the cognitive mechanics of human memory and the ancient craft of the <em>templum</em>, the augur Archive breathes across a four-part circadian cycle — singing out on cue at <strong>Dawn</strong>, weighing <strong>Scale</strong> and <strong>Resonance</strong> at <strong>Midday</strong>, <strong>retuning</strong> and <strong>fading</strong> at <strong>Dusk</strong>, and entering <strong>DreamState</strong> by <strong>Night</strong>.
+    </p>
+  </header>
+
+  <div class="epigraph-bar" data-glean-id="epigraph-block">
+    <span class="epigraph-quote">"History doesn't repeat itself, but it often rhymes."</span>
+    <span class="epigraph-attr">— Attributed to Mark Twain · The augur Epigraph</span>
+  </div>
+
+  <!-- 3D HOLOGRAPHIC RESONANCE CHAMBER -->
+  <section class="chamber-section" data-glean-id="holo-chamber-section">
+    <div class="chamber-toolbar">
+      <div class="chamber-title-group">
+        <span class="chamber-kicker">3D Acoustic &amp; Frequency Projection · The Auguraculum</span>
+        <span class="chamber-heading">The Circadian Resonance Field</span>
+      </div>
+      <div class="phase-controls" role="group" aria-label="Circadian Phase Selector">
+        <button type="button" class="phase-btn active" data-phase="dawn">I. Dawn Chorus</button>
+        <button type="button" class="phase-btn" data-phase="midday">II. Scale &amp; Resonance</button>
+        <button type="button" class="phase-btn" data-phase="dusk">III. Retune &amp; Fade</button>
+        <button type="button" class="phase-btn" data-phase="night">IV. DreamState</button>
+      </div>
+    </div>
+
+    <div class="chamber-stage" id="chamberStage" data-glean-id="holo-canvas-container">
+      <canvas id="holoCanvas"></canvas>
+      <div class="hud-overlay-tl" id="hudOverlay">
+        <div class="hud-phase-tag" id="hudTag">PHASE I · PRIMA LUCE · PROSPECTIVE MEMORY</div>
+        <div class="hud-phase-name" id="hudName">Dawn Chorus</div>
+        <div class="hud-phase-desc" id="hudDesc">
+          Four archival voices fire on cue before a Reading begins: Almanac cyclicals (Types 1 &amp; 2), open Prediction windows, active cascades in flight, and overnight DreamState premonitions waiting at the Firebreak.
+        </div>
+      </div>
+      <div class="hud-hint">DRAG TO ROTATE 3D CHAMBER · CLICK PHASE TO SHIFT FREQUENCY FIELD</div>
+      <div class="hud-overlay-br">
+        <span class="hud-metric">PEAK SCALE: <strong id="metricScale">9.4 Hz</strong></span>
+        <span class="hud-metric">RESONANT LINKS: <strong id="metricLinks">14</strong></span>
+        <span class="hud-metric">ACTIVE LEDGER: <strong id="metricRows">1,167 rows</strong></span>
+      </div>
+    </div>
+
+    <div class="chamber-sliders">
+      <div class="slider-group">
+        <span>CHAMBER TILT</span>
+        <input type="range" id="tiltSlider" min="15" max="65" value="34">
+      </div>
+      <div class="slider-group">
+        <span>HARMONIC GAIN (SCALE)</span>
+        <input type="range" id="gainSlider" min="50" max="160" value="100">
+      </div>
+      <div class="legend-group">
+        <span><i class="legend-dot dot-cyan"></i>Luminous Spires: Active Signals &amp; Resonant Rhymes</span>
+        <span><i class="legend-dot dot-orange"></i>Amber Nodes: Firebreak &amp; Scored Calls</span>
+        <span><i class="legend-dot dot-purple"></i>Outer Floor: Faded &amp; Incubating Residue</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION I: THE FOUR CIRCADIAN MOVEMENTS -->
+  <section class="section" data-glean-id="section-circadian-movements">
+    <div class="section-header">
+      <div class="section-num">Movement I · The Four Phases</div>
+      <h2 class="section-title">The Circadian Rhythm of the Archive</h2>
+      <p class="section-lead">
+        Between the three structural stores of the Archive (<strong>Corpus → Signal Ledger → Prediction Ledger</strong>) runs a continuous metabolic lifecycle. Each phase of the day governs how raw signs rise, connect, get judged against reality, or rest in incubation.
+      </p>
+    </div>
+
+    <div class="circadian-grid">
+      <!-- DAWN -->
+      <article class="phase-card" data-glean-id="card-phase-dawn">
+        <div class="phase-card-top">
+          <span class="phase-time">01 · Dawn (First Light)</span>
+          <span class="phase-pill">Prospective Memory</span>
+        </div>
+        <h3>Dawn Chorus</h3>
+        <p>
+          In Roman augury, the <em>oscines</em> were the birds that gave signs by their song at daybreak. In <strong>augur</strong>, the Archive does not wait passively to be queried: before the analyst begins <strong>The Reading</strong> at Stage 1, the <strong>Dawn Chorus</strong> fires automatically on cue.
+        </p>
+        <div class="voice-list">
+          <div class="voice-item"><strong>VOICE 1 · ALMANAC CYCLICALS:</strong> Flags unlisted recurring drops (e.g., Halifax HPI on the first Friday; FCA Dear CEO letters in January).</div>
+          <div class="voice-item"><strong>VOICE 2 · OPEN WINDOWS:</strong> Surfaces frozen predictions in the Prediction Ledger entering or closing their resolution window today.</div>
+          <div class="voice-item"><strong>VOICE 3 · RUNNING THREADS:</strong> Orientes the analyst on active multi-stage cascades mid-flight from prior editions.</div>
+          <div class="voice-item"><strong>VOICE 4 · THE NIGHT'S HARVEST:</strong> Presents experimental premonitions woken from <em>DreamState</em>, waiting at the Firebreak.</div>
+        </div>
+      </article>
+
+      <!-- MIDDAY -->
+      <article class="phase-card" data-glean-id="card-phase-midday">
+        <div class="phase-card-top">
+          <span class="phase-time">02 · Midday (The Reading)</span>
+          <span class="phase-pill">Salience &amp; Association</span>
+        </div>
+        <h3>Scale &amp; Resonance</h3>
+        <p>
+          As the daytime write path shreds an approved briefing into the Signal Ledger and Station 4 classifies each story at <code>temperature 0</code>, two acoustic laws govern how the signal enters the sky:
+        </p>
+        <div class="voice-list">
+          <div class="voice-item"><strong>SCALE (WRITE-TIME WEIGHT):</strong> The encoder's thumb on the balance. Combines deterministic <code>MentionBreadth</code> ("Also reporting" count) and lane prominence with institutional magnitude. High-scale signals stand tall as central spires and resist decay; low-scale mentions fade quickly unless reinforced.</div>
+          <div class="voice-item"><strong>RESONANCE (ASSOCIATIVE RECALL):</strong> A sign means nothing alone. When a signal matches Pattern A, sympathetic <strong>Resonance</strong> plucks the neighbouring strings wired to the same frame — automatically surfacing linked lead-lag patterns and Type 3 <strong>Clash Patterns</strong> so the analyst can <code>FlagClash</code> immediately.</div>
+        </div>
+      </article>
+
+      <!-- DUSK -->
+      <article class="phase-card" data-glean-id="card-phase-dusk">
+        <div class="phase-card-top">
+          <span class="phase-time">03 · Dusk (The Confessional)</span>
+          <span class="phase-pill">Reconsolidation &amp; Decay</span>
+        </div>
+        <h3>Retune &amp; Fade</h3>
+        <p>
+          As the day closes and open predictions reach their resolution window, the practice enters <strong>The Scoring</strong>. Reality is allowed to vote (<code>hit · miss · partial</code>), triggering two housekeeping disciplines:
+        </p>
+        <div class="voice-list">
+          <div class="voice-item"><strong>RETUNE (RECONSOLIDATION):</strong> A Pattern is frozen during normal flight; it becomes briefly editable only during The Scoring when reality votes <em>miss</em> or <em>partial</em>. Analysts <strong>retune</strong> its lead-time window or confidence while pinning the prior version in its lineage — learning without hindsight forgery.</div>
+          <div class="voice-item"><strong>FADED (ATTENTIONAL DECAY):</strong> Unreinforced <code>detected</code> or <code>incubating</code> signals that pass their edition half-life <strong>fade out</strong> into the <code>faded</code> state — dropping out of active Vantage and Query Librarian views (solving SharePoint's 5,000-row ceiling) while remaining permanently in stone for back-testing.</div>
+        </div>
+      </article>
+
+      <!-- NIGHT -->
+      <article class="phase-card" data-glean-id="card-phase-night">
+        <div class="phase-card-top">
+          <span class="phase-time">04 · Night (The Sanctuary)</span>
+          <span class="phase-pill">Incubation &amp; Consolidation</span>
+        </div>
+        <h3>Incubating &amp; DreamState</h3>
+        <p>
+          By day, each Edition is a strict <em>templum</em> and the waking classifier refuses to guess. By night, the engine steps into the sanctuary to discover what waking rules cannot see:
+        </p>
+        <div class="voice-list">
+          <div class="voice-item"><strong>INCUBATING (THE NURSERY STATE):</strong> When Station 4 meets a novel sign it has no honest enum for, it marks the row <code>incubating</code> rather than planting a phantom rhyme.</div>
+          <div class="voice-item"><strong>DREAMSTATE (NOCTURNAL CONSOLIDATION):</strong> Offline, the engine enters <strong>DreamState</strong> — walking across <code>incubating</code> rows and across separate Edition skies (Finance ↔ Design ↔ LBG) to merge multi-day echoes into canonical Events, listen for <strong>Dropped Beats</strong>, and cluster recurring residue into candidate premonitions.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- SECTION II: THE FREQUENCY ARCHITECTURE TABLE -->
+  <section class="section" data-glean-id="section-frequency-table">
+    <div class="section-header">
+      <div class="section-num">Movement II · The Operating Contract</div>
+      <h2 class="section-title">How Cognitive Memory Maps to the augur Engine</h2>
+      <p class="section-lead">
+        Every poetic term in the circadian cycle corresponds to a concrete state transition, SharePoint column, or Power Automate / Copilot Studio mechanism — ensuring that wonder is welcomed as a source, but never accepted as a verdict.
+      </p>
+    </div>
+
+    <div class="table-wrap" data-glean-id="table-memory-mapping">
+      <table class="canon-table">
+        <thead>
+          <tr>
+            <th>Circadian Phase</th>
+            <th>augur Lexicon Term</th>
+            <th>Cognitive Mechanism</th>
+            <th>Engine &amp; Schema Implementation</th>
+            <th>The Guardrail (Firebreak)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-glean-id="row-dawn-chorus">
+            <td><strong>I. Dawn</strong></td>
+            <td><strong>Dawn Chorus</strong><br><em>Ritual &amp; Brief</em></td>
+            <td>Prospective Memory &amp; Session Wake</td>
+            <td>Pre-computed morning brief combining Almanac dates, Pattern Library Types 1 &amp; 2, open Prediction windows, and overnight DreamState candidates.</td>
+            <td>Faces inward to orient Stage 1 (Cerebro intake); folds reminders once acknowledged.</td>
+          </tr>
+          <tr data-glean-id="row-scale">
+            <td><strong>II. Midday</strong></td>
+            <td><strong>Scale</strong><br><em>Object Attribute</em></td>
+            <td>Encoding Salience &amp; Modulation</td>
+            <td>Computed at Station 3/4 from <code>MentionBreadth</code> + <code>IsSubject</code> + institutional shock; sets the signal's attentional half-life.</td>
+            <td>Kept strictly separate from prediction <code>Confidence</code>; loud noise does not equal a rhyme.</td>
+          </tr>
+          <tr data-glean-id="row-resonance">
+            <td><strong>II. Midday</strong></td>
+            <td><strong>Resonance / resonate</strong><br><em>Action &amp; Link</em></td>
+            <td>Associative Recall &amp; Spreading Activation</td>
+            <td>Weighted Pattern-to-Pattern links in the Archive; matching Pattern A pulls co-occurring lead-lags and Type 3 Clash Patterns onto Vantage.</td>
+            <td>Surfaces associative context for <code>FlagClash</code>; never auto-scores a pattern from mere retrieval.</td>
+          </tr>
+          <tr data-glean-id="row-retune">
+            <td><strong>III. Dusk</strong></td>
+            <td><strong>retune / retuning</strong><br><em>Governed Action</em></td>
+            <td>Memory Reconsolidation</td>
+            <td>Triggered only inside <code>ScorePrediction</code> when an outcome is marked <code>miss</code> or <code>partial</code>; updates window/confidence and logs version history.</td>
+            <td>Protects the <strong>Arrow of Time</strong>: past calls are never retroactively re-scored under a retuned window.</td>
+          </tr>
+          <tr data-glean-id="row-faded">
+            <td><strong>III. Dusk</strong></td>
+            <td><strong>faded (fade out)</strong><br><em>Signal State</em></td>
+            <td>Attentional Decay &amp; Forgetting</td>
+            <td>Scheduled transition (`State = faded`) for `detected` or `incubating` rows that exceed their Scale-weighted edition window without matching.</td>
+            <td>Zero archival deletion: `faded` rows leave active OData views (&lt;5k ceiling) but stay in the ledger forever.</td>
+          </tr>
+          <tr data-glean-id="row-incubating">
+            <td><strong>IV. Night</strong></td>
+            <td><strong>incubating</strong><br><em>Signal State</em></td>
+            <td>Episodic Buffer (The Nursery)</td>
+            <td>Station 4 Bounded LLM output when a story fits no controlled `SignalType` enum; holds the raw sign in the Nursery without forcing a box.</td>
+            <td>Eliminates forced-classification phantoms (e.g., pension stories misclassified as motor finance).</td>
+          </tr>
+          <tr data-glean-id="row-dreamstate">
+            <td><strong>IV. Night</strong></td>
+            <td><strong>DreamState</strong><br><em>Ritual &amp; Mode</em></td>
+            <td>Offline Consolidation (Episodic → Semantic)</td>
+            <td>Periodic offline pass across `incubating` rows and across Edition skies; merges duplicate mentions into Events and clusters novel themes.</td>
+            <td><strong>Doubled Firebreak:</strong> DreamState outputs are born `experimental` and cannot issue predictions until human promotion.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="lifecycle-box" data-glean-id="signal-state-machine-box">
+      <div class="lifecycle-label">Updated Signal State Machine · Layer 2 Ledger Contract</div>
+      <div class="state-chain">
+        <span class="state-pill">detected</span>
+        <span class="state-arrow">&rarr;</span>
+        <span class="state-pill highlight-orange">incubating (The Nursery)</span>
+        <span class="state-arrow">&rarr;</span>
+        <span class="state-pill">matched (Resonance)</span>
+        <span class="state-arrow">&rarr;</span>
+        <span class="state-pill">predicted</span>
+        <span class="state-arrow">&rarr;</span>
+        <span class="state-pill">resolved (Retune)</span>
+        <span class="state-arrow">&middot;</span>
+        <span class="state-pill muted">faded (Attentional Decay)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING CREED -->
+  <section class="creed-box" data-glean-id="creed-closing-box">
+    <div class="creed-kicker">The Circadian Creed · In One Breath</div>
+    <div class="creed-title">How the Archive Breathes</div>
+    <p style="color: var(--artifact-text-secondary); font-size: 15px;">
+      When the seven memory terms join the Lexicon, the entire daily and nocturnal life of <strong>augur</strong> can be spoken in a single grammatical breath:
+    </p>
+    <div class="creed-lines">
+      At first light, the <b>Dawn Chorus</b> sang out the open windows; at midday, the analyst took a <b>reading</b>, weighed the new signal's <b>Scale</b>, watched it <b>resonate</b> with a clash pattern, and left an unnamed tremor <b>incubating</b> in the Nursery; at dusk, after <b>The Scoring</b>, we <b>retuned</b> a lagging rhyme while old unreinforced rumours <b>faded</b> from the watch; and through the night, in <b>DreamState</b>, the Archive walked across the skies to surface tomorrow's premonition at the Firebreak.
+    </div>
+  </section>
+
+  <footer class="footer" data-glean-id="doc-footer">
+    <span>The Circadian Archive · augur Canon Companion</span>
+    <span>Rapid Intelligence UK · Cision</span>
+    <span>Read the signs</span>
+  </footer>
+</div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('holoCanvas');
+  const stage = document.getElementById('chamberStage');
+  const ctx = canvas.getContext('2d');
+
+  const phaseData = {
+    dawn: {
+      tag: 'PHASE I · PRIMA LUCE · PROSPECTIVE MEMORY',
+      name: 'Dawn Chorus',
+      desc: 'Four archival voices fire on cue before a Reading begins: Almanac cyclicals (Types 1 & 2), open Prediction windows, active cascades in flight, and overnight DreamState premonitions waiting at the Firebreak.',
+      scale: '8.8 Hz',
+      links: '4 Voices Firing',
+      rows: '12 Due Today',
+      primaryHue: 'cyan',
+      spireProfile: 'chorus',
+      ringGlow: 0.85
+    },
+    midday: {
+      tag: 'PHASE II · THE READING · SALIENCE & ASSOCIATION',
+      name: 'Scale & Resonance',
+      desc: 'Incoming signals register as central luminous spires scaled by MentionBreadth and institutional shock. Matching one pattern plucks harmonic arcs that wake neighbouring and Type 3 Clash patterns.',
+      scale: '9.6 Hz (Peak)',
+      links: '18 Resonant Arcs',
+      rows: '1,167 Active',
+      primaryHue: 'dual',
+      spireProfile: 'cathedral',
+      ringGlow: 1.0
+    },
+    dusk: {
+      tag: 'PHASE III · THE SCORING · RECONSOLIDATION & DECAY',
+      name: 'Retune & Fade',
+      desc: 'Reality votes during The Scoring: partial or missed calls retune Pattern lead-time rings while preserving prior lineage. Unreinforced outer signals gently fade out into deep archival storage.',
+      scale: '6.2 Hz (Retuned)',
+      links: '7 Scored Loops',
+      rows: '312 Faded Out',
+      primaryHue: 'purple',
+      spireProfile: 'dusk',
+      ringGlow: 0.65
+    },
+    night: {
+      tag: 'PHASE IV · THE SANCTUARY · OFFLINE CONSOLIDATION',
+      name: 'Incubating & DreamState',
+      desc: 'While the daytime templum sleeps, DreamState walks across incubating signals in the Nursery and across Edition skies — merging echoes into Events and weaving premonitions for the Dawn Firebreak.',
+      scale: '4.4 Hz (Deep Wave)',
+      links: '9 Cross-Sky Bridges',
+      rows: '28 Incubating',
+      primaryHue: 'dream',
+      spireProfile: 'dream',
+      ringGlow: 0.78
+    }
+  };
+
+  let currentPhase = 'dawn';
+  let rotY = 0.45;
+  let rotX = 34 * (Math.PI / 180);
+  let gain = 1.0;
+  let isDragging = false;
+  let lastX = 0;
+  let lastY = 0;
+  let time = 0;
+
+  // Generate 3D frequency spires in concentric acoustic rings
+  const spires = [];
+  const numSpires = 130;
+  for (let i = 0; i < numSpires; i++) {
+    const rNorm = Math.pow(Math.random(), 1.35); // denser near center like attachment 2 & 3
+    const radius = rNorm * 235;
+    const angle = Math.random() * Math.PI * 2;
+    const baseHeight = (1 - rNorm * 0.82) * (42 + Math.random() * 145);
+    const freq = 1.2 + Math.random() * 3.8;
+    const phaseOffset = Math.random() * Math.PI * 2;
+    const isCore = rNorm < 0.35;
+    const isOuter = rNorm > 0.72;
+    spires.push({
+      x: Math.cos(angle) * radius,
+      z: Math.sin(angle) * radius,
+      rNorm,
+      angle,
+      baseHeight,
+      freq,
+      phaseOffset,
+      isCore,
+      isOuter
+    });
+  }
+
+  // Generate floating acoustic particles
+  const particles = [];
+  for (let i = 0; i < 65; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const r = 20 + Math.random() * 230;
+    particles.push({
+      x: Math.cos(a) * r,
+      z: Math.sin(a) * r,
+      y: 15 + Math.random() * 170,
+      size: 1.2 + Math.random() * 2.2,
+      speed: 0.3 + Math.random() * 0.9,
+      offset: Math.random() * Math.PI * 2
+    });
+  }
+
+  function resize() {
+    const rect = stage.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function project(x, y, z, cx, cy) {
+    // Rotate around Y
+    const cosY = Math.cos(rotY);
+    const sinY = Math.sin(rotY);
+    const rx = x * cosY - z * sinY;
+    const rz = x * sinY + z * cosY;
+
+    // Rotate around X (tilt)
+    const cosX = Math.cos(rotX);
+    const sinX = Math.sin(rotX);
+    const ry = y * cosX - rz * sinX;
+    const rz2 = y * sinX + rz * cosX;
+
+    const fov = 640;
+    const dist = 560;
+    const scale = fov / Math.max(120, dist + rz2);
+    return {
+      sx: cx + rx * scale,
+      sy: cy - ry * scale + 54,
+      scale,
+      depth: rz2
+    };
+  }
+
+  function render() {
+    const rect = stage.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+    const cx = w * 0.52;
+    const cy = h * 0.54;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // 1. Deep chamber ambient radial glow (inspired by holographic projection table)
+    const bgGrad = ctx.createRadialGradient(cx, cy + 30, 10, cx, cy, Math.max(w, h) * 0.62);
+    if (currentPhase === 'dawn') {
+      bgGrad.addColorStop(0, 'rgba(20, 140, 220, 0.24)');
+      bgGrad.addColorStop(0.45, 'rgba(12, 42, 95, 0.14)');
+      bgGrad.addColorStop(1, 'rgba(5, 7, 14, 0)');
+    } else if (currentPhase === 'midday') {
+      bgGrad.addColorStop(0, 'rgba(56, 224, 255, 0.26)');
+      bgGrad.addColorStop(0.38, 'rgba(255, 110, 41, 0.14)');
+      bgGrad.addColorStop(1, 'rgba(5, 7, 14, 0)');
+    } else if (currentPhase === 'dusk') {
+      bgGrad.addColorStop(0, 'rgba(168, 85, 247, 0.24)');
+      bgGrad.addColorStop(0.45, 'rgba(255, 110, 41, 0.10)');
+      bgGrad.addColorStop(1, 'rgba(5, 7, 14, 0)');
+    } else {
+      bgGrad.addColorStop(0, 'rgba(59, 130, 246, 0.25)');
+      bgGrad.addColorStop(0.45, 'rgba(99, 102, 241, 0.14)');
+      bgGrad.addColorStop(1, 'rgba(5, 7, 14, 0)');
+    }
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    // 2. Curved acoustic chamber wall rings in background (inspired by Attachment 3 & 4)
+    for (let ringIdx = 0; ringIdx < 3; ringIdx++) {
+      const wallY = 75 + ringIdx * 52;
+      const wallR = 300 + ringIdx * 18;
+      ctx.beginPath();
+      let started = false;
+      for (let a = Math.PI * 0.95; a <= Math.PI * 2.05; a += 0.05) {
+        const wx = Math.cos(a) * wallR;
+        const wz = Math.sin(a) * wallR;
+        const waveY = wallY + Math.sin(a * 5 + time * 1.4 + ringIdx) * 8;
+        const p = project(wx, waveY, wz, cx, cy);
+        if (!started) {
+          ctx.moveTo(p.sx, p.sy);
+          started = true;
+        } else {
+          ctx.lineTo(p.sx, p.sy);
+        }
+      }
+      ctx.strokeStyle = 'rgba(110, 210, 255, 0.13)';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    }
+
+    // 3. Concentric holographic floor rings (Templum grid)
+    const radii = [55, 110, 168, 230];
+    radii.forEach((r, idx) => {
+      ctx.beginPath();
+      for (let i = 0; i <= 72; i++) {
+        const a = (i / 72) * Math.PI * 2;
+        const ripple = Math.sin(a * 6 - time * 2 + idx) * (currentPhase === 'dusk' ? 4.5 : 2.0);
+        const p = project(Math.cos(a) * (r + ripple), 0, Math.sin(a) * (r + ripple), cx, cy);
+        if (i === 0) ctx.moveTo(p.sx, p.sy);
+        else ctx.lineTo(p.sx, p.sy);
+      }
+      if (idx === 1 && currentPhase === 'dusk') {
+        ctx.strokeStyle = 'rgba(255, 110, 41, 0.52)';
+        ctx.lineWidth = 1.8;
+      } else {
+        ctx.strokeStyle = 'rgba(56, 224, 255, ' + (0.28 - idx * 0.05) + ')';
+        ctx.lineWidth = 1.1;
+      }
+      ctx.stroke();
+    });
+
+    // 4. Sort and draw 3D Frequency Spires (Attachment 2 & 3 volumetric sound sculpture)
+    const projectedSpires = spires.map(s => {
+      let mod = 1.0;
+      if (currentPhase === 'dawn') {
+        // 4 cardinal clusters singing out
+        const cardinal = Math.abs(Math.cos(s.angle * 2 + time * 0.5));
+        mod = (0.45 + 0.85 * cardinal) * (1 + 0.25 * Math.sin(time * s.freq + s.phaseOffset));
+      } else if (currentPhase === 'midday') {
+        // Sharp central Scale spire + secondary resonant peaks
+        mod = (s.isCore ? 1.38 : 0.72) * (1 + 0.3 * Math.sin(time * s.freq * 1.3 + s.phaseOffset));
+      } else if (currentPhase === 'dusk') {
+        // Outer signals fade low; mid-ring retunes
+        mod = s.isOuter ? 0.18 : (0.75 + 0.25 * Math.cos(time * 2 + s.rNorm * 8));
+      } else {
+        // DreamState: slow hypnotic wave across the Nursery
+        mod = 0.55 + 0.65 * Math.sin(s.x * 0.025 + s.z * 0.025 + time * 1.6);
+      }
+
+      const hVal = Math.max(4, s.baseHeight * mod * gain);
+      const baseP = project(s.x, 0, s.z, cx, cy);
+      const topP = project(s.x, hVal, s.z, cx, cy);
+      return { s, hVal, baseP, topP, depth: baseP.depth };
+    });
+
+    projectedSpires.sort((a, b) => b.depth - a.depth);
+
+    projectedSpires.forEach(item => {
+      const { s, baseP, topP } = item;
+      const alpha = Math.max(0.12, Math.min(0.92, (1 - s.rNorm * 0.55) * (currentPhase === 'dusk' && s.isOuter ? 0.28 : 0.88)));
+
+      const grad = ctx.createLinearGradient(baseP.sx, baseP.sy, topP.sx, topP.sy);
+      if (currentPhase === 'midday' && s.isCore) {
+        grad.addColorStop(0, 'rgba(255, 110, 41, 0.10)');
+        grad.addColorStop(0.55, 'rgba(56, 224, 255, ' + (alpha * 0.85) + ')');
+        grad.addColorStop(1, 'rgba(255, 255, 255, ' + alpha + ')');
+      } else if (currentPhase === 'dusk' && s.isOuter) {
+        grad.addColorStop(0, 'rgba(168, 85, 247, 0.05)');
+        grad.addColorStop(1, 'rgba(168, 85, 247, 0.32)');
+      } else if (currentPhase === 'night') {
+        grad.addColorStop(0, 'rgba(59, 130, 246, 0.08)');
+        grad.addColorStop(0.65, 'rgba(124, 240, 255, ' + (alpha * 0.75) + ')');
+        grad.addColorStop(1, 'rgba(255, 110, 41, ' + (alpha * 0.9) + ')');
+      } else {
+        grad.addColorStop(0, 'rgba(1, 108, 255, 0.08)');
+        grad.addColorStop(0.6, 'rgba(56, 224, 255, ' + (alpha * 0.8) + ')');
+        grad.addColorStop(1, 'rgba(235, 252, 255, ' + alpha + ')');
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(baseP.sx, baseP.sy);
+      ctx.lineTo(topP.sx, topP.sy);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = Math.max(1.2, (s.isCore ? 3.2 : 2.0) * baseP.scale);
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Luminous tip node
+      if (s.isCore || (currentPhase === 'night' && !s.isOuter)) {
+        ctx.beginPath();
+        ctx.arc(topP.sx, topP.sy, Math.max(1.3, 2.4 * topP.scale), 0, Math.PI * 2);
+        ctx.fillStyle = (currentPhase === 'midday' && s.rNorm < 0.16) ? 'rgba(255, 110, 41, 0.95)' : 'rgba(220, 250, 255, 0.9)';
+        ctx.fill();
+      }
+    });
+
+    // 5. Horizontal Harmonic Carrier Waveform (inspired by Attachment 1 glowing cyan/magenta wave)
+    ctx.beginPath();
+    const wavePoints = 110;
+    for (let i = 0; i <= wavePoints; i++) {
+      const tNorm = (i / wavePoints) * 2 - 1; // -1 to 1
+      const wx = tNorm * 265;
+      const envelope = Math.exp(-tNorm * tNorm * 3.2);
+      const wy = 42 + envelope * Math.sin(tNorm * 22 - time * 3.2) * 48 * gain;
+      const p = project(wx, wy, 0, cx, cy);
+      if (i === 0) ctx.moveTo(p.sx, p.sy);
+      else ctx.lineTo(p.sx, p.sy);
+    }
+    ctx.strokeStyle = currentPhase === 'dusk' ? 'rgba(255, 110, 41, 0.78)' : 'rgba(124, 240, 255, 0.82)';
+    ctx.lineWidth = 2.0;
+    ctx.stroke();
+
+    // 6. Associative Resonance Arcs (Midday & Night DreamState bridges)
+    if (currentPhase === 'midday' || currentPhase === 'night' || currentPhase === 'dawn') {
+      const arcCount = currentPhase === 'midday' ? 7 : 5;
+      for (let aIdx = 0; aIdx < arcCount; aIdx++) {
+        const sA = projectedSpires[(aIdx * 13) % projectedSpires.length];
+        const sB = projectedSpires[(aIdx * 29 + 7) % projectedSpires.length];
+        if (sA && sB) {
+          const midX = (sA.topP.sx + sB.topP.sx) * 0.5;
+          const midY = Math.min(sA.topP.sy, sB.topP.sy) - 34;
+          ctx.beginPath();
+          ctx.moveTo(sA.topP.sx, sA.topP.sy);
+          ctx.quadraticCurveTo(midX, midY, sB.topP.sx, sB.topP.sy);
+          ctx.strokeStyle = currentPhase === 'midday'
+            ? 'rgba(255, 110, 41, 0.46)'
+            : 'rgba(56, 224, 255, 0.38)';
+          ctx.lineWidth = 1.3;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // 7. Floating luminous acoustic particles
+    particles.forEach(pt => {
+      const py = pt.y + Math.sin(time * pt.speed + pt.offset) * 14;
+      const p = project(pt.x, py, pt.z, cx, cy);
+      ctx.beginPath();
+      ctx.arc(p.sx, p.sy, pt.size * p.scale, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(165, 243, 252, 0.55)';
+      ctx.fill();
+    });
+
+    time += 0.022;
+    if (!isDragging) {
+      rotY += 0.0028;
+    }
+    requestAnimationFrame(render);
+  }
+
+  // Interactive Drag Rotation
+  stage.addEventListener('pointerdown', e => {
+    isDragging = true;
+    lastX = e.clientX;
+    lastY = e.clientY;
+  });
+  window.addEventListener('pointermove', e => {
+    if (!isDragging) return;
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    rotY += dx * 0.007;
+    rotX = Math.max(0.18, Math.min(1.15, rotX + dy * 0.005));
+    document.getElementById('tiltSlider').value = Math.round(rotX * (180 / Math.PI));
+  });
+  window.addEventListener('pointerup', () => {
+    isDragging = false;
+  });
+
+  // Sliders
+  document.getElementById('tiltSlider').addEventListener('input', e => {
+    rotX = parseFloat(e.target.value) * (Math.PI / 180);
+  });
+  document.getElementById('gainSlider').addEventListener('input', e => {
+    gain = parseFloat(e.target.value) / 100;
+  });
+
+  // Phase Buttons
+  document.querySelectorAll('.phase-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const p = btn.getAttribute('data-phase');
+      currentPhase = p;
+      const info = phaseData[p];
+      document.getElementById('hudTag').textContent = info.tag;
+      document.getElementById('hudName').textContent = info.name;
+      document.getElementById('hudDesc').textContent = info.desc;
+      document.getElementById('metricScale').textContent = info.scale;
+      document.getElementById('metricLinks').textContent = info.links;
+      document.getElementById('metricRows').textContent = info.rows;
+    });
+  });
+
+  requestAnimationFrame(render);
+})();
+</script>
+
+<script>
+  if (window.GleanBridge) {
+    window.GleanBridge.postMessage({
+      actionId: 'export-pdf',
+      type: 'glean-add-menu',
+      metadata: { label: 'Export as PDF', icon: 'export' }
+    });
+    window.GleanBridge.onMessage('action', function(data) {
+      if (data && data.actionId === 'export-pdf') window.print();
+    });
+  }
+</script>
+</body>
+</html>
